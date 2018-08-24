@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body{background: none;}
+    input,button,select,textarea{outline:none;autofill:none;}
+    html{
+        color:rgb(153, 153, 153) ;
+    }
+    .layer_text::-webkit-input-placeholder { /* WebKit browsers */
+　　  color:#fff5e7;
+　　}
+    .layer_text:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+　　  color:#fff5e7;
+　　}
+　　.layer_text::-moz-placeholder { /* Mozilla Firefox 19+ */
+　　color:#fff5e7;
+　　}
+　　.layer_text:-ms-input-placeholder { /* Internet Explorer 10+ */
+　　color:#fff5e7;
+　　}
+    .layer_text{
+        list-style: none;
+        width: 400px;
+        height:46px;
+        font-size: 16px;
+        color:#695e59;
+        border: 1px solid #695e59;
+    }
+
+    input[type="email"]{padding:6px;width:90%;color:#999;}
+    input{
+        outline:none;
+    }
+    .login{
+        margin:2% auto;
+        width: 800px;
+        position: relative;
+    }
+    .registered{
+        margin:5% auto;
+        width: 800px;
+        position: relative;
+    }
+    .user_box{
+        width: 400px;
+        margin: auto;
+    }
+    .button {
+        color: #666;
+        background-color: #EEE;
+        border-color: #EEE;
+        font-weight: 300;
+        font-size: 16px;
+        font-family: "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        text-decoration: none;
+        text-align: center;
+        line-height: 40px;
+        width: 400px;
+        height: 40px;
+        border-radius: 5px;
+        padding: 0 40px;
+        margin: 0;
+        font-size: 28px;
+        display: inline-block;
+        appearance: none;
+        cursor: pointer;
+        border: none;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+ }
+    .button:visited {
+        color: #666; }
+
+    .button-royal,
+    .button-royal-flat {
+        background-color: #000000;
+        border-color: #000000;
+        color: #FFF; }
+    .button-royal:visited,
+    .button-royal-flat:visited {
+        color: #FFF; }
+
+    .button-raised {
+        border-color: #e1e1e1;
+        border-style: solid;
+        border-width: 1px;
+        line-height: 38px;
+        background: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#e1e1e1));
+        background: linear-gradient(#f6f6f6, #e1e1e1);
+        -webkit-box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15);
+        box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.3), 0 1px 2px rgba(0, 0, 0, 0.15); }
+
+    .button-raised.button-royal {
+        border-color:#000000;
+        background: -webkit-gradient(linear, left top, left bottom, from(rgb(15, 15, 15)), to(rgb(0, 0, 0)));
+        background: linear-gradient(rgb(15, 15, 15), rgb(0, 0, 0)); }
+    .button-raised.button-royal:hover, .button-raised.button-royal:focus {
+        background: -webkit-gradient(linear, left top, left bottom, from(rgb(15, 15, 15)), to(rgb(0, 0, 0)));
+        background: linear-gradient(top, rgb(15, 15, 15), rgb(0, 0, 0)); }
+    .button-raised.button-royal:active, .button-raised.button-royal.active, .button-raised.button-royal.is-active {
+        border-color:rgb(0, 0, 0);
+        background: rgb(15, 15, 15);
+    }
+    .logo{
+        text-align: center;
+        margin-bottom: 5%;
+    }
+    .or{
+        width: 405px;
+        font-size: 16px;
+        color: #8c8c8c;
+        text-align: center;
+        margin:56px auto 8px  auto;
+        position: relative;
+    }
+    .or span{
+        height: 20px;
+        line-height: 20px;
+        padding: 0 25px;
+        display: inline-block;
+        background: #0f1620;
+        position: absolute;
+        top: -10px;
+        left: 170px;
+    }
+    .or i{
+        width: 100%;
+        height: 1px;
+        overflow: hidden;
+        background: #8c8c8c;
+        position: absolute;
+        top:50%;
+        left:0;
+    }
+    .other_user{
+        margin-top: 100px;
+
+    }
+    .lian{
+        color:#fff;
+        font-size: 18px;
+    }
+    a{
+        text-decoration: underline;
+        color:#fff;
+    }
+    @media screen and (max-width: 960px){
+        .login{
+            width: 100%;
+        }
+        .registered{width: 100%;}
+        .logo img{width: 200px;}
+        .user_box{width: 80%;}
+        .layer_text{width: 100%}
+        .button{width: 100%;}
+        .or span{left:150px}
+        .other_user{margin-left: 50px!important;}
+        .footer .nav, .footer .share{text-align: center;    padding: 0 3%;}
+    }
+    .other_user .login_gg{
+        width: 289px;
+        height: 59px;
+        text-align: center;
+        font-size: 20px;
+        text-indent: 40px;
+        color:#fff;
+        line-height: 59px;
+        background-image: url('<?=__IMG__?>/tt222.png');
+    }
+    .other_user .login_fb{
+        width: 289px;
+        height: 59px;
+        font-size: 20px;
+        text-indent: 40px;
+        color:#fff;
+        line-height: 59px;
+        margin-bottom: 10px;
+        background-image: url('<?=__IMG__?>/feacebook_icon2.jpg');
+    }
+    .login_gg{
+        width: 289px;
+        height: 59px;
+        text-align: center;
+        font-size: 20px;
+        text-indent: 40px;
+        color:#fff;
+        line-height: 59px;
+        background-image: url('<?=__IMG__?>/tt222.png');
+    }
+    .login_fb{
+        width: 289px;
+        height: 59px;
+        font-size: 20px;
+        text-indent: 40px;
+        color:#fff;
+        line-height: 59px;
+        margin-bottom: 10px;
+        background-image: url('<?=__IMG__?>/feacebook_icon2.jpg');
+    }
+</style>
+<body>
+        <?php if(!isset($register)){?>
+                    <div class="login">
+                        <div class="logo">
+                            <img src="<?=__IMG__?>/logo_1.png" alt="">
+                        </div>
+                        <div class="user_box" style="position: relative;">
+                            <form action="/ucenter/login" method="post" class='header_login_form'>
+                                <ul>
+                                    <li>
+                                        <input id="login_email_input" name="email" type="text" placeholder="<?=Yii::t('common','Email')?>" class="layer_text">
+                                    </li>
+                                    <li>
+                                        <input id="login_pass_input" name="password" type="password" placeholder="<?=Yii::t('common','PasswordPrompt')?>" class="layer_text">
+                                    </li>
+                                    <li>
+                                        <label>
+                                            <input name="remeber_time" type="checkbox" value="30" checked>
+                                            <span><?=Yii::t('common','Remember Me')?></span></label>
+                                        <font><a href="javascript:showDialog('#pwd_email');"><?=Yii::t('common','Forgot Password')?></a></font></li>
+                                    <li>
+                                        <p>
+                                            <input type="submit" value="<?=Yii::t('common','login')?>" class="layer_sub button button-raised button-royal">
+                                        </p>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div class="or"><i></i><span><?=Yii::t('common','or')?></span></div>
+                        <div class="other_user" style="margin-left:245px;position: relative">
+                            <div class="login_fb"><?=Yii::t('common', 'Log in with Facebook')?></div>
+                            <div class="login_gg"><?=Yii::t('common', 'Log in with Google')?></div>
+                            <iframe id="login_frame" src="<?=UCENTER_URL?>user/login?large=1" style="visibility:hidden;position:absolute;height:134px; width:310px; border:0" scrolling="no" frameborder="0"></iframe>
+                        </div>
+                        <div class="lian">
+                            <p><a style="display: block;text-align: center;color:#666;" href="/login/register-mobile<?=$this->params['referer']?'?referer='.$this->params['referer']:''?>">Create a new account</a></p>
+                        </div>
+                    </div>
+                </div>
+<!--注册页-->
+        <?php }else{ ?>
+                    <div class="registered" style="margin:2% auto;">
+                        <div class="logo">
+                            <img src="<?=__IMG__?>/logo_1.png" alt="">
+                        </div>
+                        <div class="user_box">
+                            <form action="/ucenter/register" method="post" class="header_reg_form">
+                                <ul>
+                                    <li>
+                                        <input id="reg_email_input" name="newemail" type="text" placeholder="<?=Yii::t('common','Email')?>" class="layer_text" id="reg_email">
+                                    </li>
+                                    <li>
+                                        <input id="reg_pass_input" name="newpassword" type="password" id="password" placeholder="<?=Yii::t('common','PasswordPrompt')?>" class="layer_text">
+                                    </li>
+                                    <li class="zhuce">
+                                        <input type="submit" value="<?=Yii::t('common','SignUp')?>" class="layer_sub button button-raised button-royal">
+                                        </li>
+                                    <li>
+                                        <span style="font-size: 18px;color:#fff;"><?=Yii::t('common','accept')?> <a href="/termsofuse.html"><?=Yii::t('common','terms')?></a> <?=Yii::t('common','playAge')?></span>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                        <div class="or"><i></i><span><?=Yii::t('common','or')?></span></div>
+                        <div class="other_user" style="margin-left:245px;position: relative ">
+                            <div class="login_fb"><?=Yii::t('common', 'Sign up with Facebook')?></div>
+                            <div class="login_gg"><?=Yii::t('common', 'Sign up with Google')?></div>
+                            <iframe id="reg_iframe" src="<?=UCENTER_URL?>user/login?large=1" style="visibility:hidden;position:absolute;height:134px; width:310px; border:0" scrolling="no" frameborder="0"></iframe>
+                        </div>
+                        <div class="lian">
+                            <p><a style="display: block;text-align: center;color:#666;" href="/login<?=$this->params['referer']?'?referer='.$this->params['referer']:''?>"><?=Yii::t('common','account')?></a></p>
+                        </div>
+                    </div>
+                </div>
+        <?php } ?>
+</body>
+</html>
+<script>
+    $(function(){
+        var isOnLoad = true;
+//            注册弹窗
+        $("#reg_iframe").load(function() {
+            isOnLoad = false;// 加载完成
+            console.log('load success');
+            $("#reg_iframe").contents().find(".login-box img").css('display','none');
+        });
+        $('.registered .login_gg').click(function(){
+            document.getElementById("reg_iframe").contentWindow.window.login_google();
+        })
+        $('.registered .login_fb').click(function(){
+            document.getElementById("reg_iframe").contentWindow.window.login_facebook();
+        })
+
+    })
+</script>
+<script>
+    //            登录弹窗
+    $(function(){
+        var isOnLoad = true;
+        $("#login_frame").load(function() {
+            isOnLoad = false;// 加载完成
+            console.log('load success');
+            $("#login_frame").contents().find(".login-box img").css('display','none');
+        });
+        $('.login .login_gg').click(function(){
+            document.getElementById("login_frame").contentWindow.window.login_google();
+        })
+        $('.login .login_fb').click(function(){
+            document.getElementById("login_frame").contentWindow.window.login_facebook();
+        })
+    })
+</script>

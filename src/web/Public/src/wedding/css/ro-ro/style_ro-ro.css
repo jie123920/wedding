@@ -1,0 +1,15 @@
+.news_detail dd .input_s,.news_detail dd .input_s02{
+    font-size: 14px!important;
+}
+.user_con_bd dt{
+    padding-right: 0px!important;
+    margin-right: 0px!important;
+    width: 157px!important;
+}
+.user_con_bd dt{
+    text-align: center!important;
+}
+span.login>a {
+    position: relative!important;
+    left: 10px!important;
+}

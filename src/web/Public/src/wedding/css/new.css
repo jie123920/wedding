@@ -1,0 +1,290 @@
+html,body{background: none;}
+.order-pic,.td-pic{width: 180px;}
+.order-name,.td-name{width: 150px;}
+.order-price,.td-price{width: 180px;}
+.order-quantity,.td-quantity{width: 110px;}
+.coupon-code{width: 100%;overflow:hidden;}
+.coupon{
+    width: 95%;
+    height: 45px;
+    margin: 15px 0;
+    margin-left: 17px;
+    font-family: GARA;
+}
+.coupon-code p{font-size: 13px;color: #e13f38;margin-top: 10px;line-height: 20px;display: none;    text-align: center;
+    font-family: "GARAIT";}
+.coupon input{width: 100%;height: 45px;border: 1px solid #C7C7C7;background: #fff;color: #695e59;font-size: 18px;text-indent: 10px;line-height: 45px;}
+.code-buttom{
+    width: 220px;
+    height: 68px;
+    background: #695e59;
+    font-size: 24px;
+    text-align: center;
+    line-height: 68px;
+    background: url(../images/btn_01.png);
+    text-align: center;
+    margin: 17px auto;
+    font-family: GARA;
+}
+.code-buttom a{color: #fff;font-size: 18px;font-family: "GARA";}
+.cf-submit a{
+    font-family: "constanb";
+    /* width: 220px; */
+    width: 220px;
+    height: 68px;
+    line-height: 68px;
+    color: #fff;
+    text-align: center;
+    font-size: 24px;
+    background: url(../images/btn_01.png);
+    float: none;
+    display: block;
+    margin: 10px auto;
+    font-family: "GARA";
+
+}
+.code-price{padding: 20px 0px;border-bottom:1px solid #c9c8c7;margin: 0px 12px;font-size: 16px}
+.after-calculation{overflow: hidden;padding: 0px 16px 10px 16px;}
+.before-calculation{overflow: hidden;padding: 0px 16px 10px 16px;}
+.before-calculation h4,.after-calculation h4{font-size: 16px;color: #616161;font-family: "GARA";float: left;}
+.before-calculation p,.after-calculation p{font-size: 18px;color: #616161;float: right;font-family: "GARA";margin: 10px 0;}
+.after-calculation p{color: #e13f38!important;}
+.user_con_bd{width: 100%;}
+.user_con_bd dt {width: 154px;float: left;text-align: right;padding-right: 30px;font-size: 16px;color: #616161;font-family: GARA;font-weight: 100;line-height: 35px;
+}
+.user_con_bd dl {line-height: 36px;}
+.user_con_bd dd {padding-bottom: 30px;}
+.user_con_bd dd.user_radio label {display: inline-block;margin-right: 20px;line-height: 40px;}
+.user_con_bd dd.user_radio label input {width: 19px;height: 19px;padding: 0;margin: 7px 0 0;}
+.user_con_bd dd.user_radio label span {padding-left: 10px;font-size: 18px;color: #69605b;font-weight: 100;}
+.user_con_bd dd.user_select select {height: 32px;width: 342px;font-size: 16px;color: #695e59;}
+.user_con_bd dd.user_select select, .user_input_text {border: 1px solid #ccc;font-family: GARA;width: 70%;font-size: 13px;height: 40px;padding:0px 0px 0px 15px ;
+}
+.user_select{position: relative;}
+.user_select .fa-caret-down{position: absolute;top: 22%;right: 20px;}
+.aa{font-size: 21px;color: #999;padding: 15px;}
+.aa:hover{color: #333;}
+.cf-select select{height: 40px;width: 70%;border: 1px solid #616161;padding-left: 15px;font-size: 13px;}
+.cf-add-form p{margin: 0;}
+.pay-city{border-bottom:none;width: 100%;}
+.pay-city dl{margin-bottom: 0px;}
+.pay-mode{margin-top: 0;}
+.pay-mode label{width: 100%;display: inline-block;margin: 10px 0px;padding-left: 40px;}
+.pay-mode img{max-height:40px;margin-left: 10px;}
+.city-select select {
+    height: 30px;
+    font-size: 15px;
+    border: 1px solid #90918c;
+    width: 90%;
+    margin-left: 40px;
+    font-family: GARA;}
+#trans_type{
+    height: 30px;
+    font-size: 15px;
+    border: 1px solid #90918c;
+    width: 111%;
+    margin-left: 40px;
+    font-family: GARA;
+}
+.pay-city dd{padding: 0;}
+.pay-city dl {margin: 15px 0;}
+.pay-city dt{width: 165px;font-size: 16px;font-weight: bold;line-height: 30px;font-family: 'GARA';}
+.add-title{    font-size: 22px;
+    color: #616161;
+    text-transform: uppercase;
+    font-family: GARA;
+    text-indent: 10px;
+    margin-right: 10px;
+}
+.prduct-total{margin-top: 0;}
+.order-list .td {min-height: 224px;font-size: 14px;float: left;line-height: 224px;font-family: GARA;}
+.td-pic {margin-top: 20px;}
+.cf-order .th{font-size: 17px;}
+.m_top20{margin-top: 20px}
+.choose-address-sel{    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #90918c;
+    font-size: 14px;
+    padding-left: 22%;
+    cursor: pointer;
+    color: #616161;}
+.j-selected-address{
+    width: 90%;
+    margin: 23px auto 0px;
+}
+.choose-address{height: 30px;font-size: 15px;margin-top: 18px;}
+.choose-address p{margin: 0 0 4px;font-size: 16px;font-family: 'GARA';color: #616161;}
+.cart-extra-info{margin-top: 20px;}
+.cart-extra-info label{font-size: 13px;color: #616161;font-family: GARA;}
+#comment{width: 100%;line-height: 18px;border: 1px solid #d0d0d0;padding: 5px 10px;font-size: 12px;overflow: auto;height: 80px;outline: rebeccapurple; resize: none;    margin-bottom: 20px;font-family: GARA;color: #616161;height: 180px;}
+.cf-order{margin-top: 0px}
+
+.exp-list select{height: 30px;}
+.cf-prompt{font-size: 14px;margin-top: 10px;text-align: center;font-family: GARA}
+.cf-agreement{text-align: center;font-size: 12px;margin-top: 20px;color: #616161;font-family: GARA}
+.cf-agreement p{margin: 0}
+.cf-agreement a{display: inline-block;color: #695e59;text-decoration: underline;cursor: pointer;}
+.ship-mode{margin-top: 30px;}
+.ship-express {
+    width:39.5%;
+    float: right;
+    font-family: GARA;
+    padding-top:6px;
+    background: #fefbf4;
+}
+.ship-address {
+    width: 57%;
+    float: left;
+    padding-top:6px;
+    padding-right: 20px;
+    background: #fefbf4;
+}
+.ship-mode{
+    margin-top: 0;
+}
+.tds{
+    width: 100%;
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    font-family: GARA;
+    color: #616161;
+    border-bottom: 1px solid #c8c9c6;
+}
+.or-detailed-left{
+    width: 25%;
+    float: left;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.or-detailed-right{
+    float: left;
+    width: 72%;
+}
+.td-right p{
+    margin: 0;
+}
+.or-detailed-left img{
+    width: 155px;
+    height: 230px;
+}
+.order-amount{
+    padding: 0;
+}
+.td-name{
+    font-size: 22px;
+    font-family: GARA;
+    color: #616161;
+    width: 100%;
+}
+.detailed-title{
+    float: left;
+    margin: 0;
+    width: 36%;
+    float: left;
+    font-size: 16px;
+    color: #695e59;
+}
+
+.td-right {
+    float: right;
+    margin: 0;
+}
+.ti{
+    font-size: 14px!important;
+    font-family: 'GARA'!important;
+    color: #695e59!important;
+}
+.coupon input::-webkit-input-placeholder { /* WebKit browsers */
+    　　  color:#999;
+    　　}
+　　.coupon input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    　　  color:#999;
+    　　}
+
+　　.coupon input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    　　color:#999;
+    　　}
+　　.coupon input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    　　color:#999;
+    　　}
+    .data-title {
+        font-size: 22px;
+        color: #616161;
+        text-transform: uppercase;
+        font-family: GARA;
+        text-indent: 10px;
+        border-bottom: 1px solid #c9c8c7;
+        height: 49px;
+        line-height: 49px;
+        margin-bottom:13px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    select {
+        height: 30px;
+    }
+    
+
+select[name='year1'] {
+    width: 80px;
+    font-size: 16px;
+    font-family: GARA;
+}
+select[name='day1'] {
+    width: 80px;
+    font-size: 16px;
+    font-family: GARA;
+}
+select[name='month1'] {
+    width: 80px;
+    font-size: 16px;
+    font-family: GARA;
+}
+.textarea-title{
+    font-size: 22px;
+    color: #616161;
+    font-family: GARA;
+    text-transform: uppercase;
+    border-bottom: 1px solid #c9c8c7;
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+}
+.textarea-end{
+    font-size: 16px;
+    color: #616161;
+    font-family: GARA;
+    margin-bottom: 16px;
+}
+select#understand {
+    width: 95%;
+    margin-bottom: 16px;
+    margin-left: 17px;
+    font-size:16px;
+}
+.data-plug-in {
+    margin-left: 17px;
+}
+.cart-extra-info {
+    margin: 30px 10px;
+}
+.understand-title{
+    font-size: 22px;
+    color: #616161;
+    text-transform: uppercase;
+    font-family: GARA;
+    text-indent: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-bottom: 1px solid #c9c8c7;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+}
+dd.email div {
+    padding-left: 168px;
+    font-size: 14px;
+    font-family: gara;
+    color: #af9e89;
+    font-family: GARA;
+}

@@ -1,0 +1,112 @@
+<?php
+use yii\helpers\Html;
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><?=\YII::t('shop','MyOrders')?></title>
+</head>
+<style>
+    .user_con_bd_box{padding: 0!important;margin-left: 230px;}
+    .user_con_bd {
+    background: #fefbf4;
+    position: relative;
+}
+.user-order-details ul li ul li {
+    border: none;
+
+}
+.user-order-details ul li ul li span{
+    font-family: "GARA"!important;
+}
+.hide-button{
+    position: absolute;
+    bottom: 0;
+}
+
+    
+</style>
+<link rel="stylesheet" type="text/css" href="<?=__CSS__?>/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="<?=__CSS__?>/person-center.css">
+<body>
+<div class="user_con_bd_box">
+    <div class="user_title"><?=\YII::t('shop','MyOrders')?></div>
+    <?php if($order_list):?>
+        <?php echo $this->render('_orders.html',['order_list'=>$order_list]);?>
+        <div class="center-loadmore">
+            <i class="fa fa-chevron-down" aria-hidden="true" id="loading"></i>
+        </div>
+    <?php else: ?>
+        <p style="font-size:22px; color:#616161;text-align: center;margin-top: 20px;font-family:GARA"><?=\YII::t('common','NoPrevious')?>
+        </p>
+    <?php endif;?>
+</div>
+</body>
+<script>
+    var SysSecond;
+    var InterValObj;
+    var timesarr = [];
+    $(document).ready(function() {
+        $(".timeCounter").each(function(){
+            SysSecond = Math.abs($(this).attr('time_start')); //这里获取倒计时的起始time\
+            timesarr[timesarr.length] = SysSecond;
+        })
+    });
+    InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
+    //将时间减去1秒，计算天、时、分、秒
+    function SetRemainTime() {
+        for(var i=0; i<timesarr.length; i++){
+            if (timesarr[i] > 0) {
+                timesarr[i] = timesarr[i] - 1;
+                var second = Math.floor(timesarr[i] % 60);             // 计算秒
+                var minite = Math.floor((timesarr[i] / 60) % 60);      //计算分
+                var hour = Math.floor((timesarr[i] / 3600) % 24);      //计算小时
+
+                $(".timeCounter").eq(i).html(hour + ":" + minite + ":" + second);
+            } else {//剩余时间小于或等于0的时候，就停止间隔函数
+                window.clearInterval(InterValObj);
+                //这里可以添加倒计时时间为0后需要执行的事件
+            }
+        }
+    }
+</script>
+<script>
+    var loadDiv = $('#loading');
+    var page = 2;
+    loadDiv.on('click',function() {
+        var layer_loading_box = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shade: [0.7, '#000']});
+        //发送ajax请求获取数据
+        $.ajax({
+            type: "get",
+            url: "myorder_more?page="+page,
+            success: function(data){
+                layer.close(layer_loading_box);
+                //追加后端返回的数据
+                $('.center-loadmore').before(data);
+                page++;
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    //详细内容展开
+     $(document).delegate(".user-click","click",function(){
+             $(this).parent().next().toggle(800);
+            if($(this).children("span").text()==="Back "){
+                $(this).children("span").text("Order Details ");
+            }else{
+               var lnid = $(this).parent().next().find('.logistics_number').attr('data-id');
+               var proid = $(this).parent().next().find('.logistics_number').attr('data');
+               proid = 'YQContainer'+proid;
+               doTrack(lnid,proid);
+               $(this).children("span").text("Back ");
+            }
+        });
+</script>
+
+ 
+</html>
+
+
+

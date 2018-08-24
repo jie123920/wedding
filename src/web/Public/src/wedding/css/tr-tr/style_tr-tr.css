@@ -1,0 +1,11 @@
+.user_box ul li.forgot_password .layer_sub {
+    font-size: 12px;
+}
+span.login>a {
+    position: relative!important;
+    left: 10px!important;
+}
+.user_con_bd dt{
+    width: 158px!important;
+    padding-right: 0!important;
+}

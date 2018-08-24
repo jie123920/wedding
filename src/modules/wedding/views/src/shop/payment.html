@@ -1,0 +1,218 @@
+<style>
+    html,body{background: none;}
+</style>
+<div class="zl-container">
+<!-- 支付头部 -->
+     <div class="ship-header">
+     	<div class="ship-title">
+            <?=Yii::t('shop','Payment')?>
+     	</div>
+     	<div class="ship-nav">
+     		<ul>
+     			<li>1.<?=Yii::t('shop','Shipping')?></li>
+     			<li style="color:#e13f38">2.<?=Yii::t('shop','Payment')?></li>
+     			<li>3.<?=Yii::t('shop','ReviewOrder')?></li>
+     		</ul>
+     	</div>
+     </div>
+<!-- 支付方式 -->
+     <div class="payment-mode">
+         <div class="pay-city">
+           <form>
+             <dl>
+                <dt><?=Yii::t('shop','PaymentRegion')?></dt>
+                  <dd class="city-select">
+                      <select class='country-id'>
+                          <?php
+                          foreach ($region as $value) {
+                              $selected = '';
+                              if ($value['id'] == $country_id) {
+                                  $selected = ' selected';
+                              }
+                              echo "<option value={$value['id']} $selected>{$value['region_name']}</option>";
+                          }
+                          ?>
+                      </select>
+                  </dd>
+             </dl>
+           </form>
+
+         </div>
+         <div class="pay-mode">
+           <ul>
+             <li class='channel-id active' style=""></li>
+             <li class='channel-id'></li>
+           </ul>
+         </div>
+         <div class="order-summary">
+           <div class="order-header"><?=Yii::t('shop','OrderSummary')?></div>
+           <div class="pay-total">
+             <span><?=Yii::t('shop','ProductTotal')?></span>
+             <p>
+               <i><?=THINK_RATE_SYMBOL?></i>
+               <strong>
+               <?php
+               	$show_total = $order['amount']-$order['coupon_amount'];
+				if($show_total < 0){
+					$show_total = 0.00;
+					echo 0.00;
+				}else{
+					echo number_format(($order['amount']-$order['coupon_amount'])*THINK_RATE_M, 2, '.', '');
+				}
+               ?>
+               </strong>
+             </p>
+           </div>
+           <div class="pay-ship">
+             <span><?=Yii::t('shop','Shipping & Handling')?></span>
+             <p>
+               <i><?=THINK_RATE_SYMBOL?></i>
+               <strong><?=number_format($order['freight']*THINK_RATE_M, 2, '.', '')?></strong>
+             </p>
+           </div>
+         </div>
+     </div>
+        <!-- 订单总价 -->
+        <div class="cf-total1">
+          <div class="prduct-total">
+             <span><?=Yii::t('shop','Subtotals')?></span>
+             <p style="margin-left: 360px">
+               <i><?=THINK_RATE_SYMBOL?></i>
+               <strong><?=number_format(($show_total+$order['freight'])*THINK_RATE_M, 2, '.', '')?></strong>
+             </p>
+          </div>
+          <div class="cf-submit">
+          <p>Orders are charged in $USD</p>
+            <a href='javascript: void'><?=Yii::t('shop','Continue')?></a>
+          </div>
+          <p class="cf-prompt">
+            <?php
+          if ($promotion['id'] == 1) {
+               echo Yii::t('shop','FreeDelivery');
+          } else if ($promotion['id'] == 2) {
+				$currency = THINK_RATE_SYMBOL.number_format($promotion['money']*THINK_RATE_M, 2, '.', '');
+              	echo  Yii::t('shop','OrdersAboveNGetFreeShipping', $currency);
+          }
+          ?>
+          </p>
+        </div>
+     </div>
+
+
+<script>
+var order_id = <?php echo $order_id ?>;
+var order = '<?php echo json_encode($order); ?>';
+var country_id = <?php echo json_encode($country_id); ?>;
+var country_us = <?php echo json_encode($country_us); ?>;
+var channel_id = <?php echo json_encode($channel_id); ?>;
+var region = <?php echo json_encode($region); ?>;
+var payment_country_id = <?php echo json_encode($payment_country_id); ?>;
+var payway = <?php echo json_encode($payway); ?>;
+
+function changeCountry(country_id, channel_id) {
+    if ( payment_country_id[country_id] == undefined ) {
+        country_id = country_us;
+    }
+
+    var node = $('.pay-mode ul');
+    node.html('');
+    for( var i=0; i < payment_country_id[country_id].channel_way_id.length; i++ ) {
+        var cid = payment_country_id[country_id].channel_way_id[i];
+        var active = '';
+        if (channel_id != undefined) {
+            if ( channel_id == cid ) {
+                active = ' active ';
+            }else if(i == 0){
+            	active = ' active ';
+            }
+        }
+        var img = payway[cid].img;
+        if(img == null){
+        	img = payway[cid].img_url;
+        }
+        var content = "<li data-channel-id='" + cid  + "' class='channel-id" + active + "'><img src='" + img + "' /></li>";
+        node.append(content);
+    }
+        node.find('.channel-id').eq(0).addClass('active');
+
+}
+
+changeCountry(country_id, channel_id);
+
+$('.country-id').on('change', function() {
+    var country_id = $(this).val();
+    changeCountry(country_id);
+});
+
+$(document).delegate('.channel-id','click',function(){
+    $(this).siblings('.channel-id').removeClass('active');
+    $(this).addClass('active');
+})
+
+
+$('.cf-submit').on('click', function() {
+    var country_id = parseInt($('.country-id').val());
+    var channel_id = 0;
+    $('.channel-id').each(function(){
+        var node = $(this);
+        if ( node.hasClass('active') ) {
+            channel_id = parseInt(node.attr('data-channel-id'));
+        }
+    });
+
+    if (country_id == 0) {
+        return  $(".wenzi").text("no country").parent().show();
+    }
+
+    if(channel_id == 0 ) {
+        return  $(".wenzi").text("no channel_id").parent().show();
+    }
+
+
+    var currency_id = 0;
+    if (payment_country_id[country_id]) {
+        currency_id = payment_country_id[country_id].currency_id;
+    } else {
+        currency_id = payment_country_id[country_us].currency_id;
+    }
+    var layer_loading_box = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shade: [0.7, '#000']});
+    $.ajax({
+        type: 'POST',
+        url: '/order/payment?order_id=' + order_id,
+        data: {
+            country_id: country_id,
+            channel_id: channel_id,
+            currency_id: currency_id
+        },
+        success: function(content, status) {
+            layer.close(layer_loading_box);
+            if(content['code'] != 0) {
+                return  $(".wenzi").text(content.message).parent().show();
+            }
+            var product = $.parseJSON(content.data.gtm);
+//            dataLayer.push({
+//                'event':'Payment',
+//                'ecommerce': {
+//                    'Payment': {
+//                        'actionField': {
+//                            'step': 2,
+//                                    'option': content.data.pay_way,
+//                                    'revenue': content.data.amount,
+//                                    'tax':'',
+//                                    'shipping': content.data.freight,
+//                                    'coupon': content.data.coupon_code
+//                        },
+//                        'products': product
+//                    }
+//                }
+//            });
+//            console.log(content)
+//            console.log(dataLayer)
+
+            var order_id = content.data.order_id;
+            return location.href = '/order/review?order_id=' + order_id;
+        }
+    });
+});
+</script>
+

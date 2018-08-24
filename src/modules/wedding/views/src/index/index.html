@@ -1,0 +1,246 @@
+<style>
+div#reset_pwd {
+    position: fixed;
+    top: 30%;
+    width: 485px;
+    left: 40%;
+    height: 463px;
+    background: #fff;
+    z-index: 999999999;
+}
+div#reset_pwd h2 {
+    font-size: 38px;
+    color: #616161;
+    text-align: center;
+    font-weight: 100;
+    padding-bottom: 30px;
+}
+input#rep_password {
+    width: 380px;
+    height: 50px;
+    margin: 16px 0;
+    text-indent: 10px;
+    text-indent: 10px;
+    padding: 14px;
+    height: 50px;
+    line-height: 20px;
+    font-size: 16px;
+    color: #616161;
+    font-family: GARA;
+}
+input.layer_text {
+    width: 380px;
+    height: 50px;
+    text-indent: 10px;
+    padding: 14px;
+    height: 50px;
+    line-height: 20px;
+    font-size: 16px;
+    color: #616161;
+    font-family: GARA;
+}
+input.layer_sub {
+    height: 68px;
+    width: 220px;
+    background: url('<?=__IMG__?>/btn_01.png');
+    margin: 16px 0;
+    text-decoration: none;
+    text-align: center;
+    line-height: 68px;
+    width: 220px;
+    height: 68px;
+    display: inline-block;
+    color: #fff;
+    border: none;
+    font-family: GARA;
+    font-size: 16px;
+}
+div#reset_pwd ul {
+    text-align: center;
+}
+.lazy{
+    z-index: 19891020;
+    background-color: #000;
+    opacity: 0.7;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    pointer-events: auto;
+}
+</style>
+   
+     <div class="content"></div>
+    <section id="section1-container" class="section1-container section">
+        <div class="carousel" style="box-sizing: content-box">
+            <!--左侧按钮-->
+            <div class="left"></div>
+            <ul id="carousel">
+                    <?php $b = isset($block[BLOCK_2])?$block[BLOCK_2]:[];?>
+                    <?php foreach($b as $i=> $v):?>
+                        <li>
+                            <a target="_blank" href="<?=$v['url'];?>"><img alt="<?=$v['name'];?>" src="<?=$v['image'];?>"></a>
+                        </li>
+                    <?php endforeach;?>
+            </ul>
+            <!--下方小圆点-->
+            <div class="dot">
+                <?php
+                 $b = isset($block[BLOCK_2])?$block[BLOCK_2]:[];
+                 $i = 1;
+                ?>
+                <?php foreach($b as $i=> $v):?>
+                    <span class="<?php if($i==1){echo 'active';}?>"></span>
+                    <?php $i++;?>
+                <?php endforeach;?>
+            </div>
+            <!--右侧按钮-->
+            <div class="right"></div>
+        </div>
+    </section>
+    <section id="section0-container" class="section0-container section advertise">
+        <div class="Advertisement" style="box-sizing: content-box">
+            <li>
+                <?php $b = isset($block[BLOCK_3])?$block[BLOCK_3]:[];?>
+                <?php foreach($b as $i=> $v):?>
+                    <a target="_blank" href="<?=$v['url'];?>"><img alt="<?=$v['name'];?>" data-original="<?=$v['image'];?>"></a>
+                    <?php break;?>
+                <?php endforeach;?>
+            </li>
+        </div>
+    </section>
+    <section id="section2-container" class="section2-container section">
+        <div class="trending-list">
+            <ul>
+                <?php
+                 $b = isset($block[BLOCK_4])?$block[BLOCK_4]:[];
+                 $i = 1;
+                ?>
+                <?php foreach($b as $i=> $v):?>
+                    <li>
+                        <div class="trending-list-pic" style="box-sizing: content-box"><a target="_blank" href="<?=$v['url'];?>"><img alt="<?=$v['name'];?>" data-original="<?=$v['image'];?>"></a></div>
+                        <h2><a target="_blank" href="<?=$v['url'];?>"><?=$v['name'];?></a></h2>
+                        <h3><a target="_blank" href="<?=$v['url'];?>"><?=$v['desc'];?></a></h3>
+                    </li>
+                <?php $i++;if($i==4){break;}?>
+                <?php endforeach;?>
+            </ul>
+        </div>
+    </section>
+    <section id="section6-container" class="section0-container section advertise">
+        <div class="Advertisement" style="box-sizing: content-box">
+            <li>
+                <?php $b = isset($block[BLOCK_5])?$block[BLOCK_5]:[];?>
+                <?php foreach($b as $i=> $v):?>
+                    <a target="_blank" href="<?=$v['url'];?>"><img alt="<?=$v['name'];?>" data-original="<?=$v['image'];?>"></a>
+                <?php break;?>
+                <?php endforeach;?>
+            </li>
+        </div>
+    </section>
+    <section id="section3-container" class="section3-container section">
+            <div class="trending-list">
+                <ul>
+                <?php
+                 $b = isset($block[BLOCK_6])?$block[BLOCK_6]:[];
+                 $i = 1;
+                ?>
+                    <?php foreach($b as $i=> $v):?>
+                    <li>
+                        <div class="trending-list-pic" style="box-sizing: content-box"><a target="_blank" href="<?=$v['url'];?>"><img alt="<?=$v['name'];?>" data-original="<?=$v['image'];?>"></a></div>
+                        <h2><a target="_blank" href="<?=$v['url'];?>"><?=$v['name'];?></a></h2>
+                        <h3><a target="_blank" href="<?=$v['url'];?>"><?=$v['desc'];?></a></h3>
+                    </li>
+                    <?php $i++;if($i==4){break;}?>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+    </section>
+    <section id="section4-container" class="section0-container section advertise">
+        <div class="Advertisement" style="box-sizing: content-box">
+            <li>
+                <?php $b = isset($block[BLOCK_7])?$block[BLOCK_7]:[];?>
+                <?php foreach($b as $i=> $v):?>
+                    <a target="_blank" href="<?=$v['url'];?>"><img alt="<?=$v['name'];?>" data-original="<?=$v['image'];?>"></a>
+                <?php break;?>
+                <?php endforeach;?>
+            </li>
+        </div>
+    </section>
+    
+</div>
+
+<?php if(isset($this->params['get_password_code']) && $this->params['get_password_code']){?>
+<div class="lazy"></div>
+<div class="retrieve dialog_box" id="reset_pwd">
+    <h2><?=Yii::t('common','ResetPassword')?></h2>
+    <div class="user_box">
+        <form action="/ucenter/repassword" method="post" class="repwd_form">
+            <ul>
+                <input type="hidden" name="code" value="<?=\yii::$app->request->get('code')?>">
+                <li><input name="password" type="password" placeholder="<?=Yii::t('common','PasswordPrompt')?>" id="rep_password" class="layer_text"></li>
+                <li><input name="repassword" type="password" placeholder="<?=Yii::t('common','PasswordPrompt')?>" class="layer_text"></li>
+                <input name="email" type="hidden" value="<?=$this->params['email']?>" />
+                <li><p><input type="submit" value="<?=Yii::t('common','ok')?>" class="layer_sub"></p></li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<?php }?>
+
+<script type="text/javascript" src="<?=__JS__?>/layer/layer.js"></script>
+<script>
+    $(function() {
+        $("img").lazyload({effect: "fadeIn",threshold : 200});
+            $('.lazy').on('click',function(){
+                $(this).css("display","none")
+                $("#reset_pwd").css("display","none")
+            })
+    });
+
+
+    $(".repwd_form").validate({
+        rules: {
+            password: {
+                required: true,
+                rangelength: [6, 20]
+            },
+            repassword: {
+                equalTo: "#rep_password"
+            }
+        },
+        submitHandler: function (form)
+        {
+            rePwd_box_index = layer.msg('<?=Yii::t('common','Loading')?>', {icon: 16, time: 0, shadeClose: true,zIndex:999999999999, shade: [0.7, '#000']});
+            $(form).ajaxSubmit({
+                success: rePwdResponse
+            });
+        }
+    });
+
+
+    function rePwdResponse(result)
+    {
+        layer.close(rePwd_box_index);
+        if (result.error > 0)
+        {
+            layer.alert(result.msg, {title: false,zIndex:999999999999, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000, end: function (index) {
+                //location.href = "/";
+            }
+            });
+        }
+        else
+        {
+            layer.alert(result.msg, {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 1000, end: function (index) {
+                //location.href = "/";
+            }
+            });
+        }
+    }
+</script>
+
+
+
+

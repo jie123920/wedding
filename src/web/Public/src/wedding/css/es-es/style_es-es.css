@@ -1,0 +1,37 @@
+.content_box03 .text dl {
+    font-size: 14px;
+}
+.header_msg_box li a {
+    font-size: 13px;
+
+}
+.user_box ul li.forgot_password .layer_sub {
+    font-size: 12px;
+}
+
+.header .nav .hd a{
+    padding: 0 10px;
+    font-size: 18px!important;
+}
+.user_con_bd dt{
+    padding-right: 0px!important;
+    width: 174px!important;
+    
+}
+.shipping-address-border{
+    width: 650px!important;
+}
+.car-info-all{
+    padding:20px 0!important;
+}
+.user_con_bd dt{
+    text-align: center!important;
+}
+span.login>a {
+    position: relative!important;
+    left: 13px!important;
+}
+.other_user .login_fb{
+    font-size: 18px!important;
+    text-indent: 60px!important;
+}

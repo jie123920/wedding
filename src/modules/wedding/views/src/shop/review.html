@@ -1,0 +1,267 @@
+<?php
+use yii\helpers\Html;
+?>
+<style>
+    html,body{background: none;}
+    .or-detailed{border-bottom: 2px  solid #695e59;}
+    .cf_prompt_cf a{text-decoration: underline}
+    .cf_prompt_cf a:hover{color:#695e59}
+</style>
+<div class="zl-container">
+
+<!-- 支付头部 -->
+     <div class="rev-header">
+     	<div class="rev-title">
+            <?=Yii::t('shop','ReviewOrder')?>
+     	</div>
+     	<div class="rev-nav">
+     		<ul>
+     			<li>1.<?=Yii::t('shop','Shipping')?></li>
+     			<li>2.<?=Yii::t('shop','Payment')?></li>
+     			<li style="color: #e13f38">3.<?=Yii::t('shop','ReviewOrder')?></li>
+     		</ul>
+     	</div>
+     </div>
+    <div class="promet">
+        <p>THANK YOU FOR YOUR ORDER,PLEASE COMPLETE PAYMENT WTTHIN 6 HOURS.WE WILL PROCESS YOUR ORDER AFTER YOU'VE COMPLETED PAYMENT</p>
+    </div>
+<!-- 支付详情 -->
+     <div class="rev-mode">
+     	<div class="rev-address">
+     		<div class="add-title"><?=Yii::t('shop','ShippingAddress')?></div>
+          <div  class="clear th">
+             <div class="detailed-title">
+               <p><?=Yii::t('shop','Email')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['email'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+              <div class="detailed-title">
+               <p><?=Yii::t('shop','FullName')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['fullname'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+             <div class="detailed-title">
+               <p><?=Yii::t('shop','Country')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['country'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+             <div class="detailed-title">
+               <p><?=Yii::t('shop','City')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['city'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+          <div class="detailed-title">
+               <p><?=Yii::t('shop','AddressLine1')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['address'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+          <div class="detailed-title">
+               <p><?=Yii::t('shop','AddressLine2')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['address2'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+          <div class="detailed-title">
+               <p><?=Yii::t('shop','ZIPCode')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['postal_code'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+             <div class="detailed-title">
+               <p><?=Yii::t('shop','PhoneNumber')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['phone'];?></p>
+             </div>
+          </div>
+          <div class="clear th">
+             <div class="detailed-title">
+               <p><?=Yii::t('shop','Remark')?></p>
+             </div>
+             <div class="detailed-content">
+             <p><?php echo $order['remark'];?></p>
+             </div>
+          </div>
+     	</div>
+     	<div class="rev-express">
+     	    <div class="exp-title"><?=Yii::t('shop','ShippingMethod')?></div>
+     	    <div class="exp-list">
+	     	     <ul>
+	     	    	<li>
+	     	    	<?php
+	     	    		if($order['trans_type'] == 1){
+							echo Yii::t('shop','StandardShipping');
+						}else{
+							echo Yii::t('shop','shop.UrgentExpress');
+						}
+	     	    	?>
+	     	    	</li>
+                     <li>
+                         <p>*Shipping times are estimates and commence from the date of shipping.rather than the data of order,and take longer than expected due to invalid address.Customs clearance procedures or other causes.</p>
+                     </li>
+	     	    </ul>
+     	    </div>
+     </div>
+     <div class="rev-pay">
+          <div class="pay-title"><?=Yii::t('shop','PAYMENT METHOD')?></div>
+          <div class="pay-list">
+             <ul>
+              <li><?php echo Html::img($img);?></li>
+            </ul>
+          </div>
+     </div>
+</div>
+     <!-- 订单列表 -->
+     <div class="cf-order">
+         <div class="order-th">
+             <div class="th order-pic" style="width: 193px;"></div>
+             <div class="th order-name" style="width: 300px;"><?=Yii::t('shop','Name')?></div>
+             <!--<div class="th order-color"><?=Yii::t('shop','Color')?></div>-->
+             <!--<div class="th order-size"><?=Yii::t('shop','Size')?></div>-->
+             <div class="th order-price"><?=Yii::t('shop','UnitPrice')?></div>
+             <div class="th order-quantity" style="width: 275px;"><?=Yii::t('shop','Quantity')?></div>
+         </div>
+        <div class="order-list">
+          <?php
+          foreach ($items as $item) {
+                $spec = '';
+                foreach($item['spec'] as $specv){
+                    $spec .= $specv['spec_value'].',';
+                }
+                $spec = rtrim($spec,',');
+          echo "
+          <div class='or-detailed'>
+            <input type='hidden' value='{$item['goods_sku_id']}' class='item-id' />
+            <ul>
+
+              <!--<li class=' td-pic' style='width: 220px;'>-->
+                  <!--<img src='{$item['cover']}'>-->
+              <!--</li>-->
+              <!--<li class='td td-name'>{$item['name']}<p>{$spec}</p></li>-->
+              <!--<li class='td td-price'>".number_format($item['price']*THINK_RATE_M, 2, '.', '')."</li>-->
+              <!--<li class='td td-quantity'>{$item['number']}</li>-->
+
+                <li class='td-pic' style='width: 200px;margin-top:20px'>
+                    <img src='{$item['cover']}'>
+                </li>
+                <li class='td td-name'>{$item['name']}<p>{$spec}</p></li>
+                <li class='td td-price' style='width: 270px;'><strong>".THINK_RATE_SYMBOL."</strong>".number_format($item['price']*THINK_RATE_M, 2, '.', '')."</li>
+                <li class='td td-quantity'>{$item['number']}</li>
+
+
+            </ul>
+        </div>";
+          }
+          ?>
+     </div>
+        <!-- 订单价格 -->
+        <div class="order-summary">
+           <div class="order-header"><?=Yii::t('shop','OrderSummary')?></div>
+           <div class="pay-total">
+             <span><?=Yii::t('shop','Product Total')?></span>
+             <p>
+               <i><?=THINK_RATE_SYMBOL?></i>
+               <strong>
+               <?php
+               	$show_total = $order['amount']-$order['coupon_amount'];
+				if($show_total < 0){
+					$show_total = 0.00;
+					echo 0.00;
+				}else{
+					echo number_format(($order['amount']-$order['coupon_amount'])*THINK_RATE_M, 2, '.', '');
+				}
+               ?>
+               </strong>
+             </p>
+           </div>
+           <div class="pay-rev">
+             <span><?=Yii::t('shop','Shipping & Handling')?></span>
+             <p>
+               <i><?=THINK_RATE_SYMBOL?></i>
+               <strong><?=number_format($order['freight']*THINK_RATE_M, 2, '.', '')?></strong>
+             </p>
+           </div>
+         </div>
+        <!-- 订单总价 -->
+        <div class="cf-total1">
+          <div class="prduct-total">
+             <h2><?=Yii::t('shop','Subtotals')?>:
+             	<p>
+             		<?php if(THINK_RATE_NAME != 'USD'){?>
+                     <i>US$</i>
+                     <strong><?=number_format($show_total+$order['freight'], 2);?></strong> |
+                     <?php }?>
+                     <i><?=THINK_RATE_SYMBOL?></i>
+                     <strong><?=number_format(($show_total+$order['freight'])*THINK_RATE_M, 2, '.', '')?></strong>
+                 </p>
+             </h2>
+          </div>
+          <div class="cf-submit">
+          <p>Orders are charged in $USD</p>
+          <a href="/order/create-order?order_id=<?php echo $order_id;?>"><?=Yii::t('shop','CHECKOUT')?></a>
+          </div>
+          <p class="cf_prompt_cf" style="text-align: right">
+          <!--<?php-->
+          <!--if ($promotion['id'] == 1) {-->
+               <!--echo Yii::t('shop','FreeDelivery');-->
+          <!--} else if ($promotion['id'] == 2) {-->
+              <!--echo  sprintf(Yii::t('shop','OrdersAboveNGetFreeShipping'),$promotion['money']);-->
+          <!--}-->
+          <!--?>-->
+              <!--For an item sold by ClothesForever.com: After clicking the "CHECKOUT" button, we'll send you an email acknowledging receipt of your order. You will not be charged for the purchase until we send you an email notifying you that the item has been shipped.-->
+              By placing your order, you agree to LoveCrunch's <a style="color: #695e59" href="/termsofuse">Terms of use</a>.
+          </p>
+        </div>
+        <p class="rev-prompt"></p>
+     </div>
+
+<?php
+    $amount = $order['amount'];
+    $freight = $order['freight'];
+    $coupon_code = $order['coupon_code'];
+?>
+<?php $this->registerJs("
+	document.domain = '$domain';
+    $('.cf-submit a').click(function(){
+        var url = $(this).attr('href');
+        $.get(url,function(data){
+            if(data.code == 0){
+                var shopUrl = data.data.url;
+                layer.open({
+                  type: 2,
+                  title: false,
+                  closeBtn: 1, //不显示关闭按钮
+                  shade: [0],
+                  area: ['780px', '644px'],
+                  anim: 2,
+                  content: [shopUrl, 'no'], //iframe的url，no代表不显示滚动条
+                });
+            }else if(data.code == 30001){
+				alert(data.message);
+				window.location.href = '/usercenter/myorder';
+			}else{
+                alert(data.message);
+            }
+          },'json');
+        return false;
+    });
+")?>

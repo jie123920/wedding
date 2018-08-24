@@ -1,0 +1,24 @@
+
+.pay-content .agree{
+    text-align: left!important;
+}
+.pay_result dl dt{
+    padding-left: 135px!important;
+}
+.pay_result dl dd span{
+    font-family:"adelle",Georgia,"Times New Roman",serif !important;
+}
+.pay_result dl dd{
+    padding-left: 217px!important;
+}
+body,.pay_result .sub,.pay_result p,.pay_result dl dd span,.pay-content .agree,.pay-content .pay-title,.card-info label,.pay_result dl dt,.agree{
+    font-family:"adelle",Georgia,"Times New Roman",serif !important;
+}
+.pay_result p{
+	margin-top:-15px;
+}
+#pin .icon_s{right:38px !important;}
+
+.sub #submit{font-family:"adelle",Georgia,"Times New Roman",serif !important;width:286px !important;}
+
+.card-info input[type="text"]{font-size:20px !important;}

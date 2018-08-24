@@ -1,0 +1,62 @@
+.content_box03 .text dl{
+    font-size: 14px!important;
+}
+.log_share_lang .log_in .header_msg_box li i{
+    right:5px !important;
+}
+.header_msg_box li a{
+    text-indent: 10px!important;
+    font-size: 12px!important;
+}
+@media screen and (min-width: 1100px){
+    .main_box .showDetail>p {
+        font-size: 12px !important;  
+    }
+}
+@media screen and (max-width: 1440px) {
+    .scene_box .img span {
+        font-size: 38px !important;
+    }
+}
+.payment .table h2, .payment .table p{
+    font-size: 12px!important;
+
+}
+.news_detail dd .input_s,.news_detail dd .input_s02{
+    font-size: 12px!important;
+}
+.header .nav .hd a{
+    font-family: "Cambria" !important;
+    padding: 0 16px;
+    font-weight: normal;
+    font-size: 18px;
+}
+.log_share_lang .log_in li.item03 a{
+    font-family: "Cambria" !important;
+}
+.log_share_lang .lang span{
+    font-family: "Cambria" !important;
+}
+a{
+    font-family: "Cambria" !important;
+    font-weight: normal;
+}
+.user_input_sub,.avater_box .upload .box .file,.user_con_bd dt,.avater_box .upload .box span,.avater_title,.content_box .item h2,.content_box .item .text,.content_box .tit, .content_box02 .tit, .content_box03 .tit,.content_box02 .con,.content_box03 .tit,.content_box03 .text h2,.content_box03 .text dt,.content_box03 .text dd,.service_in_box .service_list h3,.list_con table td.th,.service_main .list_con .hd li,.layui-layer-content,.header .nav .bd li:first-child{
+    font-family: "Cambria" !important;
+    font-weight: normal!important;
+}
+.user_con_bd dt{
+    padding-right: 0px!important;
+    margin-right: 5px!important;
+}
+a#add-cart {
+    width: 247px!important;
+    background-size: 251px 68px!important;
+}
+.user_con_bd dt{
+    width: 168px!important;
+    text-align: center!important;
+}
+.shipping-address-border{
+    width: 650px!important;
+}

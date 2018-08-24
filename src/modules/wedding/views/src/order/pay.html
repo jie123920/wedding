@@ -1,0 +1,86 @@
+<?php
+/* @var $this yii\web\View */
+?>
+<?php if($orderInfo && ($success == 'true')){?>
+<script>
+  fbq('track', 'Purchase', {
+    value: "<?php echo $orderInfo['total_amount']?>",
+    currency: 'USD',
+  });  
+</script>
+
+<script>
+var orderinfo = <?php echo json_encode($orderInfo)?>;
+try {
+	dataLayer.push({
+		'event': 'purchase',
+	    'orderid': orderinfo.orderid,
+	    'country': 'US',
+	    'quantity': orderinfo.quantity,    //商品总数量//
+	    'ids': orderinfo.ids,   //所有商品的id，用逗号分隔//
+	    'totalvalue': orderinfo.amount,    //所有商品总价值//
+	    'tax': '',
+	    'shipping': orderinfo.freight,
+	    'coupon': orderinfo.coupon_code, //有使用coupon的话//
+	    'revenue': orderinfo.total_amount,  //用户要付款的金额//
+		'ecommerce': {
+		  'purchase': {
+		    'actionField': {
+		    	 'id': orderinfo.orderid,                         // 订单id//
+		         'affiliation': 'Online Store',
+		         'revenue': orderinfo.total_amount,                     // 付款总金额//
+		         'tax':'',
+		         'shipping': orderinfo.freight,
+		         'coupon': orderinfo.coupon_code
+		    },
+		    'products': orderinfo.gtm
+		  }
+		}
+	});
+
+    console.log("pay sucessful datalayer:");
+    console.log(dataLayer);
+}catch(err) {
+	console.log(err.message);
+}
+</script>
+<?php }?>
+<div class="zl-container">
+	<?php if($success == 'true'){?>
+    <div class="pay_result1">
+        <div class="box">
+            <h1><?=Yii::t('shop','ORDER CONFIRMED')?></h1>
+            <p><?=Yii::t('shop','Thank you for your purchase')?></p>
+            <p style="margin-top: 0px">Automatically jump back to the home page after <span id="second">5</span> s</p>
+            <div class="sub">
+                <a class="ml50" href="<?php echo Yii::$app->params['MY_URL']['BS']?>/user-center/myorder" target="_parent" style="margin:0;"><?php echo Yii::t('common', 'shop.myorder')?></a>
+                <a href="<?php echo Yii::$app->params['MY_URL']['BS']?>/" class="" target="_parent"style="margin-left:20px;"><?php echo Yii::t('common', 'shop.continue')?></a>
+            </div>
+        </div>
+    </div>
+    <?php }else{?>
+    <div class="pay_result2">
+        <div class="box">
+            <h1><?=Yii::t('shop','PURCHASE FAILED')?></h1>
+            <p>Payment may be declined for various reasons. We suggest you contact your credit card issuer first to find out why. If the problem persists, please contact our billing team.</p>
+            <p style="margin-top: 0px">Automatically jump back to the home page after <span id="second">5</span> s</p>
+            <div class="sub">
+                <a class="ml50" href="" target="_parent" style="margin:0;">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+    <?php }?>
+</div>
+<script>
+    var i = 5;
+    var timer;
+    timer = setInterval("fun()", 1000);
+    function fun() {
+        if (i == 0) {
+            window.location.href = "<?php echo $base_url;?>";
+            clearInterval(timer);
+        }
+        document.getElementById("second").innerHTML = i;
+        i--;
+    }
+</script>

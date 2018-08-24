@@ -1,0 +1,53 @@
+Size in Inch
+<?php foreach($diy_spec_json['inch'] as $_spec_json):?>
+<?php  $_spec_json = json_decode($_spec_json,true);?>
+<table class="fit-guide">
+    <thead>
+    <tr>
+        <th></th>
+        <?php foreach($_spec_json['row'] as $row):?>
+        <th><?=$row?></th>
+        <?php endforeach;?>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach($_spec_json['col'] as $i=>$col):?>
+    <tr>
+        <td><?=$col?></td>
+        <?php foreach($_spec_json['row'] as $j=>$row):?>
+        <td><?=$_spec_json['data'][$i*count($_spec_json['row'])+$j]?></td>
+        <?php endforeach;?>
+    </tr>
+    <?php endforeach;?>
+    </tbody>
+</table>
+<br>
+<?php endforeach;?>
+
+<br>
+Size in CM
+<?php foreach($diy_spec_json['cm'] as $_spec_json):?>
+<?php  $_spec_json = json_decode($_spec_json,true);?>
+
+<table class="fit-guide">
+    <thead>
+    <tr>
+        <th></th>
+        <?php foreach($_spec_json['row'] as $row):?>
+        <th><?=$row?></th>
+        <?php endforeach;?>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach($_spec_json['col'] as $i=>$col):?>
+    <tr>
+        <td><?=$col?></td>
+        <?php foreach($_spec_json['row'] as $j=>$row):?>
+        <td><?=$_spec_json['data'][$i*count($_spec_json['row'])+$j]?></td>
+        <?php endforeach;?>
+    </tr>
+    <?php endforeach;?>
+    </tbody>
+</table>
+<br>
+<?php endforeach;?>

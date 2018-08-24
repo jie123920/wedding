@@ -1,0 +1,176 @@
+<?php
+use yii\helpers\Url;
+use app\helpers\myhelper;
+?>
+<?php foreach($goods as $good):?>
+<?php
+    //默认的SKU 套图:选取有套图的SKU
+    $link = '';
+    $wailian = 0;
+    if($good['link']){
+        $cover = $good['cover'];
+        $wailian = 1;
+    }else{
+        $cover = $good['cover'];
+    }
+    $urltitle = isset($good['urltitle']) ? $good['urltitle'] : "";
+    $link = $this->params['bs']."/".$urltitle."-g".$good['id']; //wdx 0621
+
+//GG GTM
+$gtm = [];
+if ( $good['price_min'] > 0 && $good['price_max'] > 0 && $good['price_max'] != $good['price_min'] ){
+$gtm['price'] = $good['price_min']."~".$good['price_max'];
+}else{
+$gtm['price'] = $good['price'];
+}
+$gtm['category_id'] = $good['category_id'];
+$gtm['category_name'] = $good['category_name'];
+$gtm['id'] = $good['bn']."_";
+$gtm['name'] = $good['name'];
+
+$gtm = json_encode($gtm);
+?>
+
+<li id="li_<?=$good['id']?>"  gtm='<?=$gtm?>'>
+    <div class="cf-commodities-pic">
+        <div class="imgs">
+                <?php if($good['covers']):?>
+                    <?php if($good['covers']):?>
+                        <?php foreach(array_slice($good['covers'],0,2) as $url):?>
+                            <a goods_id="<?=$good['id']?>" href="<?=$link?>"><img alt="<?=$good['name']?>" data-original="<?=myhelper::resize($url['url'],251,376);?>" alt=""/></a>
+
+                        <?php endforeach;?>
+                    <?php endif;?>
+                <?php endif;?>
+        </div>
+        <span class="flow" id="<?=$good['id']?>">
+            <?php if($good['if_favorite'] == 1):?>
+            <img src="<?=__IMG__?>/img_06.png"  class="heart" style="display: block">
+            <img src="<?=__IMG__?>/img_05.png"  class="heart-o" style="display: none">
+            <?php else:?>
+            <img src="<?=__IMG__?>/img_06.png"  class="heart" style="display: none">
+            <img src="<?=__IMG__?>/img_05.png"  class="heart-o" style="display: block">
+            <?php endif;?>
+        </span>
+    </div>
+    <h2>
+        <a goods_id="<?=$good['id']?>" href="<?=$link?>"><?=$good['name']?></a>
+    </h2>
+    <div class="cf-commodities-price">
+        <div>
+            <span class="z_price">
+                <?php if ( $good['price_min'] > 0 && $good['price_max'] > 0 && $good['price_max'] != $good['price_min'] ): ?>
+                    <span><span><?=THINK_RATE_SYMBOL?></span><?php echo number_format($good['price_min']*THINK_RATE_M, 2, '.', ''); ?> ~ <span><?=THINK_RATE_SYMBOL?></span><?php echo number_format($good['price_max']*THINK_RATE_M, 2, '.', ''); ?></span>
+                <?php else: ?>
+                    <span><?=THINK_RATE_SYMBOL?></span>
+                    <span><?=number_format($good['price']*THINK_RATE_M, 2, '.', '')?></span>
+                <?php endif; ?>
+            </span>
+
+            <?php if($good['price_original']>$good['price']):?>
+                <span class="long-string yuanjia" style="text-decoration: line-through;color: #616161;">
+                    <span><?=THINK_RATE_SYMBOL?></span>
+                    <span><?=number_format($good['price_original']*THINK_RATE_M, 2, '.', '')?></span>
+                </span>
+            <?php endif;?>
+        </div>
+        <?php if($good['color_number']):?>
+            <?php if($good['color_number']>1):?>
+            <div class="more_color"><a style="color: #a7a7a7" href="<?=$link?>"><?=\YII::t('shop','More colors')?>></a></div>
+            <?php endif;?>
+        <?php endif;?>
+    </div>
+</li>
+<?php endforeach;?>
+
+
+<script type="text/javascript">
+    // 收藏点击
+    $(".cf-commodities").delegate(".flow","click",function(){
+        if($(this).find(".heart").css("display")=="none"){
+            $(this).find(".heart").show();
+            $(this).find(".heart-o").hide();
+        }else{
+            $(this).find(".heart").hide();
+            $(this).find(".heart-o").show();
+        }
+
+        var goods_id = $(this).attr("id");
+        $.get('/goods/favorite?goods_id='+goods_id,{}, function(data, textStatus, xhr) {
+            if (data.status == 0) {
+                //GG GTM
+                dataLayer.push({
+                    'event': 'addtowishlist',
+                    'name': data.gtm.name,
+                    'id': data.gtm.name,
+                    'price': '',
+                    'category': data.gtm.category
+                });
+                console.log('addtowishlist dataLayer:')
+                console.log(dataLayer)
+
+                <?php if(\Yii::$app->controller->action->id == 'favorite-goods'):?>
+                    window.location.reload();
+                <?php endif;?>
+            }else{
+                if(data.status == -1){
+                    location.href = "/login?referer="+document.location.href;
+                }else{
+                    return  $(".wenzi").text(data.msg).parent().show();
+                }
+            }
+        },"json").complete(function(){
+
+        });
+    });
+
+    $(".cf-commodities a").click(function () {
+        var goods_id = $(this).attr("goods_id")
+        var gtm = $("#li_"+goods_id).attr("gtm")
+        gtm = $.parseJSON(gtm)
+        dataLayer.push({
+            'event': 'productClick',
+            'ecommerce': {
+                'click': {
+                    'actionField': {'categoryid':gtm.category_id},
+                    'products': [{
+                        'name': gtm.name,                      // Name or ID is required.
+                        'id': gtm.id,
+                        'price': gtm.price,
+                        'category': gtm.category_name,
+                    }]
+                }
+            }
+        });
+
+        console.log('productClick  dataLayer :')
+        console.log(dataLayer)
+    })
+
+
+    //访问 列表页统计
+    dataLayer.push({
+        'event': 'visit',
+        'pagetype': '<?=$gtm_list['pagetype']?>',
+        'categoryid': '<?=$gtm_list['categoryid']?>',  //这里传入列表页id//
+        'pageid': '<?=$gtm_list['pageid']?>',  //这里传入用户位置是在该列表页的第几页//
+        'Form URL': '<?=$gtm_list['referer']?>', //这里传入前一个页面链接//
+        'ecommerce': {
+            'currencyCode': '<?=$gtm_list['currencyCode']?>',                       // Local currency is optional.
+            'impressions': []
+        }
+    });
+    console.log('visit  dataLayer :')
+    console.log(dataLayer)
+</script>
+
+
+
+
+
+
+
+
+
+
+

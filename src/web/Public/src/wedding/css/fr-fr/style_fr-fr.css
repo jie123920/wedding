@@ -1,0 +1,23 @@
+.user_box ul li.forgot_password .layer_sub {
+    font-size: 12px;
+}
+.news_detail dd .input_s,.news_detail dd .input_s02{
+    font-size: 16px!important;
+}
+.user_con_hd li a{
+    font-size: 16px!important;
+}
+
+
+.user_con_bd dt{
+    margin-right: 1px!important;
+    padding-right: 0px!important;
+}
+.user_con_bd dt{
+    width: 158px!important;
+    text-align: center!important;
+}
+span.login>a {
+    position: relative!important;
+    left: 17px!important;
+}

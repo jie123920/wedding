@@ -1,0 +1,299 @@
+<?php
+use yii\helpers\Url;
+?>
+<style>
+    .pinglun,.pinglun_a,.pinglun_b,.pinglun_c,.pinglun_d,.pinglun_e,.pinglun_f,.pinglun_g {
+
+        border: 1px solid #ccc;
+        position: fixed;
+        top: 0;
+        width: 399px;
+        height: 120px;
+        background: #ffffffff;
+        left: 746px;
+        text-align: center;
+        line-height: 120px;
+        box-shadow: 0px 1px 22px #ccc;
+        z-index: 500;
+    }
+    i.fa.fa-times {
+        position: relative;
+        left: 117px;
+        top: -13px;
+        font-size: 16px;
+    }
+
+    .er {
+        top: 80px;
+        position: relative;
+        left: 26px;
+        border: 1px solid #0069ff;
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+        background-color: #0098ffeb;
+        cursor: pointer;
+    }
+    .er i {
+        position: relative;
+        top: -45px;
+        font-style: normal;
+        color: #fff;
+
+    }
+</style>
+<div class="custom-reviews" name="to_review">
+    <div class="champion-premium" style="margin-top: 60px;border: 1px solid #e0dedd;">
+        <div class="champion-title" style="font-size: 26px"><?=Yii::t('shop', 'CUSTOMER REVIEWS');?></div>
+    </div>
+    <div class="summary dts-summary">
+        <div class="write-review has-review">
+            <input type="button" class="write-a-review she-btn-black" value="<?=Yii::t('shop', 'Write Review');?>">
+        </div>
+    </div>
+    
+    <link rel="stylesheet" href="<?=__CSS__?>/comment.css">
+    <script src="<?=__JS__?>/imgUp.js"></script>
+    <div class="review-editor" id="review_editor" style="display: none;">
+        <form method="post" name="commentForm">
+            <div>
+                <div class="list-item">
+                    <div class="item-title">
+                        <span ><?=Yii::t('shop', 'Click to Rate');?></span>
+                    </div>
+                    <div class="star" id="review_star" style="display: inline-block">
+                        <ul>
+                            <li class="light"><a href="javascript:;">1</a></li>
+                            <li class="light"><a href="javascript:;">2</a></li>
+                            <li class="light"><a href="javascript:;">3</a></li>
+                            <li class="light"><a href="javascript:;">4</a></li>
+                            <li class="light"><a href="javascript:;">5</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item" style="margin-top: 30px">
+                <div class="item-title content_title">
+                    <span><?=Yii::t('shop', 'Your Review');?></span>
+                </div>
+                <input type="hidden" value="<?=\yii::$app->request->get('id',0)?>" id="good_id">
+                <textarea class="textarea" name="content" cols="60" rows="5" id="content" onkeyup="if(this.value.length > 1000) this.value=this.value.substr(0,1000)" placeholder="<?=Yii::t('shop', '1, 000 characters remaining');?>"></textarea>
+            </div>
+            <div class="list-item" style="margin-top: 30px">
+                <div class="item-title photo_title">
+                    <span class="photo"><?=Yii::t('shop', 'Photo');?></span>
+                </div>
+                <div class="img-box full">
+                    <section class=" img-section">
+                        <div class="z_photo upimg-div clear" >
+                            <section class="z_file fl add_photo">
+                                <div class="add-img">+</div>
+                                <input type="file" name="file" id="file" class="file" value="+" accept="image/jpg,image/jpeg,image/png,image/bmp" multiple />
+                            </section>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="list-item btn-con" style="text-align: center;margin-top:30px;">
+                <input type="button" id="submit" class="she-btn-black" name="Submit" value="<?=Yii::t('shop', 'submit');?>">
+            </div>
+        </form>
+    </div>
+    <div class="review-details">
+        <div id="comment_list">
+            <?php echo $this->render('comment_list.html',['comment'=>$comment,'count'=>$count]);?>
+        </div>
+        <?php if($count>10):?>
+        <div class="review_more review-more" id="more_div">
+            <a href="javascript:" id="more"><?=Yii::t('shop', 'More Reviews');?><span id="count">(<?=($count-10)?>)</span></a>
+        </div>
+        <?php endif;?>
+    </div>
+</div>
+<script>
+    var review=$('.review-details').length
+    console.log(review)
+    if( review == 0 ){
+        $('.write-review').css('float','none')
+    }
+    $("#submit").click(function () {
+        var good_id=$("#good_id").val()
+        var star = $(".light").length
+        var content = $("#content").val()
+        var picture = []
+        $(".up-img").each(function () {
+            picture.push($(this).attr('src'))
+        })
+        if(content == ''){
+            $(".wenzi").text('Content Required!').parent().show();
+        }
+        var layer_loading_box = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shade: [0.7, '#000']});
+        $.post('<?=Url::to(['comment'])?>', {goods_id: good_id, star: star,content:content,picture:picture}, function(data, textStatus, xhr) {
+            if (data.code === 0) {
+                layer.close(layer_loading_box);
+                $(".wenzi").text(data.msg).parent().show();
+                window.location.reload();
+            }else{
+                layer.close(layer_loading_box);
+                if(data.code == -1){
+                    location.href = "/login?referer="+document.location.href;
+                }else{
+                    return  $(".wenzi").text(data.msg).parent().show();
+                }
+            }
+        },"json").complete(function(){
+            //$this.prop('disabled', false);
+        });
+    })
+    //UPLOAD
+    function uploadImage(file) {
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData();
+        formData.append('file', file);
+        xhr.open('POST', "/goods/upload");
+        xhr.send(formData);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log(xhr.responseText);
+                var data = xhr.responseText;
+                data = JSON.parse(data)
+                if (data.code == 0) {
+                    return  data.data;
+                } else if (data.code == 1) {
+                    alert('invalid picture');
+                } else if (data.code == 2) {
+                    alert('upload failed');
+                } else if (data.code == 3) {
+                    alert('picture too large');
+                }
+            }
+            xhr.timeout = 100000;
+            xhr.ontimeout = function (event) {
+                alert('TimeOut');
+            }
+        }
+    }
+    $(function(){
+        $('.write-a-review').click(function(){
+            if($('#review_editor').css('display') == 'block'){
+                $(this).removeClass('she-btn-white').addClass('she-btn-black');
+                $('#review_editor').hide();
+            }
+            else {
+                $(this).removeClass('she-btn-black').addClass('she-btn-white');
+                $('#review_editor').show();
+            }
+        })
+    })
+
+
+    //数据加载时期的gif加载图,用于提示用户数据正在加载!
+    var total = '<?=$count?>';
+    var loadDiv = $('#more');
+    var more_div = $('#more_div');
+    var allDiv=$(".review-details")
+    //监听窗口的鼠标滚轮事件
+    var page = 1;
+    var goods_id = "<?=\Yii::$app->request->get('id',0);?>";
+    loadDiv.on('click',function() {
+        var layer_loading_box = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shade: [0.7, '#000']});
+        //发送ajax请求获取数据
+        $.ajax({
+            type: "GET",
+            url: "/goods/more-comment",
+            data:{page:page+1,goods_id:goods_id},
+            success: function(data){
+                layer.close(layer_loading_box);
+                //追加后端返回的数据
+                if(data != ''){
+                    $('#comment_list').append(data);
+                    page++;
+                    var lastcount = total-page*10;
+                    ;!function(){
+                        layer.config({
+                            extend: 'extend/layer.ext.js'
+                        });
+                        layer.ready(function(){
+                            //使用相册
+                            layer.photos({
+                                photos: '.remark'
+                            });
+                        });
+                    }();
+                    if(lastcount>0){
+                        $("#count").html("("+lastcount+")");
+                    }else{
+                        more_div.hide();
+                    }
+   
+                    $(".stars").each(function(){
+
+                        if($(this).children().children().length==4){
+                            $(this).css("margin-left","10px")
+                        }
+                        if($(this).children().children().length==3){
+                            $(this).css("margin-left","18px")
+                        }
+                        if($(this).children().children().length==2){
+                            $(this).css("margin-left","30px")
+                        }
+                        if($(this).children().children().length==1){
+                            $(this).css("margin-left","36px")
+                        }
+                    })
+                    $(".col-md-9").each(function(){
+                        if($(this).children(".comment-character").children(".remark").children("img").height()<100){
+            $(this).siblings(".col-md-3").children(".user-msg").css({"position":"relative","top":"12px","left":"-15px"})
+            $(this).children(".comment-character").children(".stars").css({"position":"relative","top":"64px","left":"-256px"})
+        }
+        if($(this).children(".comment-character").children(".remark").children("img").height()==100){
+            $(this).siblings(".col-md-3").children(".user-msg").css({"position":"relative","top":"40px","left":"-15px"})
+            $(this).children(".comment-character").children(".stars").css({"position":"relative","top":"98px","left":"-256px"})
+        }
+        if($(this).children(".comment-character").children(".remark").children("img").length==0){
+            $(this).siblings(".col-md-3").children(".user-msg").css({"position":"relative","top":"0px","left":"-15px"})
+            $(this).children(".comment-character").children(".stars").css({"position":"relative","top":"53px","left":"-256px"})
+        }
+                    })
+
+                }else{
+                    more_div.hide();
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(".stars").each(function(){
+        if($(this).children().children().length==4){
+            $(this).css("margin-left","10px")
+        }
+        if($(this).children().children().length==3){
+            $(this).css("margin-left","18px")
+        }
+        if($(this).children().children().length==2){
+            $(this).css("margin-left","30px")
+        }
+        if($(this).children().children().length==1){
+            $(this).css("margin-left","36px")
+        }
+    })
+    $(".col-md-9").each(function(){
+
+        if($(this).children(".comment-character").children(".remark").children("img").height()<100){
+            $(this).siblings(".col-md-3").children(".user-msg").css({"position":"relative","top":"12px","left":"-15px"})
+            $(this).children(".comment-character").children(".stars").css({"position":"relative","top":"64px","left":"-256px"})
+        }
+        if($(this).children(".comment-character").children(".remark").children("img").height()==100){
+            $(this).siblings(".col-md-3").children(".user-msg").css({"position":"relative","top":"40px","left":"-15px"})
+            $(this).children(".comment-character").children(".stars").css({"position":"relative","top":"98px","left":"-256px"})
+        }
+        if($(this).children(".comment-character").children(".remark").children("img").length==0){
+            $(this).siblings(".col-md-3").children(".user-msg").css({"position":"relative","top":"0px","left":"-15px"})
+            $(this).children(".comment-character").children(".stars").css({"position":"relative","top":"53px","left":"-256px"})
+        }
+
+    })
+</script>
+
+

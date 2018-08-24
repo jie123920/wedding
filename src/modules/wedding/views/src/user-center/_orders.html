@@ -1,0 +1,296 @@
+<?php
+use yii\helpers\Html;
+use app\helpers\myhelper;
+
+?>
+<?php if($order_list):?>
+<?php foreach($order_list as $v):?>
+<style>
+    .user_con_bd{min-height: 0;width: 100%;}
+    .user-order-details ul li ul li span {
+    font-size: 12px;
+    font-family: 'GARA'!important;
+    color: #616161;
+}
+.user-order-details ul li ul li{
+    color: #616161;
+}
+.user-order-details ul li ul li {
+    padding-left: 83px;
+}
+.user-order-details ul li ul li span:nth-child(1) {
+    width: 30px;
+    display: inline-block;
+    margin-right: 120px;
+}
+</style>
+<div class="user_con_bd">
+    <!--  头部 -->
+    <div class="user-header">
+        <div class="time">
+            <span class="user-year"><?=date('Y-m-d',$v['createtime'])?></span>
+            <span class="user-time"><?=date('H:i:s',$v['createtime'])?></span>
+        </div>
+        <div class="user-id">
+            <span><?=Yii::t('shop','OrderID')?></span>
+            <span><?=$v['id']?></span>
+        </div>
+    </div>
+   
+    <!--  订单列表 -->
+    <div class="user-list">
+        <ul>
+            <?php
+                $products = $v['products'];
+                $list = myhelper::productSort($products);
+                //$custom_size = $v['custom_size'] ? json_decode($v['custom_size'],true) : [];
+            ?>
+            <?php if($list):?>
+            <?php foreach($list as $product):?>
+            <?php
+                $_custom_size = isset($custom_size[$product['id']]) ? json_decode($custom_size[$product['id']],true) : NULL;
+
+                $urltitle = preg_replace('/[^a-z0-9\s]/','',strtolower($product['name']));
+                $urltitle = preg_replace('/\s+/','-',$urltitle);
+            ?>
+            <li>
+                <div class="user-list-pic"><a target='_blank' href="/<?=$urltitle.'-g'.$product['goods_id']?>"><img alt="<?=$product['name']?>" src="<?=isset($product['cover'])?$product['cover']:''?>" /></a></div>
+                <div class="user-list-details">
+                    <h4><a target='_blank' href="/<?=$urltitle.'-g'.$product['goods_id']?>"><?=$product['name']?></a></h4>
+                    <?php if($product['spec']):?>
+                        <?php foreach($product['spec'] as $spec):?>
+                            <?php  if($spec['type2'] == 3){ continue; }?>
+                            <div class="myorder_td">
+                                <div class="myorder_title"><?=$spec['spec_name']?></div>
+                                <div class="myorder_th"><?=($spec['spec_value'] == 'Custom Size')?Yii::t('shop','Custom size'):$spec['spec_value']?></div>
+                            </div>
+                        <?php endforeach;?>
+                    <?php endif;?>
+                    <?php if($_custom_size):?>
+                        <?php foreach($_custom_size as $k=>$size):?>
+                        <div class="myorder_td">
+                            <div class="myorder_title"><?=Yii::t('shop',strtolower($k))?></div>
+                            <div class="myorder_th"><?=$size?></div>
+                        </div>
+                        <?php endforeach;?>     
+                    <?php endif;?>
+                    <div class="myorder_td">
+                        <div class="myorder_title"><?=Yii::t('shop','Quantity')?></div>
+                        <div class="myorder_th">1</div>
+                    </div>
+                    <div class="myorder_td">
+                        <div class="myorder_title"><?=Yii::t('shop','Item Total')?></div>
+                        <div class="myorder_th"><span>US$</span><?=$product['price']?></div>
+                    </div>
+                    <?php if(isset($product['activitiy_name'])){?>
+                    <div class='myorder_td' style="color:red">
+                         <div class='myorder_title' style="color:red"><?php echo $product['activitiy_name']?></div>
+                         <div class='myorder_th'><span>-US$</span><?=round($product['price_promotion'], 2)?></div>
+                     </div>
+                     <?php }?>
+                </div>
+
+            </li>
+            <?php endforeach;?>
+            <?php endif;?>
+        </ul>
+    </div>
+     <!-- //支付时间 -->
+     <div class="uesr-unpaid">
+        <div class="unpaid-title">
+            <?php  $time = ($v['createtime']+604800)-time();?>
+            <?php if($time<0 && $v['status'] == 0):?>
+                <strong><?=Yii::t('shop','InvalidOrder')?></strong>
+            <?php endif;?>
+            <?php if(in_array($v['status'],[0]) && $time>0):?>
+                <strong><?=Yii::t('shop','Unpaid')?></strong>
+            <?php endif;?>
+            <?php if(in_array($v['status'],[3]) && $time>0):?>
+                <strong><?=Yii::t('shop','Pending')?></strong>
+            <?php endif;?>
+            <?php if(in_array($v['status'],[1])):?>
+                <?php if(in_array($v['logistics_status'],[11])):?>
+                <strong><?=Yii::t('shop','WaitDelivery')?></strong>
+                <?php endif;?>
+                <?php if(in_array($v['logistics_status'],[12])):?>
+                <strong><?=Yii::t('shop','Shipped')?></strong>
+                <?php endif;?>
+                <?php if(in_array($v['logistics_status'],[13])):?>
+                <strong><?=Yii::t('shop','Signed')?></strong>
+                <?php endif;?>
+            <?php endif;?>
+        </div>
+
+        <?php
+            $c_id = isset($v['channel_method']['id']) ? $v['channel_method']['id'] : 0;
+        ?>
+
+        <div style="margin-left: 50px;float: right">
+            <?php if($v['status'] == 0 && $time>0 && $c_id && !in_array($c_id,[1001,1002])):?>
+                 <div class="unpaid-play">
+                 	<a target="_blank" href="/order/direct-buy?order_id=<?=$v['id']?>"><?=Yii::t('shop','PayNow')?></a>
+                 	<span id='pay_way_name' style='display: none'><?=$v['channel_method']['pay_way']?></span>
+                 </div>
+            <?php endif;?>
+            <div class="unpaid-service"><a target="_blank" href="/support"><?=Yii::t('shop','CustomerService')?></a></div>
+        </div>
+    </div>
+    <!-- 隐藏按钮 -->
+    <div class="hide-button"><a class="user-click"><span><?=Yii::t('shop','OrderDetails')?> </span>&nbsp<i class="fa fa-angle-right" aria-hidden="true"></i></a></div>
+    <!-- 订单详情 -->
+    <div class="user-order-details">
+        <ul>
+            <li>
+                <div class="product-total">
+                    <div class="total-name tf"><?=Yii::t('shop','Product')?></div>
+                    <div class="total-price ta">US$<?=$v['amount']?></div>
+                </div>
+                <?php if($v['coupon_amount']):?>
+                <div class="product-total">
+                    <div class="total-name tf"><?=Yii::t('shop','Promo code')?></div>
+                    <div class="total-price ta">-US$<?=floatval($v['coupon_amount'])?></div>
+                </div>
+                <?php endif;?>
+                  <?php if(isset($v['activity_amount'])):?>
+                <div class="product-total">
+                    <div class="total-name tf">Discount Amount</div>
+                    <div class="total-price ta">-US$<?=floatval($v['activity_amount'])?></div>
+                </div>
+                <?php endif;?>
+                <div class="shiping-hanging">
+                    <div class="ship-name tf"><?=Yii::t('shop','Shipping&Handing')?></div>
+                    <div class="ship-price ta">US$<?=$v['freight']?></div>
+                </div>
+                <div class="sub">
+                    <div class="sub-name tf"><?=Yii::t('shop','Subtotals')?></div>
+                    <div class="sub-price ta">US$<?=$v['total_amount']?></div>
+                </div>
+            </li>
+            <li>
+                <div class="ship-address" style="float: none;">
+                    <h2><?=Yii::t('shop','ShippingAddress')?></h2>
+                    <p><?=$v['full_name']?> <?=$v['phone']?></p>
+                    <p><?=$v['address']?></p>
+                </div>
+            </li>
+            <li>
+                <div class="ship-met">
+                    <h2><?=Yii::t('shop','ShippingMethod')?></h2>
+                    <p><?=htmlspecialchars_decode(nl2br($v['logistics_information']))?></p>
+                    <p id='logistics_number<?=$product["id"]?>' class='logistics_number' data='<?=$product["id"]?>' data-id='<?=htmlspecialchars_decode(nl2br($v['logistics_number']))?>' onclick="showlnum('YQContainer<?=$product['id']?>')" style="cursor:pointer;font-weight:bold"><?=htmlspecialchars_decode(nl2br($v['logistics_number']))?></p>
+                    <div id="YQContainer<?=$product['id']?>" ></div>
+                    <p><?=htmlspecialchars_decode(nl2br($v['remark2']))?></p>
+                </div>
+            </li>
+            <li style="border:none">
+                <div class="payment">
+                    <h2><?=Yii::t('shop','PaymentMethod')?></h2>
+                    <div class="met-pic"><img src="<?=isset($v['channel_method']['img'])?$v['channel_method']['img']:''?>"/></div>
+                </div>
+                <?php if(in_array($c_id,[1001,1002])):?>
+                    <ul>
+                        <?php if(in_array($v['channel_method']['id'],[1001])):?>
+                        <li><span>Account Holder:</span><span>Shanghai Laiwan Network Technology Co. Ltd</span></li>
+                        <li><span>Address:</span><span>Suite 1217, Building 6, 768 Chenxiang Rd, Shanghai, China</span></li>
+                        <li><span>Bank:</span><span>BANK OF COMMUNICATIONS</span></li>
+                        <li><span>Bank Account Number: </span><span>310066632018800062403</span></li>
+						<li><span>Swift Code:</span><span>COMMCNSHXXX</span></li>
+						<li><span>Bank Address:</span><span>200 Jiangxizhong Road, Shanghai, China</span></li>
+
+						
+
+						<li><span>Payment reference:</span><span>design fee No. <?=$v['id']?></span></li>
+						<li class="Note"><strong>Note:</strong></li>
+
+						<li>Please include this payment reference in the instructions to your bank.<br>
+							Without this reference the processing of your payment will be delayed or may even not be possible.
+						</li>
+                        <?php else:?>
+                        <li><span>Receiver Name: </span><span>Chen Xiaoyang</span></li>
+                        <li><span>Country: </span><span>China</span></li>
+                        <li><span>Address:</span><span>Suite 1217, Building 6, 768 Chenxiang Rd, Shanghai, China</span></li>
+                        <li><span>Phone: </span><span>+86 131 3653 5672</span></li>
+
+						<li><span>Payment reference:</span><span>design fee No. <?=$v['id']?></span></li>
+						<li class="Note"><strong>Note:</strong></li>
+
+						<li>Please include this payment reference in the instructions to Western Union.<br>
+							Without this reference the processing of your payment will be delayed or may even not be possible.
+						</li>
+                        <?php endif;?>
+                    </ul>
+                <?php endif;?>
+            </li>
+        </ul>
+    </div>
+</div>
+<?php endforeach;?>
+<?php endif;?>
+<script type="text/javascript">
+$(function(){
+	$(document).delegate('.unpaid-play','click',function(){
+	    var url = $(this).children().attr('href');
+	    var pay_way_name = $(this).children('#pay_way_name').html();
+	    url = url+'&api_access_key=233fb47265250cb7d8356f2089941433&_=1503039595202'
+	    $.get(url,function(data){
+	        if(data.code == 0){
+	            var shopUrl = data.data.url;
+	            if(pay_way_name == 'Paypal'){
+	            	window.open(shopUrl, '_self');
+	            }else{
+	            	layer.open({
+		              type: 2,
+		              title: false,
+		              closeBtn: 1, //不显示关闭按钮
+		              shade: [0],
+		              area: ['780px', '644px'],
+		              anim: 2,
+                      content: [shopUrl, 'no'], //iframe的url，no代表不显示滚动条
+                      end: function () {
+                            
+                            window.location.href="/user-center/myorder";
+            }
+		            },'json');
+	            }
+	        }else{
+	            alert(data.message);
+	        }
+	      },'json');
+	    return false;
+	});
+});
+</script>
+<script type="text/javascript" src="<?=__JS__?>/externalcall.js"></script>
+<script type="text/javascript">
+
+function doTrack(lnid,proid) {
+    
+              if(lnid!==""){
+                 YQV5.trackSingle({
+                   //必须，指定承载内容的容器ID。
+                    YQ_ContainerId:proid,
+                    //可选，指定查询结果高度，最大为800px，默认为560px。
+                   
+                    YQ_Height:500,
+                    //可选，指定运输商，默认为自动识别。
+                    YQ_Fc:"0",
+                    //可选，指定UI语言，默认根据浏览器自动识别。
+                    YQ_Lang:"en",
+                    //必须，指定要查询的单号。
+                    YQ_Num:lnid
+               }); 
+                
+             }
+  
+}
+function showlnum(id){
+    var lnum = document.getElementById(id);
+    if(lnum.style.display == 'block'){
+        lnum.style.display = 'none';
+    }else{
+        lnum.style.display = 'block';
+    }
+
+}
+</script>   
+    

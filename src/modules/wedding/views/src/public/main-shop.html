@@ -1,0 +1,655 @@
+<?php
+    use yii\helpers\Html;
+    use yii\helpers\Url;
+	use app\helpers\myhelper;
+	use app\modules\wedding\services\Goods as BlockData;
+?>
+<?php $this->beginPage();?>
+<!-- 头部 -->
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="content-language" content="en-US" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<meta name="msvalidate.01" content="7C06C4C63B195B46A5C0901A3B0963FD" />
+<title><?=isset($this->params['meta_title'])?$this->params['meta_title']:'';?></title>
+<meta name="keywords" content="<?=isset($this->params['keyword'])?$this->params['keyword']:'';?>">
+<meta name="description" content="<?=isset($this->params['description'])?$this->params['description']:'';?>">
+<meta property="og:image"  content="<?=isset($this->params['image'])?$this->params['image']:'';?>" />
+<?php if(isset($this->params['canonical'])):?>
+<?=$this->params['canonical']?>
+<?php endif;?>
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="stylesheet" href="<?=__CSS__?>/shop.css">
+<link rel="stylesheet" href="<?=__CSS__?>/Newiconfont.css">
+<link rel="stylesheet" href="<?=__CSS__?>/<?=LANG_SET?>/style_<?=LANG_SET?>.css">
+<link href="<?=__CSS__?>/bootstrap.min.css" rel="stylesheet">
+<!--wdx 0621 -->
+<?php if(isset($this->params['alternate'])):?>
+<?=$this->params['alternate']?>
+<?php endif;?>
+
+<script type="text/javascript" src="<?=__JS__?>/all.js"></script>
+<script src="<?=__JS__?>/lang.js"></script>
+<script type="text/javascript" src="<?=__JS__?>/layer/layer.js"></script>
+<script type="text/javascript" src="<?=__JS__?>/jquery.zoom.min.js"></script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-K5MP5DH');</script>
+<!-- End Google Tag Manager -->
+<!-- Facebook Pixel Code -->
+<script>
+    
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '653346744861849');
+    fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+               src="https://www.facebook.com/tr?id=653346744861849&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Facebook Pixel Code -->
+<script>
+    document.domain = "<?=\YII::$app->params['COOKIE_DOMAIN']?>";
+    var lang = "<?=LANG_SET?>";
+</script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5MP5DH"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<?php
+    $header = BlockData::get_block_data(BLOCK_6,2);
+?>
+<header class="pageheader">
+    <div class="header_v">
+        
+         <div class="header_container">
+             <div class="right-title">
+                 <div class="faq"><a href="/support"><img src="<?=__IMG__?>/icon_02.png" alt=""></a></div>
+                 <div class="collection" onclick="javascript:location.href='/user-center/favorite-goods'">
+                 </div>
+                 <div class="right-cart" onclick="javascript:location.href='/cart/index'">
+                     <span class="cart-amount" style="color: #fff;line-height: 35px"><?=$this->params['cart_num'];?></span>
+                 </div>
+                 <div class="right-login">
+                     <?php  if(!$this->params['is_login']):?>
+                     <span class="login" ><a href="/login?referer=<?=\Yii::$app->request->getUrl()?>"><?=Yii::t('common','login')?></a></span>
+                     <span class="sign"><a href="/register?referer=<?=\Yii::$app->request->getUrl()?>"><?=Yii::t('common','SignUp')?></a></span>
+                         <?php else:?>
+                         <span class="login_name"><a href="/user-center/index"><?=$this->params['user_info']['username'];?></a></span>
+                         <div class="login_out"><a href="/ucenter/logout"><?=Yii::t('common','Log Out')?></a></div>
+                         <?php endif;?>
+                 </div>
+             </div>
+             <div class="right-search" style="float: left">
+                 <form action="/goods/list" method="get" id="form">
+                     <input type="text" value="" class="input_text" id="search_input" name="search_keyword">
+                     <i class="fa fa-search" id="search" aria-hidden="true"></i>
+                 </form>
+                 <script>
+                     $("#search").click(function () {
+                         $("#form").submit();
+                     })
+                 </script>
+             </div>
+         </div>
+    </div>
+    <div class="title-container">
+        <div class="left-container g4">
+            <div class="shares">
+                <?php if(isset($header[0])):?>
+                    <p style="margin-bottom: 0;margin-left: 15px;color: #695e59">
+                        <?php if($header[0]['url']):?>
+                            <a target="_blank" href="<?=$header[0]['url']?>"><?=$header[0]['name']?></a>
+                        <?php else:?>
+                            <?=$header[0]['name']?>
+                        <?php endif;?>
+                    </p>
+                <?php endif;?>
+            </div>
+            <div class="page-user">
+                <div class="state-currency">
+                        <?php
+                            	$exchange_rate_id = isset($_COOKIE['think_rate_id'])?$_COOKIE['think_rate_id']:'';
+                            	$exchange_rate_id = \yii::$app->request->get('rid')?\yii::$app->request->get('rid'):$exchange_rate_id;
+                            	$list = \app\modules\wedding\services\Region::GetIdByIp($exchange_rate_id,\app\helpers\myhelper::get_client_ip());
+                        ?>
+                    <div class="currency"><?php echo $list['default']['region_name'].','.$list['default']['symbol'];?></div>
+                    <div class="state-currency-list">
+                        <ul>
+                            <?php  foreach ($list['result'] as $child){ ?><li><a onclick="changeCurrency('<?=$child['id']?>', '<?=$child['name']?>','<?=$child['m']?>', '<?=$child['symbol']?>', '<?=$child['region_name']?>')"><?php echo $child['region_name'].','.$child['symbol'];?></a></li><?php }?>
+                        <li id="final"><a href="javascript:void(0);" id="load_country"><i ><?=Yii::t('shop','GetMore')?></i><i class="fa fa-arrow-down" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="language">
+                    <div class="language-v"><?=Yii::t('common','language')?></div>
+                    <div class="language-list">
+                        <ul>
+                            <?php foreach(\YII::$app->params['lang'] as $key=>$v){  ?>
+                                <?php if($key == 'de-de'){ ?>
+                               <li><a onclick="changeLang('<?=$key?>')"  href="/de"><span><?=$v?></span></a></li>
+                                <?php }else{ ?>
+                               <li><a onclick="changeLang('<?=$key?>')"  href="javascript:;"><span><?=$v?></span></a></li>
+
+                                <?php } ?>
+                              
+                            <?php }?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="logo-container g4">
+            <a href="/">
+                <img alt="Bycouturier" src="<?=__IMG__?>/logo.png">
+            </a>
+        </div>
+    </div>
+    <nav id="topNavTile" class="page-nav">
+        <div class="nav-list">
+            <ul class="nav-list-v">
+                <?php if(is_array($this->params['category'])):?>
+                <?php foreach($this->params['category'] as $category):?>
+                    <li class="name-list-title">
+                        <a class="nav_a" style="text-transform: uppercase;" href="<?=$this->params['bs'];?>/<?=$category['urltitle']?>-c<?=$category['id']?>"><?=$category['name']?></a>
+                        <div class="dropdown-mask"></div>
+                            <div class="name-list">
+                                <div class="nested-nav-content-container">
+                                        <section class="nested-navigation-section">
+                                        <h3 class="sub-navigation-header"><?=$category['name']?></h3>
+                                        <ul class="sub-navigation-list">
+                                            <?php if($category['cat_id']):?>
+                                            <?php foreach($category['cat_id'] as $_category):?> 
+                                                <li class="sub-navigation-list-item">
+                                                    <a class="sub-navigation-list-item-link" href="<?=$this->params['bs'];?>/<?=$_category['urltitle']?>-c<?=$_category['id']?>">
+                                                        <div class="sub-navigation-list-item-link-text"><?=$_category['name']?></div>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach;?>
+                                            <?php endif;?>
+                                        </ul>
+                                    </section>
+                                    <?php
+                                        $price_range = isset($category['other_attribute']['recommend_price'])?$category['other_attribute']['recommend_price']:null;
+                                    ?>
+                                    <?php if($price_range):?>
+                                        <section class="nested-navigation-section">
+                                        <h3 class="sub-navigation-header"><?=Yii::t('shop','Shop By Price')?></h3>
+                                        <ul class="sub-navigation-list">
+                                            <?php foreach($price_range as $_price_range):?>
+                                                <li class="sub-navigation-list-item">
+                                                <a class="sub-navigation-list-item-link" href="<?=$_price_range['price_url']?>">
+                                                    <div class="sub-navigation-list-item-link-text"><?=Yii::t('shop',$_price_range['price_name'])?></div>
+                                                </a>
+                                            </li>
+                                            <?php endforeach;?>
+                                        </ul>
+                                    </section>
+                                    <?php endif;?>
+                                    <?php
+                                        $recommend_categories = isset($category['other_attribute']['recommend_categories'])?$category['other_attribute']['recommend_categories']:null;
+                                    ?>
+                                    <?php if($recommend_categories):?>
+                                        <section class="nested-navigation-section">
+                                        <h3 class="sub-navigation-header"><?=Yii::t('shop','Complete Your Look')?></h3>
+                                        <ul class="sub-navigation-list">
+                                            <?php foreach($recommend_categories as $_recommend_categories):?>
+                                                <li class="sub-navigation-list-item">
+                                                    <a class="sub-navigation-list-item-link" href="<?=$this->params['bs'];?>/<?=$_recommend_categories['category_url']?>">
+                                                        <div class="sub-navigation-list-item-link-text"><?=$_recommend_categories['category_name']?></div>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach;?>
+                                        </ul>
+                                    </section>
+                                    <?php endif;?>
+                                    <?php
+                                        $recommend_position = isset($category['other_attribute']['recommend_position'])?$category['other_attribute']['recommend_position']:null;
+                                    ?>
+                                    <?php if($recommend_position):?>
+                                        <?php if($recommend_position['name']):?>
+                                            <section class="nested-navigation-section">
+                                                <ul class="sub-navigation-list">
+                                                    <li class="sub-navigation-list-item">
+                                                        <a class="sub-navigation-list-item-link pic_sub" href="<?=$recommend_position['url']?>">
+                                                            <img src="<?=$recommend_position['cover']?>">
+                                                        </a>
+                                                        <div class="pic_wen"><?=$recommend_position['name']?></div>
+                                                    </li>
+                                                </ul>
+                                            </section>
+                                        <?php endif;?>
+                                    <?php endif;?>
+                                </div>
+                            </div>
+                    </li>
+                    
+                <?php endforeach;?>
+                <?php endif;?>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="section0-container" class="section0-container section">
+        <div class="Advertisements" style="box-sizing: content-box;" >
+               <!--左侧按钮-->
+               <div class="lef"></div>
+               <ul id="carouse">
+                <?php $b = isset($this->params['header_block'][BLOCK_1])?$this->params['header_block'][BLOCK_1]:[];?>
+                <?php foreach($b as $i=> $v):?>
+                   <li>
+                        <a target="_blank" href="<?=$v['url'];?>"><img src="<?=$v['image'];?>"></a>
+                   </li>
+                <?php endforeach;?>
+        </ul>
+         <!--右侧按钮-->
+         <div class="righ"></div>
+        </div>
+    </section>
+    <div class="erro" style="position: fixed;top:30%;left:42%;border:2px solid black;background: #ffffff;display: none;z-index:999" >
+        <i class="fa fa-window-close cc" aria-hidden="true" style="font-size: 30px;position: absolute;top:-4px;right:-1px"></i>
+        <h2 class="wenzi" style="font-size:18px;text-align: center;color: #000000;padding: 20px 50px;text-transform: capitalize;width: 400px;word-break: break-all;"></h2>
+    </div>
+</header>
+<?php if(\Yii::$app->controller->id != \Yii::$app->controller->action->id):?>
+    <div class="crumbs" style="line-height: 10px;min-width: 1260px;margin: 25px auto;width: 1260px">
+        <a href="<?=$this->params['bs'];?>"><?=\YII::t('common','Bycouturier')?></a>
+        <?php if($this->params['bread']):?>
+            <span class="crumbs_jiantou"></span>
+            <?php foreach($this->params['bread'] as $i=>$bread):?>
+                 <?php if(isset($bread['url']) && $bread['url']):?>
+                <a href="<?=$this->params['bs'];?><?=$bread['url']?>"><?=$bread['name']?></a>
+                <?php else:?>
+                <a href="<?=$bread['url']?>"><?=$bread['name']?></a>
+                <?php endif;?>
+                <?php if(isset($this->params['bread'][++$i])):?>
+                    <span class="crumbs_jiantou"></span>
+                <?php endif;?>
+            <?php endforeach;?>
+        <?php endif;?>
+    </div>
+<?php endif;?>
+<?php $this->beginBody();?>
+<?=$content?>
+<?php $this->endBody();?>
+<div class="footer">
+    <div class="clearfix">
+        <div class="share">
+            <ul>
+                <li><a rel="nofollow" target="_blank" href="https://twitter.com/bycouturierwed1"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                <li><a rel="nofollow" target="_blank" href="https://www.facebook.com/Bycouturierwedding"><i class=" fa fa-facebook" aria-hidden="true"></i></a></li>
+
+                <li><a rel="nofollow" target="_blank" href="https://www.youtube.com/channel/UCxo8rAvU9Z197vxkKUUV-ig/featured?view_as=subscriber"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+                <li><a rel="nofollow" target="_blank" href="https://www.instagram.com/bycouturierwedding/"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                <li><a rel="nofollow" target="_blank" href="https://www.pinterest.com/Bycouturierwedding/"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+            </ul>
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/termsofuse"><?=\YII::t('common','terms')?></a></li>
+                <li><a href="/privacypolicy"><?=\YII::t('common','Privacy')?></a></li>
+                <li><a href="/return-and-refund"><?=\YII::t('shop','Delivery Policy')?></a></li>
+                <li><a href="/support"><?=\YII::t('common','Support')?></a></li>
+                <li><a href="/contact"><?=\YII::t('common','Contact')?></a></li>
+                <li class="copy" style="float:none;margin-top:40px;">
+                    <p>© 2015-2018 Mutant Box Interactive Limited.</p>
+                    <p style="font-family:GARA;margin-top: -20px;">Dept 906, 196 High Road, Wood Green, London.</p>
+                </li>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="<?=__JS__?>/index.js"></script>
+</html>
+ <script>
+//    var en_us = {
+//     "More colors" : "More colors",
+//     "Less colors" : "Less colors",
+//     "Please select":"Please select",
+//    }; 
+//    var pt_pt= {
+//     "More colors" : " Mais cores",
+//     "Less colors" : "Menos cores",
+//     "Please select":"Por favor selecione",
+//    };
+//    var es_es= {
+//     "More colors" : "Más colores",
+//     "Less colors" : "Menos colores",
+//     "Please select":"Por favor selecciona", 
+//    }
+   var lan=lang.replace("-","_")
+   var get_lan=function (m){
+    switch(lan){
+        case 'en_us':
+            var t = en_us[m];
+            break;
+        case 'es_es':
+            var t = es_es[m];
+            break;
+         case 'pt_pt':
+            var t = pt_pt[m];
+            break;
+            default:
+            var t = en_us[m];
+   }
+   if(t==undefined) t = en_us[m];
+    if(t==undefined) t = es_es[m];
+    if(t==undefined) t = pt_pt[m];
+    if(t==undefined) t = m;
+    return t;
+}
+
+
+</script> 
+<script>
+    var turl = window.location.href;
+    var langname = "<?=$this->params['jslang'];?>";
+    if(turl){
+        if(turl.indexOf(".com/de")>-1){
+            var temp = turl.split('.com/de/');
+            if(temp[1]){
+                if(langname !== 'de-de'){  
+                    changeLang('de-de');
+                }
+             }else{
+                 var temp2 = turl.split('.com/de');
+                if(!temp2[1]){
+                    if(langname !== 'de-de'){  
+                        changeLang('de-de');
+                    }
+                }
+             }
+             
+            
+            
+        }
+    }
+    $(".sub-navigation-list-item").each(function(){
+        $(this).children("a").children("div").mouseover(function(){
+            $(this).css("color","#f8afa7")
+        })
+        $(this).children("a").children("div").mouseleave(function(){
+            $(this).css("color","#616161")
+        })
+    })
+    $(".cc").click(function(){
+        $(".erro").hide();
+    });
+
+    function changeLang(language){
+        $.cookie('think_language',language,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+        var turl = window.location.href;
+        var tempurl = turl;
+        if(turl){
+            if(language !=="de-de" && turl.indexOf(".com/de")>-1 ){
+                var temp = turl.split('.com/de/');
+                if(temp[1]){
+                     tempurl = turl.replace('.com/de/', '.com/');
+                }else{
+                    var temp2 = turl.split('.com/de');
+                    if(!temp2[1])
+                    tempurl = turl.replace('.com/de', '.com');
+                }
+               
+             }
+        }
+        window.location.href=tempurl;
+        //window.location.reload();
+    }
+
+    var scrollTop = 0;
+    function setscrollTop(){
+        $('.banner a>img').each(function(index, el) {
+            if ($(el).height() > 0) {
+                scrollTop = $(el).height();
+                return false;
+
+            }
+        });
+    }
+    function fangfa() {
+        var bodyw = $(window).width();
+        var bodyw = $('body').width();
+        if (bodyw > 960) {
+            $('.pc_banner .bd ul,.pc_banner .bd li').width(bodyw)
+            var imgh = $('.pc_banner .bd li img').height();
+            $('.pc_banner .bd ul').height(imgh);
+            $(".slideBox").slide({mainCell: ".bd ul", effect: "fold", autoPlay: true, interTime: 4000});
+        }
+        else
+        {
+            TouchSlide({slideCell: "#focus", titCell: ".hd ul", mainCell: ".bd ul", effect: "leftLoop", autoPlay: true, autoPage: true, interTime: 4000});
+        }
+        var role_box = $('.role_box .con'), scene_box = $('.scene_box .con');
+        role_box.css({marginTop: -role_box.outerHeight() / 2});
+        scene_box.css({marginTop: -scene_box.outerHeight() / 2});
+    }
+    $(window).bind('scroll', function(){
+        var fixedHeight = 307;
+        var bannerHeight = scrollTop;
+        if($(document).scrollTop() + $(window).height() >= ($(window).height() - fixedHeight) / 2 + fixedHeight + bannerHeight) {
+            $('.side-share').css({"display":"block"});
+            $('.side-share').stop().animate({"opacity":1},200);
+        } else {
+            $('.side-share').stop().animate({"opacity":0},200,function(){
+                $(this).css({"display":"none"});
+            });
+        }
+    })
+    $(function () {
+        setscrollTop()
+        fangfa();
+        $(window).resize(function () {
+            setscrollTop();
+            fangfa();
+        });
+    })
+    window.onload = function(){
+      
+        (function() {
+            var byRow = $('body').hasClass('test-rows');
+            $('.items-container').each(function () {
+                $(this).children('.item').matchHeight(byRow);
+            });
+            var h = $('.game_commanders').outerHeight();
+            $('.g_renwu_commanders').height(h - 69);
+
+        })();
+    }
+    // function changeLang(language){
+    //     $.cookie('think_language',language,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+    //     window.location.reload();
+    // }
+    //更改显示的货币
+    function changeCurrency(id, name, m, symbol, region_name){
+        $.cookie('think_rate_id',id,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+        $.cookie('think_rate_name',name,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+        $.cookie('think_rate_m',m,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+        $.cookie('think_rate_symbol',symbol,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+        $.cookie('think_rate_region_name',region_name,{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+        window.location.reload();
+    }
+    $('.subscription').on('click', '.submit-btn', function () {
+        var email = $('.subscription input[name=email]').val();
+        $.post('/subscription/create', {email: email}, function (data) {
+            layer.alert(data.message, {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000});
+            if (data.code == 0) {
+                $(".subscription").hide();
+                $.cookie('email_erro', '1',{'path':'/',domain:'<?=\YII::$app->params['COOKIE_DOMAIN']?>'});
+            }
+        });
+    });
+    <?php  if(!$this->params['is_login']):?>
+        $.post('/cart/init-cookie-cart', {}, function (data) {
+             console.log('init-cookie-cart:')
+             console.log(data)
+        });
+    <?php endif;?>
+    $.post('/cart/get-num', {}, function (data) {
+        $(".cart-amount").html(data.data)
+        console.log('init-cart-num:')
+        console.log(data)
+    });
+</script>
+<script>
+    //放大轮播图 玩家截图
+    ;!function(){
+        layer.config({
+            extend: 'extend/layer.ext.js'
+        });
+        layer.ready(function(){
+            //使用相册
+            layer.photos({
+                photos: '.remark'
+            });
+        });
+    }();
+</script>
+<script>
+    $(document).ready(function () {
+        //首先将#back-to-top隐藏
+        $(".cf-top").hide();
+        //当滚动条的位置处于距顶部100像素以下时，跳转链接出现，否则消失
+        $(function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 100) {
+                    $(".cf-top").fadeIn(1500);
+                }
+                else {
+                    $(".cf-top").fadeOut(1000);
+                }
+            });
+            //当点击跳转链接后，回到页面顶部位置
+            $(".cf-top").click(function () {
+                $('body,html').animate({ scrollTop: 0 }, 1000);
+                return false;
+            });
+        });
+    });
+</script>
+<!-- Start of LiveChat (www.livechatinc.com) code -->
+<script type="text/javascript">
+    window.__lc = window.__lc || {};
+    window.__lc.license = 9189695;
+    (function() {
+        var lc = document.createElement('script'); lc.type = 'text/javascript'; lc.async = true;
+        lc.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.livechatinc.com/tracking.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(lc, s);
+    })();
+</script>
+<!-- End of LiveChat code -->
+<script type="text/javascript">
+    $("#load_country").click(function () {
+        $.ajax({
+            url: "/index/get-more-country",
+            dataType: 'json',
+            success: function(ajaxdata){
+                if(ajaxdata.data){
+                    $('#load_country').parent("li").remove();
+
+                    //获取数据拼接html，加在li标签后面
+                    var html = '';
+                    $.each(ajaxdata.data, function(idx, obj) {
+                        html += '<li><a onclick="changeCurrency(\''+obj.id+'\',\''+obj.name+'\',\''+obj.m+'\',\''+obj.symbol+'\',\''+obj.region_name+'\')">'+obj.region_name+','+ obj.symbol+'</a></li>';
+                    });
+
+                    $(".state-currency-list ul").append(html);
+                }else{
+                    alert("<?=\YII::t('common','NoMore')?>", {title: false, btn: "", shadeClose: true, shade:false, offset: "auto", time: 2000});
+                }
+            }
+        });
+    })
+</script>
+<script>
+ 
+    function getCookie(c_name)
+{
+    if (document.cookie.length>0)
+      {
+      c_start=document.cookie.indexOf(c_name + "=")
+      if (c_start!=-1)
+        { 
+        c_start=c_start + c_name.length+1 
+        c_end=document.cookie.indexOf(";",c_start)
+        if (c_end==-1) c_end=document.cookie.length
+//        document.write(document.cookie.substring(c_start,c_end)+"<br>");
+        return unescape(document.cookie.substring(c_start,c_end))
+        } 
+      }
+    return ""
+} 
+// 删除cookie的方法
+function delCookie(name){  
+
+    var exp = new Date(); 
+    exp.setTime(exp.getTime() - 1); 
+    var cval=name 
+    if(cval!=null) 
+        document.cookie= name + "="+cval+";expires="+exp.toGMTString(); 
+} 
+
+
+if(getCookie("name")=="signup"){
+  
+
+    dataLayer.push({
+                'event': 'signup',
+                'visitorType': 'high-value',
+                   
+                         'eventCallback': function() {
+                                     
+  
+                }
+                
+                   
+            });
+        }
+  
+delCookie("name")
+
+
+if(getCookie("nam")=="login"){
+
+            dataLayer.push({
+                'event': 'login',
+                'visitorType': 'high-value',
+                  
+                    'eventCallback': function() {
+
+
+                }
+              
+
+             
+            });
+}
+delCookie("nam")
+</script>
+
+<?php $this->endPage();?>
+
+
+
+
+
+
+

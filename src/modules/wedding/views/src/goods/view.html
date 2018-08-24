@@ -1,0 +1,987 @@
+<?php
+use yii\helpers\Url;
+use app\helpers\myhelper;
+?>
+<style>
+	#discount{font-size: 14px;color: #c00000;}
+	.spinner {
+  margin: 238px auto;
+  width: 38px;
+  height: 38px;
+  position: relative;
+}
+ 
+.container1 > div, .container2 > div, .container3 > div {
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+ 
+  border-radius: 100%;
+  position: absolute;
+  -webkit-animation: bouncedelay 1.2s infinite ease-in-out;
+  animation: bouncedelay 1.2s infinite ease-in-out;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+ 
+.spinner .spinner-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+ 
+.container2 {
+  -webkit-transform: rotateZ(45deg);
+  transform: rotateZ(45deg);
+}
+ 
+.container3 {
+  -webkit-transform: rotateZ(90deg);
+  transform: rotateZ(90deg);
+}
+ 
+.circle1 { top: 0; left: 0; }
+.circle2 { top: 0; right: 0; }
+.circle3 { right: 0; bottom: 0; }
+.circle4 { left: 0; bottom: 0; }
+ 
+.container2 .circle1 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+ 
+.container3 .circle1 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+ 
+.container1 .circle2 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+ 
+.container2 .circle2 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+ 
+.container3 .circle2 {
+  -webkit-animation-delay: -0.7s;
+  animation-delay: -0.7s;
+}
+ 
+.container1 .circle3 {
+  -webkit-animation-delay: -0.6s;
+  animation-delay: -0.6s;
+}
+ 
+.container2 .circle3 {
+  -webkit-animation-delay: -0.5s;
+  animation-delay: -0.5s;
+}
+ 
+.container3 .circle3 {
+  -webkit-animation-delay: -0.4s;
+  animation-delay: -0.4s;
+}
+ 
+.container1 .circle4 {
+  -webkit-animation-delay: -0.3s;
+  animation-delay: -0.3s;
+}
+ 
+.container2 .circle4 {
+  -webkit-animation-delay: -0.2s;
+  animation-delay: -0.2s;
+}
+ 
+.container3 .circle4 {
+  -webkit-animation-delay: -0.1s;
+  animation-delay: -0.1s;
+}
+ 
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+ 
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+.mystyle{
+
+  cursor:url(<?=__IMG__?>/fada.png), pointer;
+}
+.c-clothes {
+    width: 750px;
+    height: 600px;
+   
+}
+
+.c-clothes li span {
+	font-size: 14px;
+    font-family: ebrima;
+	color: #616161;
+	width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+	border: 1px solid #ccc;
+    border-right: none;
+    padding-left: 3px;
+}
+
+.c-clothes input[type='text'] {
+  
+    height: 30px;
+	font-size: 14px;
+	font-family: ebrima;
+	color: #616161;
+	display: table-cell;
+	width: 100%;
+	border: none;
+	padding: 5px;
+	border: 1px solid #cdcdcd;
+    border-left: none;
+}
+.unit {
+    height: 40px;
+    line-height: 40px;
+    font-family: ebrima;
+    color: #616161;
+    font-size: 14px;
+	padding-left: 27px;
+}
+span.unit_o {
+    margin-left: 10px;
+}
+span.unit_t {
+    margin-left: 10px;
+}
+.unit input[type="radio"]{
+	vertical-align: text-top;
+}
+.c-clothes	ul div {
+    display: table;
+}
+li.col-sm-6 {
+  
+    padding-right: 0;
+}
+.c-clothes ul div {
+  
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+.imm {
+    padding-left: 22px;
+}
+.c-clothes>div {
+    height: 40px;
+}
+.col-sm-6.oo {
+    padding-right: 0;
+}
+.col-sm-6.oo div {
+   
+	padding-right: 0;
+	padding-left: 10px;
+}
+.col-sm-6.oo span{
+	font-size: 14px;
+    font-family: ebrima;
+    color: #616161;
+	border: 1px solid #ccc;
+    border-right: none;
+    padding-left: 3px;
+}
+.shen .gao:nth-child(2) {
+    margin: 0 10px;
+}
+.shen .gao{
+	border: 1px solid #a3a3a3;
+}
+.gao {
+	display: inline-block;
+	padding-left: 10px;
+}
+.shen input {							
+    height: 30px;
+    border: none;
+}
+.gao span{
+	font-size: 16px;
+    font-family: ebrima;
+    color: #616161;
+}
+.goods-intro.c-active a {
+    color: #000000cf;
+}
+</style>
+<!-- <link href="<?=__CSS__?>/jquery-editable-select.css" rel="stylesheet"> -->
+<div class="cf-detail-container" style="background: none;padding-top: 4px;">
+	<div class="cf-detail-wrap">
+		<div class="product-intro">
+			<div class="preview-wrap">
+				<div class="preview clearfix" style="position: relative">
+					<div class="spec-n1 zoom" id="ex3">
+						<div class="spinner">
+							<div class="spinner-container container1">
+							  <div class="circle1"></div>
+							  <div class="circle2"></div>
+							  <div class="circle3"></div>
+							  <div class="circle4"></div>
+							</div>
+							<div class="spinner-container container2">
+							  <div class="circle1"></div>
+							  <div class="circle2"></div>
+							  <div class="circle3"></div>
+							  <div class="circle4"></div>
+							</div>
+							<div class="spinner-container container3">
+							  <div class="circle1"></div>
+							  <div class="circle2"></div>
+							  <div class="circle3"></div>
+							  <div class="circle4"></div>
+							</div>
+						  </div>
+					
+					</div>
+                    <div class="preview_right_img" style="width: 66px;height: 600px;float: right">
+                        <div style="height: 525px;width:66px;overflow: hidden;position: relative;z-index: 100">
+                            <ul id="bum-box" class="spec-n2 bum" >
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bum-buttom">
+                        <a class="bum-prev" href="javascript:void(0);"></a>
+                        <a class="bum-next" href="javascript:void(0);"></a>
+                    </div>
+				</div>
+				<div class="preview-share">
+					<a href="https://www.facebook.com/sharer/sharer.php?u=<?=\Yii::$app->request->getHostInfo().\Yii::$app->request->url?>&t=<?=$good['name']?>" title="Share on Facebook" target="_blank"><i style="color: #b09e91;" class="fa fa-facebook" aria-hidden="true"></i></a>
+					<a href="https://twitter.com/intent/tweet?source=<?=\Yii::$app->request->getHostInfo().\Yii::$app->request->url?>&text=<?=$good['name']?>" target="_blank" title="Tweet"><i style="color: #b09e91;" class="fa fa-twitter" aria-hidden="true"></i></a>
+					<a href="http://pinterest.com/pin/create/button/?url=<?=\Yii::$app->request->getHostInfo().\Yii::$app->request->url?>&description=<?=$good['name']?>" target="_blank" title="Pin it"><i style="color: #b09e91;" class="fa fa-pinterest" aria-hidden="true"></i></a>
+				</div>
+			</div>
+			<div class="attrs-wrap">
+				<div class="attrs-info" style="padding-top:0"><h1><?=$good['name']?><p style="padding-top:10px;font-size:18px;"><?=$good['good_brand_name']?></p></h1>
+					<p>
+						<span id="price_original_local"  style="display: <?php echo ($good['price_original'] > $good['price'] ? "inline" : "none"); ?>; font-size:20px;text-decoration: line-through;color: #c6c6c6;">
+						<span><?=THINK_RATE_SYMBOL?></span>
+						<span class="price_original_local"><?=number_format($good['price_original']*THINK_RATE_M, 2, '.', '')?></span>
+						</span>
+					</p>
+					<p>
+						<span style="font-size:20px;">
+							<span><?=THINK_RATE_SYMBOL?></span>
+							<span class="price_local"><?=number_format($good['price']*THINK_RATE_M, 2, '.', '')?></span>
+						</span>
+
+						<?php
+                         if($good['price'] < $good['price_original']) {
+						$discount = sprintf("%.2f", ($good['price_original'] - $good['price']) / $good['price_original'] );
+						$discount = $discount * 100;
+						echo "<span id='discount' style='font-size: 14px;'>&nbsp&nbsp({$discount}% Off)</span>";
+						}else{
+						echo "<span id='discount'></span>";
+						}
+						?>
+					</p>
+				</div>
+				<div class="choose-attrs">
+					<?php
+					 $num = count($specArr);
+					 $i = 0;
+					?>
+					<?php foreach ($specArr as $specModel): ?>
+					<?php $i++;?>
+					<dl class="attrs-c" <?php if(in_array($specModel['type'],[3,4,5,6,7])){echo "style='display:none'";}?> >
+						<dt><?=$specModel['spec_name'];?>: <span class="attrs-name"></span>
+							<?php if($i == $num && $default_sku_info['store']<6):?>
+								<span class="inventory"><?=Yii::t("shop","only left",$default_sku_info['store'])?></span>
+							<?php endif;?>
+						</dt>
+						<dd>
+							<ul class="cart-list clearfix"   <?php if ($specModel['type'] == 2){echo "id='sku_color_li'";}elseif($specModel['type'] == 1){echo "id='sku_size_li'";} ?>>
+								<?php if (isset($specValArr[$specModel['spec_id']])): ?>
+								<?php foreach ($specValArr[$specModel['spec_id']] as $specValModel): ?>
+								<?php
+										$spec_value = $specValModel['spec_value'];
+										if(in_array($specValModel['spec_value_id'],explode(",",CUSTOM_ID))){
+											$spec_value = Yii::t("shop","Custom size");
+										}
+								?>
+								<li <?php if ($specModel['type'] == 2){echo "style='border-radius: 50%;box-shadow: none;width: 24px;height: 24px;border: none;'";} ?>  data-value="<?=$spec_value;?>" data-key="<?=$specValModel['spec_id'];?>" data-attrid="<?=$specValModel['spec_value_id'];?>" class="sku">
+									<?php if ($specModel['spec_type'] === 'text'): ?>
+									<a href="javascript:;"><span><?=$spec_value;?></span></a>
+									<?php else: ?>
+									<a href="javascript:;">
+										<?php if($specValModel['spec_image_original']):?>
+											<img src="<?=myhelper::resize($specValModel['spec_image_original'],30,30);?>" alt="<?=$specValModel['spec_value'];?>" title="<?=$specValModel['spec_value'];?>">
+												<i class="leim"></i>
+											<?php else: ?>
+										<?=$specValModel['spec_value'];?>
+										<?php endif ?>
+									</a>
+									<?php endif ?>
+								</li>
+								<?php endforeach ?>
+								<?php endif ?>
+							</ul>
+
+							<?php if (($specModel['type'] == 1) && !array_intersect(explode(",",CUSTOM_ID),$spec_value_ids)):?>
+								<!--<div class="unit ">-->
+									<!--<span>*Choose measurement unit:</span>-->
+									<!--<span class="unit_a"><input type="radio" name="un" checked value="inch">inch</span>-->
+									<!--<span class="unit_b"><input type="radio" name="un" value="cm">cm</span>-->
+								<!--</div>-->
+								<!--<div class="shen"><div class="gao"><span>*Height:</span><input type="text"  name="heigt_g"></div><div class="gao"><span >*Heel Height:</span><input type="text"  name="shoe_x"></div></div>-->
+							<?php endif;?>
+
+						</dd>
+					</dl>
+					<?php endforeach ?>
+					<?php if(array_intersect(explode(",",CUSTOM_ID),$spec_value_ids)):?>
+
+							<input type="checkbox" checked disabled name="custom" class="custom_input">
+								<span class="cs"><?=Yii::t("shop","Custom size")?></span>
+							<div class="c-clothes">
+								<div style="display: none;">
+									<img src="https://cdn-image.mutantbox.com/201804/d4ee1c322c06f5c345b0bbf5284513a1.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/559b9eeab2d96958a3eb38f414a89211.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/6948f106522901c6d997d259212f39f0.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201805/c29b547ebe0261721feb7c3eedfb1192.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/0ec505b39a33e416b1acca18aff81b73.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201805/ec4c45ad4b29b8f5b64932bacbdfb45a.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/be9ed7f80672681169563d077f741c9c.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/b03f9e5e951d6c65da93b2649ef5afbc.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/37218fc7f502d0c51d2d2012bb6fe6a7.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/ee17b08803127dc5be8a66605fac7420.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201805/bb3cc0fe28044d5e07c0b91913699545.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201804/b6315cd83d25d60186282b84a50773c8.png" alt="">
+									<img src="https://cdn-image.mutantbox.com/201805/f65fc8ddf8951f994595d9c04649aa93.png" alt="">
+								</div>
+										<div>
+										<div class="unit col-sm-6">
+											<span>Choose measurement unit:</span>
+											<span class="unit_o"><input type="radio" name="uni" checked value="inch">inch</span>
+											<span class="unit_t"><input type="radio" name="uni" value="cm">cm</span>
+										</div>
+										<div class="col-sm-6 oo"><div style="display: table;"><span style="display: table-cell;width: 1%">Height:</span><input name="Height" type="text" style="display: table-cell;"></div></div>
+									</div>
+										<ul class="clearfix">
+											<li class="col-sm-6"><div><span>Bust:</span><input name="Bust" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Under Bust:</span><input name="UnderBust" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Waist:</span><input name="Waist" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Waist To Floor:</span><input name="WaistToHem" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Hips:</span><input name="Hips" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Hollow To Floor:</span><input name="HollowToFloor" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Back Shoulder Width:</span><input name="BackShoulderWidth" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Arm Circumference:</span><input name="ArmCircumference" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Arm Eye Circumference:</span><input name="ArmEyeCircumference" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Mid-Shoulder to Bust Point:</span><input name="Mid-ShouldertoBustPoint" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Arm Length:</span><input name="SleeveLength" type="text"></div></li>
+											<li	class="col-sm-6"><div><span>Heel Height:</span><input name="HeelHeight" type="text"></div></li>
+										</ul>
+										<div class="imm">
+											<img src="https://cdn-image.mutantbox.com/201804/d4ee1c322c06f5c345b0bbf5284513a1.png" alt="">
+										</div>
+
+							</div>
+					<?php endif;?>
+					<div class="cart-compute-wrap">
+						<span><?=Yii::t('shop','Quantity')?>: </span>
+						<div class="cart-compute"><a class="cf-reduce">-</a><input value="1" name="" id="buy-num" class="buy-num"><a class="cf-add">+</a></div>
+					</div>
+				</div>
+				<div class="cart-button">
+					<a href="javascript:void(0);" id="add-cart" class="add-cart"><?=Yii::t('shop','AddToCart')?></a>
+					<a href="javascript:;" id="buy-now" class="buy-now"><?=Yii::t('shop','BuyNow')?></a>
+				</div>
+				<?php if(array_intersect(explode(",",CUSTOM_ID),$all_spec_value_ids)):?>
+                	<div class="prod-info-time clearfix de">
+                    <div class="taketime_context_wrap">
+                        <span class="old-processing-time" style="">
+                            <span class="pointer pointer_jiandao">
+                                <em class="icon-tailoring"></em>
+								<?=Yii::t('shop','Tailoring Time: 10-18 Days',['<span id="make_time">','</span>'])?>
+                            </span>
+                            <!-- <span class="pointer plus">+</span> -->
+                            <!-- <span class="pointer pointer_feiji">
+                                 <em class="icon-shipping"></em>
+								<?=Yii::t('shop','Delivery Time: 7-20 Days')?>
+                            </span> -->
+                        </span>
+                        <div class="prod-size-tip clearfix made-to-order-left">
+                            <div>
+								<?=Yii::t('shop','Made-To-Order',['<p>','<b>','</b>','</p>'])?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="jiandao" style="font-family: ebrima;"><span class="arrow"></span><?=Yii::t('shop','choose size rule')?>.</div>
+                    <div class="feiji" style="font-family: ebrima"><span class="arrow"></span><?=Yii::t('shop','Express Standard shipping','<br>')?></div>
+                </div>
+				<?php endif;?>
+			   
+				
+				<div class="cart-info">
+					<ul>
+						<li>
+							<div class="goods-news-title">
+                                <span class="icon-on" style="position: absolute;top:8px;left:-24px"><i class="iconfont icon-jian"></i></span>
+                                <span style="margin-left:40px"><?=Yii::t('shop', 'Description');?></span>
+							</div>
+							<div class="goods-intro c-active">
+									<?php
+									 $str = "";
+									 $desc = $good['description'];
+									 if($desc){
+										 $desc = str_replace("Measurements",Yii::t('shop', 'Measurements'),$desc);
+										 $str = htmlspecialchars_decode(nl2br($desc));
+									 }else{
+										foreach($spec_value_ids_bc as $v_id){
+											if(isset($all_spec_values[$v_id])){
+												$str .=$all_spec_values[$v_id]['spec_value']."<br>";
+											}
+										}
+										 $str .= "<br>".Yii::t('shop', 'We can make the adjustment according to your personalized customization.Please leave the special request when making an order or send us Email to this address: service@bycouturier.com',['<a href="mailto:service@bycouturier.com">','</a>']);
+									 }
+									 echo $str;
+									?>
+								</p>
+							</div>
+						</li>
+
+						<?php
+							 $sizefit = $good['spec_description'];
+							 $spec_json = $good['spec_json']?json_decode($good['spec_json'],true):'';
+							 $spec_json_data = isset($spec_json['data'])?$spec_json['data']:[];
+							 $diy_spec_json = "";
+							 if(isset($top_category)){
+								$diy_spec_json = isset(\yii::$app->params['size'][$top_category['id']])? \yii::$app->params['size'][$top_category['id']] : $diy_spec_json;//一级分类
+							 }
+							 $diy_spec_json = isset(\yii::$app->params['size'][$good['categoryID']])? \yii::$app->params['size'][$good['categoryID']] : $diy_spec_json;//最低级那个分类
+						?>
+
+						<?php if($good['spec_cover'] || $sizefit || $spec_json_data || $diy_spec_json):?>
+						<li>
+							<div class="goods-news-title">
+                                <span class="icon-off" style="position: absolute;top:8px;left:-24px"><i class="iconfont icon-icon11"></i></span>
+                                <span style="margin-left: 40px"><?=Yii::t('shop', 'Size&Fit');?></span>
+							</div>
+							<div class="goods-intro">
+								<p>
+
+								<?php if($good['spec_cover']):?>
+								<?=htmlspecialchars_decode(nl2br($sizefit))?>
+								<br>
+								<img src="<?=$good['spec_cover'];?>"/>
+								<?php endif;?>
+
+
+								<?php if($spec_json_data && !$good['spec_cover'] && !$diy_spec_json):?>
+								<?=htmlspecialchars_decode(nl2br($sizefit))?>
+									<br>
+									<table class="fit-guide">
+										<thead>
+										<tr>
+											<th><?=Yii::t('shop', 'Size');?></th>
+											<?php foreach($spec_json['row'] as $row):?>
+												<th><?=$row?></th>
+											<?php endforeach;?>
+										</tr>
+										</thead>
+										<tbody>
+											<?php foreach($spec_json['col'] as $i=>$col):?>
+												<tr>
+													<td><?=$col?></td>
+													<?php foreach($spec_json['row'] as $j=>$row):?>
+													<td><?=$spec_json['data'][$i*count($spec_json['row'])+$j]?></td>
+													<?php endforeach;?>
+												</tr>
+											<?php endforeach;?>
+										</tbody>
+									</table>
+								<?php elseif($diy_spec_json):?>
+									<?php echo $this->render('sizefit.html',['diy_spec_json'=>$diy_spec_json]);?>
+								<?php endif;?>
+								</p>
+                            </div>
+						</li>
+						<?php endif;?>
+						<li>
+							<div class="goods-news-title">
+                                <span class="icon-off" style="position: absolute;top:8px;left:-24px"><i class="iconfont icon-icon11"></i></span>
+                                <span style="margin-left: 40px"><?=Yii::t('shop', 'Shipping&Returns');?></span>
+							</div>
+							<div class="goods-intro"><p><?=Yii::t('shop', 'shop.ProductDetails');?></p></div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<?php if($related_goods || $recommend):?>
+        	<?php echo $this->render('relate.html',['related_goods'=>$related_goods,'recommend'=>$recommend]);?>
+		<?php endif;?>
+		<?php echo $this->render('comment.html',['comment'=>$comment,'count'=>$comment_count]);?>
+</div>
+<div class="bone-box">
+	<div class="pos-rel-box">
+		<div class="box-del"><a class="icon-d">+</a></div>
+		<p><?=Yii::t('shop','AddToCart')?></p>
+		<div class="cart-box-btn">
+			<a href="javascript:;" id="edit-cart"><?=Yii::t('shop','EditYourCart')?></a>
+			<a href="javascript:;" id="btn-goon"><?=Yii::t('shop','ContinueShopping')?></a>
+		</div>
+		<div>
+		</div>
+	</div>
+</div>
+
+<div class="car-success clearfix">
+	<i class="fa fa-times aa" aria-hidden="true" style="font-size: 21px;color: #69605b;padding: 10px"></i>
+	<div class="car-img">
+		<img id="car-good-image" src="" title="" alt="" data-pin-nopin="true">
+	</div>
+	<div class="car-info">
+		<div class="car-info-title" ><?=Yii::t('shop','ITEM HAS BEEN ADDED TO CART')?></div>
+		<div class="car-info-all">
+			<p style="font-size: 18px;font-weight: bold;" id="car-good-brand"></p>
+			<p id="car-good-name"></p>
+      		<span id="car-good-variant"></span>
+		</div>
+		<div class="car-buttom">
+			<div class="edit-cart"><a href="/cart/index"><?=Yii::t('shop','CHECKOUT')?></a></div>
+		</div>
+	</div>
+</div>
+<div class="no-cart" style="">
+	<i class="fa fa-times bb" aria-hidden="true" style="font-size: 30px;"></i>
+	<h2 ><?=Yii::t('shop','PleaseChoseSizeAndColor')?></h2>
+</div>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+	window.goodDatas = <?=json_encode($productObj)?>;
+	var isFirstClick=true;
+	$(function(){
+		<?php foreach ($spec_value_ids as $vid):?>
+			$("li[data-attrid='<?=$vid?>']").addClass('sku-selected');
+			$("li[data-attrid='<?=$vid?>']").closest('dl').find('.attrs-name').text($("li[data-attrid='<?=$vid?>']").data('value'))
+		<?php endforeach;?>
+		isFirstClick=false;
+	})
+
+	var urltitle = "<?=$url?>";
+	var goods_id = "<?=$good['id']?>";
+	var goods_name = "<?=$good['name']?>";
+	var bsurl = "<?=$this->params['bs'];?>";
+	 
+	var CUSTOM_ID = 0;
+	<?php if(array_intersect(explode(",",CUSTOM_ID),$spec_value_ids)):?>
+		CUSTOM_ID=1;
+	<?php endif;?>
+</script>
+
+<script src="<?=__JS__?>/cart.js"></script>
+<script>
+
+	$(function(){
+		// 定制
+		$(".oo").on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201805/f65fc8ddf8951f994595d9c04649aa93.png');
+		})
+		$('.c-clothes ul li:eq(0)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/d4ee1c322c06f5c345b0bbf5284513a1.png');
+		})
+		$('.c-clothes ul li:eq(1)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/559b9eeab2d96958a3eb38f414a89211.png');
+		})
+		$('.c-clothes ul li:eq(2)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/6948f106522901c6d997d259212f39f0.png');
+		})
+
+$('.c-clothes ul li:eq(3)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201805/c29b547ebe0261721feb7c3eedfb1192.png');
+		})
+
+	$('.c-clothes ul li:eq(4)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/0ec505b39a33e416b1acca18aff81b73.png');
+		})
+		$('.c-clothes ul li:eq(5)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201805/ec4c45ad4b29b8f5b64932bacbdfb45a.png');
+		})
+
+$('.c-clothes ul li:eq(6)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/be9ed7f80672681169563d077f741c9c.png');
+		})
+		$('.c-clothes ul li:eq(7)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/b03f9e5e951d6c65da93b2649ef5afbc.png');
+		})
+		$('.c-clothes ul li:eq(8)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/37218fc7f502d0c51d2d2012bb6fe6a7.png');
+		})
+		$('.c-clothes ul li:eq(9)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/ee17b08803127dc5be8a66605fac7420.png');
+		})
+		$('.c-clothes ul li:eq(10)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201805/bb3cc0fe28044d5e07c0b91913699545.png');
+		})
+		$('.c-clothes ul li:eq(11)').on('click',function(){
+			$('.imm img').attr('src', 'https://cdn-image.mutantbox.com/201804/b6315cd83d25d60186282b84a50773c8.png');
+		})
+
+
+
+		$(".sku-selected a .leim").addClass("duig")
+           
+		document.getElementById('spec-img').onload=function(){
+        // 加载完成 
+};
+		$('#add-cart').off('click').on('click', function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			if ($this.prop('disabled')) return false;
+
+			var selectedVal = getSelectedVal();
+			if (selectedVal === false || selectedVal.length <= 0 ) return false;
+
+			var joinedIdx = selectedVal.sort(function(value1, value2) {
+				return parseInt(value1) - parseInt(value2);
+			}).join(';');
+			if(CUSTOM_ID == 1){
+				var custom_size = check_custom_size();
+				if(!custom_size){
+					return false;
+				}
+				custom_size = JSON.stringify(custom_size);
+			}else{
+				var custom_size = '';
+			}
+
+
+			if (goodDatas[joinedIdx] !== undefined) {
+				var layer_loading_box = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shade: [0.7, '#000']});
+
+				$this.prop('disabled', true);
+				$.post('<?=Url::to(['cart/add-item'])?>', {item_id: goodDatas[joinedIdx]['id'], number: $('#buy-num').val(),custom_size:custom_size}, function(data, textStatus, xhr) {
+
+					if (data.code === 0) {
+
+						$.post('<?=Url::to(['goods/cart-count'])?>', {goods_id: goods_id}, function(data, textStatus, xhr) {
+							console.log(data);
+						})
+
+						var product = $.parseJSON(data.data.gtm);
+						//GOOGLE GTM CODE
+						dataLayer.push({
+							'event': 'addToCart',
+							'id':product[0].id,
+							'name':product[0].name,
+							'price':product[0].price,
+							'category':product[0].category,
+							'variant':product[0].variant,
+							'quantity':product[0].quantity,
+							'ecommerce': {
+								'currencyCode': '<?=THINK_RATE_SYMBOL?>',
+								'add': {                                // 'add' actionFieldObject measures.
+									'products': product
+								}
+							}
+						});
+						
+						fbq('track', 'AddToCart', {
+						    value: product[0].price,
+						    currency: 'USD',
+						    content_ids: product[0].id,
+						    content_type: 'product',
+						  });
+
+						layer.close(layer_loading_box);
+
+						$("#car-good-image").attr("src",$("#spec-img").attr("src"));
+						$("#car-good-name").html(product[0].name);
+						$("#car-good-brand").html(product[0].brand);
+						$("#car-good-variant").html(product[0].variant);
+
+						$('.car-success').show();
+						$('.cart-amount').html(parseInt($('.cart-amount').html())+data.data.add_number);
+					}else{
+						// TODO
+						layer.close(layer_loading_box);
+						if(data.code == -1){
+							location.href = "/login?referer="+document.location.href;
+						}else{
+							return  $(".wenzi").text(data.message).parent().show();
+						}
+					}
+				},"json").complete(function(){
+					$this.prop('disabled', false);
+				});
+			}else{
+				$this.prop('disabled', false)
+			}
+
+			return false;
+		});
+
+		$('.aa').click(function(){
+			$('.car-success').hide();
+		})
+		$('.con-shop').click(function(){
+			$('.car-success').hide();
+		})
+		$('.bb').click(function(){
+			$('.no-cart').hide();
+		})
+
+		$('#buy-now').off('click').on('click', function(event) {
+			event.preventDefault();
+			var $this = $(this);
+			if ($this.prop('disabled')) return false;
+
+			var selectedVal = getSelectedVal();
+			if (selectedVal === false || selectedVal.length <= 0 ) return false;
+
+			var joinedIdx = selectedVal.sort(function(value1, value2) {
+				return parseInt(value1) - parseInt(value2);
+			}).join(';');
+
+			if(CUSTOM_ID == 1){
+				var custom_size = check_custom_size();
+				if(!custom_size){
+					return false;
+				}
+				//custom_size = JSON.stringify(custom_size);
+			}else{
+				var custom_size = '';
+			}
+					
+			if (goodDatas[joinedIdx] !== undefined) {
+				var layer_loading_box = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shade: [0.7, '#000']});
+				$this.prop('disabled', true);
+				var item_id = goodDatas[joinedIdx]['id'];
+				var number = $('#buy-num').val();
+				var items = new Object();
+				items[item_id] = {item_id: item_id, number: number,custom_size:custom_size};
+
+				//谷歌统计
+				var gtm = '<?=str_replace("'","\'",$gtm)?>'
+				gtm = $.parseJSON(gtm)
+				gtm[0].quantity = number
+				try {
+					dataLayer.push({
+						'event': 'buynow',
+						'name': gtm[0].name,
+						'id': gtm[0].id,
+						'price':gtm[0].price,
+						'category': gtm[0].category,
+						'variant': gtm[0].variant,
+						'quantity': gtm[0].quantity,
+						'ecommerce': {
+							'currencyCode': 'EUR',
+							'add': {
+								'products':gtm
+							}
+						}
+					});
+					console.log('buynow  dataLayer :')
+					console.log(dataLayer)
+					
+					fbq('track', 'AddToCart', {
+					    value: gtm[0].price,
+					    currency: 'USD',
+					    content_ids: gtm[0].id,
+					    content_type: 'product',
+					  });
+				}
+                catch(err) {
+                	console.log(err.message);
+                }
+
+                <?php if(!$this->params['is_login']):?>
+					location.href = '/login?referer=/checkout?from=detail&items='+JSON.stringify(items);
+				<?php else:?>
+					location.href = '/checkout?from=detail&items='+encodeURI(JSON.stringify(items));
+				<?php endif;?>
+			}else{
+				$this.prop('disabled', false);
+			}
+
+			return false;
+		});
+
+		function getSelectedVal(){
+			var selectedVal = [];
+			$('.choose-attrs .attrs-c').each(function(index, el) {
+				if ($(this).find('dd li.sku-selected').length <= 0) {
+					// TODO 提示
+					$('.no-cart').show();
+					selectedVal = [];
+					return false;
+				}else{
+					selectedVal.push($(this).find('dd li.sku-selected').data('attrid'));
+				}
+			});
+			return selectedVal;
+		}
+
+
+		function check_custom_size() {
+			var custom_size = new Object();
+			var Height = $("input[name='Height']").val();
+			var Bust = $("input[name='Bust']").val();
+			var UnderBust = $("input[name='UnderBust']").val();
+			var Waist = $("input[name='Waist']").val();
+			var WaistToHem = $("input[name='WaistToHem']").val();
+			var Hips = $("input[name='Hips']").val();
+			var HollowToFloor = $("input[name='HollowToFloor']").val();
+			var BackShoulderWidth = $("input[name='BackShoulderWidth']").val();
+			var ArmCircumference = $("input[name='ArmCircumference']").val();
+			var ArmEyeCircumference = $("input[name='ArmEyeCircumference']").val();
+			var MidShouldertoBustPoint = $("input[name='Mid-ShouldertoBustPoint']").val();
+			var SleeveLength = $("input[name='SleeveLength']").val();
+			var HeelHeight = $("input[name='HeelHeight']").val();
+			var unit = $('input[name="uni"]:checked').val();
+
+			console.log("custom size:");
+			console.log(Height);
+			console.log(Bust);
+			console.log(UnderBust);
+			console.log(Waist);
+			console.log(WaistToHem);
+			console.log(Hips);
+			console.log(HollowToFloor);
+			console.log(BackShoulderWidth);
+			console.log(ArmCircumference);
+			console.log(ArmEyeCircumference);
+			console.log(MidShouldertoBustPoint);
+			console.log(SleeveLength);
+			console.log(HeelHeight);
+			console.log(Bust);
+
+			var rge = /^\d{0,3}(\.\d{1,1})?$/;
+			if(Bust == '' || (rge.test(Bust)!=true)){
+				alert('<?=Yii::t('shop','invalid Bust')?>') ; return false;
+			}
+			if(Waist == '' || (rge.test(Waist)!=true)){
+				alert('<?=Yii::t('shop','invalid Waist')?>') ; return false;
+			}
+			if(Hips == '' || (rge.test(Hips)!=true)){
+				alert('<?=Yii::t('shop','invalid Hips')?>') ; return false;
+			}
+			if(HollowToFloor == '' || (rge.test(HollowToFloor)!=true)){
+				alert('<?=Yii::t('shop','invalid Hollow To Floor')?>') ; return false;
+			}
+			if(UnderBust == '' || (rge.test(UnderBust)!=true)){
+				alert('<?=Yii::t('shop','invalid Under Bust')?>') ; return false;
+			}
+			if(WaistToHem == '' || (rge.test(WaistToHem)!=true)){
+				alert('<?=Yii::t('shop','invalid Waist To Hem')?>') ; return false;
+			}
+			if(SleeveLength == '' || (rge.test(SleeveLength)!=true)){
+				alert('<?=Yii::t('shop','invalid Sleeve Length')?>') ; return false;
+			}
+			if(HeelHeight == '' || (rge.test(HeelHeight)!=true)){
+				alert('<?=Yii::t('shop','invalid Heel Height')?>') ; return false;
+			}
+			if(BackShoulderWidth == '' || (rge.test(BackShoulderWidth)!=true)){
+				alert('<?=Yii::t('shop','invalid Back Shoulder Width')?>') ; return false;
+			}
+			if(ArmCircumference == '' || (rge.test(ArmCircumference)!=true)){
+				alert('<?=Yii::t('shop','invalid Arm Circumference')?>') ; return false;
+			}
+			if(ArmEyeCircumference == '' || (rge.test(ArmEyeCircumference)!=true)){
+				alert('<?=Yii::t('shop','invalid Arm Eye Circumference')?>') ; return false;
+			}
+			if(MidShouldertoBustPoint == '' || (rge.test(MidShouldertoBustPoint)!=true)){
+				alert('<?=Yii::t('shop','invalid Mid-Shoulder to BustPoint')?>') ; return false;
+			}
+
+			custom_size['unit'] = unit;
+			custom_size['Height'] = Height;
+			custom_size['Bust'] = Bust;
+			custom_size['Waist'] = Waist;
+			custom_size['Hips'] = Hips;
+			custom_size['Hollow To Floor'] = HollowToFloor;
+			custom_size['Arm Length'] = SleeveLength;
+			custom_size['Heel Height'] = HeelHeight;
+			custom_size['Under Bust'] = UnderBust;
+			custom_size['Arm Circumference'] = ArmCircumference;
+			custom_size['Waist To Floor'] = WaistToHem;
+			custom_size['Back Shoulder Width'] = BackShoulderWidth;
+			custom_size['Arm Eye Circumference'] = ArmEyeCircumference;
+			custom_size['Mid-Shoulder to Bust Point'] = MidShouldertoBustPoint;
+
+
+			return custom_size;
+		}
+
+	});
+</script>
+
+<script>
+	var detail_gtm =  '<?=str_replace("'","\'",$gtm)?>'
+	detail_gtm = $.parseJSON(detail_gtm);
+	dataLayer.push({
+		'event': 'visit',
+		'pagetype': 'productdetail',
+		'name': detail_gtm[0].name,
+		'id': detail_gtm[0].id,
+		'price': detail_gtm[0].price,
+		'category': '<?=$bread[0]['name']?>',
+		'variant': detail_gtm[0].variant,
+		'Form URL': '<?=\Yii::$app->request->referrer?>',
+
+		'ecommerce': {
+			'detail': {
+				'actionField': {'list': '<?=$bread[0]['name']?>'},
+				'products':detail_gtm
+			}
+		}
+	});
+	console.log('productdetail dataLayer:')
+	console.log(dataLayer)
+</script>
+
+
+<!-- 由 Google 结构化数据标记助手生成的 JSON-LD 标记。 -->
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Product",
+  "name" : "<?=$good['name']?>",
+  "image" : "<?=current($good['goods_photo'])?>",
+  "description" : "<?=$str?>",
+  "url" : "<?=\yii::$app->params['MY_URL']['BS']."/".$good['urltitle']."-g".$good['id']?>",
+  "brand" : {
+    "@type" : "Brand",
+    "name" : "Bycouturier",
+    "logo" : "https://cdn.mutantbox.com/01/04/wedding/images/logo.png"
+  },
+  "offers" : {
+    "@type" : "Offer",
+    "price" : "<?=$good['price']?>",
+    "priceCurrency":"USD"
+  }
+}
+</script>
+
+
+<script>
+	$(function() {
+		$(".cart-recommend img").lazyload({effect: "fadeIn", threshold:500});
+		// $(".c-clothes input").attr("placeholder",get_lan("Please select"))
+	});
+</script>

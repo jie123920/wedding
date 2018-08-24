@@ -1,0 +1,12 @@
+.content_box03 .text dl{
+    font-size: 16px!important;
+}
+.user_con_bd dt{
+    line-height: 20px!important;
+    width: 157px!important;
+    padding-right: 0px!important;
+}
+span.login>a {
+    position: relative!important;
+    left: 10px!important;
+}

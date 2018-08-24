@@ -1,0 +1,36 @@
+.layer_sub {
+    font-size: 20px;
+}
+.header_msg_box li a {
+    font-size: 13px;
+
+}
+.news_detail dd .input_s,.news_detail dd .input_s02{
+    font-size: 16px!important;
+}
+.header .nav .hd a,.service_in_box .sercice_cont p a{
+    font-size: 18px;
+}
+.header .nav .hd a{
+    padding: 5px 15px;
+}
+.user_con_hd li{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.user_con_bd dt{
+    padding-right: 0px!important;
+    margin-right: 5px!important;
+}
+.user_con_bd dt{
+    text-align: center!important;
+    width: 160px!important;
+}
+span.login>a {
+    position: relative!important;
+    left: 10px!important;
+}
+.shipping-address-border{
+    width: 650px!important;
+}

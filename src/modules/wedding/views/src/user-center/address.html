@@ -1,0 +1,237 @@
+
+<div class="user_con_bd_box">
+    <div class="user_title"><?=Yii::t('shop','Address Book')?></div>
+    <div class="user_con_bd system_message_box">
+        <div class="address_list" id="add_list">
+            <ul>
+                <!-- JS 追加 DOM -->
+            </ul>
+            <div class="add_from">
+                <form action="/user-address/create" method="post" novalidate="novalidate" class="cf-add-form">
+                    <dl>
+                        <dt><?=Yii::t('shop','Email')?></dt>
+                        <dd class="email">
+                            <input id="email" name="email" type="text" value="" class="cf-add-text">
+                        </dd>
+                        <dt><?=Yii::t('shop','FullName')?></dt>
+                        <dd><input id="fullname" name="fullname" type="text" value="" class="cf-add-text"></dd>
+                        <dt><?=Yii::t('shop','Country')?></dt>
+                        <dd class="cf-select">
+                            <select id="country_id" name="country_id">
+                                <!-- JS 追加 DOM -->
+                            </select>
+                        </dd>
+                        <dt><?=Yii::t('shop','* State/Province/Region')?></dt>
+                        <dd><input id="state" name="state" type="text" value="" class="cf-add-text"></dd>
+                        <dt><?=Yii::t('shop','City')?></dt>
+
+                        <dd><input id="city" name="city" type="text" value="" class="cf-add-text"></dd>
+                        <dt><?=Yii::t('shop','PhoneNumber')?></dt>
+                        <dd >
+                            <input id="phone" name="phone" value="" type="text" class="cf-add-text">
+                        </dd>
+                        <dt><?=Yii::t('shop','AddressLine1')?></dt>
+                        <dd >
+                            <input id="address" name="address" value="" type="text" class="cf-add-text">
+                            <p style="margin-left:70px"><?=Yii::t('shop','AddressLine1Placeholder')?></p>
+                        </dd>
+                        <dt><?=Yii::t('shop','AddressLine2')?></dt>
+                        <dd >
+                            <input id="address2" name="address2" value="" type="text" class="cf-add-text">
+                            <p style="margin-left:70px"><?=Yii::t('shop','AddressLine2Placeholder')?></p>
+                        </dd>
+                        <dt><?=Yii::t('shop','ZIPCode')?></dt>
+                        <dd ><input id="postal_code" name="postal_code" value="" type="text" class="cf-add-text"></dd>
+                    </dl>
+                    <div class="user_sub">
+                        <input type="hidden" name="id" value="">
+                        <input name="" type="submit" value="<?=\YII::t('common','Save')?>" class="user_input_sub user_input_sub01">
+                        <input name="" type="button" value="<?=\YII::t('common','Cancel')?>" class="user_input_sub user_input_sub02">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var ajaxGet = function(url, data) {
+            var output = '';
+            $.ajax({
+                url: url,
+                cache: false,
+                type: 'GET',
+                dataType: 'json',
+                data: data,
+                async: false,
+                success: function (data) {
+                    if (data.code == 0) {
+                        output = data.data;
+                    } else {
+                        console.log(data.message);
+                    }
+                }
+            });
+            return output;
+        };
+
+        var getAddressList = function(id) {
+            var data = ajaxGet('/user-address/list', {id: id});
+            return data.data;
+        }
+
+        var showCountries = function () {
+            var counties = ajaxGet('/trans-price/index', {});
+            var counties_len = counties.data.length;
+            if (counties_len > 0) {
+                var option = '';
+                for(var i = 0; i < counties_len; i++) {
+                    var selected = '';
+                    if (counties.default.id == counties.data[i].countryID) {
+                        selected = 'selected';
+                    }
+                    option += '<option value=\"' + counties.data[i].countryID + '\"' + selected + '>' + counties.data[i].country + '</option>';
+                }
+                $('#country_id').html(option);
+            }
+        };
+        var showAddressList = function () {
+            var addressList = getAddressList();
+            var dom = '';
+            if (addressList.length > 0) {
+                var len = addressList.length;
+                for (var i=0; i < len; i++) {
+                    dom += '<li class="' + (addressList[i].is_default == 1 ? 'sign' : '')
+                        + '" style="text-align: left"><p style="font-weight: bold;font-size: 22px;margin-bottom: 20px">' + addressList[i].fullname
+                        + '</p><p>' + addressList[i].address + '</p><p class="default_add" style="'
+                        + (addressList[i].is_default == 1 ? 'display:block' : '') + '"><?=Yii::t('shop','DEFAULT ADDRESS')?></p><p>'
+                        + addressList[i].address2 + '</p><p>' + addressList[i].country+ '</p><p>' + addressList[i].state
+                        + '</p><p><span><?=Yii::t("shop", "Tell")?>:</span>' + addressList[i].phone
+                        + '</p><p>' + addressList[i].email + '</p><p style="font-size: 12px"><a data-id="' + addressList[i].id
+                        + '" class="btn-edit"><?=Yii::t("shop", "EditAddress")?></a><a data-id="' + addressList[i].id
+                        + '" class="btn-delete"><?=Yii::t("shop", "DeleteAddress")?></a><a data-id="' + addressList[i].id
+                        + '" class="default" style="' + (addressList[i].is_default == 1 ? 'display:none' : '')
+                        + '"><?=Yii::t('shop','MAKE DEFAULT')?></a></p></li>';
+                }
+            }
+            dom += '<li class="add_class"><a><?=Yii::t('shop','ADD ADDRESS')?></a></li>';
+            $('#add_list ul').html(dom);
+        }
+
+        showAddressList();
+        showCountries();
+
+        $('.add_class').click(function(e){
+            e.preventDefault();
+            $('.cf-add-form').prop('action', '/user-address/create');
+            $('.add_from').find('input[name=id]').val('');
+            $('.add_from form').trigger("reset");
+            $('.add_from').show(800);
+            $(".add_class").hide(800)
+        });
+
+        $('#add_list').on('click', '.btn-edit', function () {
+            var id = $(this).data('id');
+            $('.cf-add-form').prop('action', '/user-address/edit');
+            $('.cf-add-form').find('input[name=id]').val(id);
+
+            $.get('/user-address/list', {id: id}, function (data) {
+                if (data.code == 0 && Object.keys(data.data.data).length > 0) {
+                    $('.cf-add-form dl input,select').each(function () {
+                        var name = $(this).prop('name');
+                        if (name === 'country_id') {
+                            $(this).find('option[value=' + data.data.data[name] + ']').prop('selected', true);
+                        } else {
+                            $(this).val(data.data.data[name]);
+                        }
+                    });
+                }
+            });
+            $('.add_from').show(800);
+            $('.add_class').hide(800);
+        });
+
+        $('#add_list').on('click', '.btn-delete', function () {
+            var id = $(this).data('id');
+            layer.confirm('<?=Yii::t("shop", "DeleteConfirm")?>', {title: false,  btn: ['<?=Yii::t("common", "ok")?>', '<?=Yii::t("common", "Cancel")?>']}, function(index){
+                $.post('/user-address/delete', {id: id}, function (data) {
+                    layer.close(index);
+                    layer.alert(data.message, {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000});
+                    window.location.reload();
+                });
+            });
+        });
+
+        $(".cf-add-form").validate({
+            errorClass: "red_error",
+            highlight: function (element, errorClass) {
+                $(element).removeClass(errorClass);
+            },
+            errorPlacement: function (error, element) {
+                error.appendTo(element.parent());
+            },
+            rules: {
+                email: {
+                    required: true
+                },
+                fullname: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                state: {
+                    required: true
+                },
+                phone: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+                postal_code: {
+                    required: true
+                }
+            },
+            submitHandler: function (form)
+            {
+                saveUser_index = layer.msg('<?=\YII::t('common','Loading')?>', {icon: 16, time: 0, shadeClose: true, shade: [0.7, '#000']});
+                $(form).ajaxSubmit({
+                    success: saveUserResponse
+                });
+            }
+        });
+
+        function saveUserResponse(data)
+        {
+            layer.close(saveUser_index);
+            layer.alert(data.message, {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000});
+            if (data.code == 0) {
+                window.location.reload();
+            }
+        }
+
+        $('.user_input_sub02').click(function (e) {
+            e.preventDefault();
+            $('.add_from').find('input[name=id]').val('');
+            $('.add_from form').trigger("reset");
+        });
+
+
+        $(document).delegate(".default","click",function(){
+            var id = $(this).data('id');
+            var $that = $(this);
+            $.post('/user-address/default', {id: id}, function (data) {
+                layer.alert(data.message, {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000});
+                if (data.code == 0) {
+                    $that.parents('li').siblings('li').removeClass('sign');
+                    $that.parents('li').addClass('sign')
+                    $that.parents('li').siblings('li').find('.default').show()
+                    $that.hide();
+                    $that.parents('li').find('.default_add').show()
+                    $that.parents('li').siblings('li').find('.default_add').hide()
+                }
+            });
+        });
+    });
+</script>

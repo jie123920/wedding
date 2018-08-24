@@ -1,0 +1,63 @@
+<?php
+use yii\helpers\Url;
+use app\helpers\myhelper;
+?>
+    <div class="cart-recommend">
+        <?php if($related_goods):?>
+        <div class="recommend-title"><?=Yii::t('shop', 'Wear It With');?></div>
+        <div class="related-commodity">
+            <div class="slider_t">
+                <ul class="list_o clearfix" id="imgList">
+                    <?php foreach($related_goods as $g):?>
+                    <?php
+                            $link = '';
+                            $wailian = 0;
+                            if($g['link']){
+                            $cover = $g['cover'];
+                            $wailian = 1;
+                            $link = $g['link'];
+                            }else{
+                            $cover = $g['cover'];
+                            }
+                            $urltitle = preg_replace('/[^a-z0-9\s]/','',strtolower($g['name']));
+                            $urltitle = preg_replace('/\s+/','-',$urltitle);
+                            $link = $this->params['bs']."/".$urltitle."-g".$g['id'];
+
+                    ?>
+                    <li><a href="<?=$link?>"><img data-original="<?=myhelper::resize($g['cover'],166,250);?>" alt="<?=$g['name']?>"></a></li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+            <div class="arr_a"><img src="<?=__IMG__?>/img_10.png" class="left_t" id="left_t"><img src="<?=__IMG__?>/img_11.png" class="right_t" id="right_t"></div>
+        </div>
+        <?php endif;?>
+        <?php if($recommend):?>
+        <div class="recommend-title" style="margin-top: 20px"><?=Yii::t('shop', 'You Also Might Like');?></div>
+        <div class="related-commodity">
+            <div class="slider_o">
+                <ul class="list_o clearfix" id="img_one">
+                    <?php foreach($recommend as $g):?>
+                    <?php
+                                $link = '';
+                                $wailian = 0;
+                                if($g['link']){
+                                $cover = $g['cover'];
+                                $wailian = 1;
+                                $link = $g['link'];
+                                }else{
+                                $cover = $g['cover'];
+                                }
+                                $urltitle = preg_replace('/[^a-z0-9\s]/','',strtolower($g['name']));
+                                $urltitle = preg_replace('/\s+/','-',$urltitle);
+                                $link = $this->params['bs']."/".$urltitle."-g".$g['id'];
+                    ?>
+                    <li><a href="<?=$link?>"><img data-original="<?=myhelper::resize($g['cover'],166,250);?>" alt="<?=$g['name']?>"></a></li>
+                    <?php endforeach;?>
+                </ul>
+            </div>
+            <div class="arr_a"><img src="<?=__IMG__?>/img_10.png" class="left_t" id="left_o"><img src="<?=__IMG__?>/img_11.png" class="right_t" id="right_o"></div>
+        </div>
+        <?php endif;?>
+    </div>
+
+    

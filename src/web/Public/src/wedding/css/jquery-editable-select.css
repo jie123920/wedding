@@ -1,0 +1,187 @@
+/**
+ * jQuery Editable Select
+ * Indri Muska <indrimuska@gmail.com>
+ *
+ * Source on GitHub @ https://github.com/indrimuska/jquery-editable-select
+ */
+
+ .c-clothes{
+    width: 750px;
+    height: 800px;
+    background-color: #fefdf4;
+    position: relative;
+}
+.c-clothes>span{
+    font-size:14px;
+    color: #616161;
+    font-family: "ebrima";
+}
+.c-clothes .title{
+    font-size: 14px;
+    font-family: "ebrima";
+    color: #616161;
+}
+
+
+
+.custom_r {
+    width: 409px;
+    height: 414px;
+    position: absolute;
+    right: 20px;
+    top: 43px;
+}
+.custom_r .lo-zi {
+    position: relative;
+    top: -73px;
+    padding: 0px 15px 0 15px;
+}
+.c-clothes select option {
+
+    background-color: #fef4e1;
+}
+.custom_l select {
+    width: 252px;
+    height: 30px;
+
+
+    border: 1px solid #97938c;
+}
+.custom_l li {
+    margin-left: 20px;
+   
+    margin-top: 8px;
+}
+.c-clothes select option {
+    background-color: #fef4e1;
+}
+.c-clothes>div:nth-child(1) {
+    position: relative;
+    top: 10px;
+    left: 20px;
+    font-size: 14px;
+    font-family: "ebrima";
+}
+.custom_l li>div {
+    font-size: 14px;
+    font-family: "ebrima";
+    color: #616161;
+    position: relative;
+}
+.custom_l {
+    position: relative;
+    top: 38px;
+}
+span.cs {
+    font-size: 14px;
+    font-family: Gara;
+    color: #ffcc33;
+}
+.custom_l select {
+    font-size: 14px;
+    font-family: ebrima;
+    color: #616161;
+   
+}
+.title_f {
+    margin-top: 38px;
+}
+.title_s {
+    margin-top: 38px;
+}
+.title_n {
+    margin-top: 38px;
+}
+.custom_l li>div>input {
+    position: absolute;
+    
+}
+.custom_l li>div>select {
+    position: absolute;
+    
+}
+input.es-input {
+    padding-right: 20px !important;
+    font-size: 14px;
+    font-family: ebrima;
+    color: #616161;
+    width: 252px;
+    height: 30px;
+    border: 1px solid #97938c;
+    padding-left: 5px;
+    background-color: white  !important;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAYAAADJEc7MAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAG2YAABzjgAA4DIAAIM2AAB5CAAAxgwAADT6AAAgbL5TJ5gAAABGSURBVHjaYvz//z8DOYCJgUzA0tnZidPK8vJyRpw24pLEpwnuVHRFhDQxMDAwMPz//x+OOzo6/iPz8WFGuocqAAAA//8DAD/sORHYg7kaAAAAAElFTkSuQmCC) right center no-repeat;
+}
+
+input.es-input.open {
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    border-bottom-left-radius: 0;
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0;
+    /* font-size: 30px;
+    color: red; */
+}
+
+.es-list {
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #d1d1d1;
+    display: none;
+    z-index: 1000;
+    background: #fff;
+    max-height: 160px;
+    overflow-y: auto;
+    -moz-box-shadow: 0 0px 0px #ccc;
+    -webkit-box-shadow: 0 0px 0px #ccc;
+    box-shadow: 0 0px 0px #ccc;
+}
+
+.es-list li {
+    display: block;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 14px;
+    font-family: ebrima;
+    color: #616161;
+}
+
+.es-list li.selected {
+    background: #f3f3f3;
+    /* font-size: 30px;
+    color: red; */
+}
+
+.es-list li[disabled] {
+    opacity: .5;
+    /* font-size: 30px;
+    color: red;
+     */
+}
+
+.title_w {
+    margin-top:38px;
+}
+.title_l {
+    margin-top: 38px;
+}
+.title_q {
+    margin-top: 38px;
+}
+.title_u{
+    margin-top: 38px;
+}
+.title_to{
+    margin-top: 38px;
+}
+.title_bac{
+    margin-top: 38px;
+}
+.title_Armu{
+    margin-top: 38px;
+}
+.title_Armcu{
+    margin-top: 38px;
+}

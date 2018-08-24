@@ -1,0 +1,154 @@
+	@font-face {font-family: "constanb";
+	    src: url('../fonts/constanb.ttf');
+	    src: url('../fonts/constanb.eot?#iefix') format('embedded-opentype'),
+	    url('../fonts/constanb.ttf') format('ttf'),
+	    url('../fonts/constanb.woff') format('woff'),
+	    url('../fonts/constanb.svg') format('svg');
+	}
+  ul,li,a{text-decoration:none;list-style: none;}
+  *{margin: 0;padding: 0;}
+  body{font-family: 'Open Sans', sans-serif;/*background: url("images/bg.jpg")*/;}
+  .user_con_bd_box{padding-left: 225px;min-height: 500px;}
+  .user-header{width: 100%;height:46px;line-height: 46px;font-size: 18px;color:#616161;font-family: GARA}
+  .user-time{margin-left: 20px;}
+  .time{width: 30%;height: 100%;margin-left: 30px;display: inline-block;}
+  .user-id{
+      width: 60%;
+      height: 100%;
+      float: left;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-right: 40px;
+      text-align: left;
+      text-indent: 40px;
+  }
+  .uesr-unpaid{width:92%;margin: 0 auto;overflow: hidden;padding-bottom: 30px;}
+  .unpaid-title{display: inline-block;}
+  .unpaid-title strong{font-size: 18px;color:#e13f38;font-family: GARA}
+  .unpaid-title p{font-size: 18px;color: #000000;line-height:48px;}
+  .unpaid-title p span{font-size: 24px;color: #b50000;}
+  .unpaid-play{width: 145px;height:42px;background:url("../images/btn_01.png");font-size: 16px;line-height:42px;text-align: center;color: #fff;display: inline-block;background-size: 100%}
+  .unpaid-play a{color: #ffffff}
+  .unpaid-play a:hover{color: #ffffff}
+  .unpaid-service{width: 145px;height:42px;background:url("../images/btn_02.png");font-size: 16px;line-height:42px;text-align: center;color: #fff;display: inline-block;background-size: 100%}
+  .unpaid-service a{color: #fff;}
+  .unpaid-service a:hover{color: #fff;}
+  .user-list{width: 92%;margin: 0 auto;margin-top: 26px;overflow: hidden;}
+  .user-list li{width: 99%;height:auto;margin-top: 12px;overflow: hidden}
+    .user-list li:first-child{border-top:1px solid #94908d }
+  .user-list-pic{
+      width: 141px;
+      height: 150px;
+      float: left;
+      margin-top: 10px;
+      margin-left: 10px;
+      margin-bottom: 10px;
+  }
+    .user-order-details li:first-child {
+        overflow: hidden;
+    }
+  .user-list-pic img{width: 106px;max-height: 160px;}
+  .user-list-details{
+      float: right;
+      width: 716px;
+      text-align: center;
+      line-height: 26px;
+      font-size: 14px;
+      color: #616161;
+      margin-top: 14px;
+      margin-left: 20px;
+  }
+  .user-list-details p{text-align: left;}
+  .hide-button{width: 92%;margin: 0 auto;text-align: center;line-height: 30px;font-size: 18px;color: #0062b5;}
+  .hide-button a{color: #616161;cursor: pointer;font-family: GARA}
+  .hide-button a:hover{color: #fc9335;text-decoration: underline;}
+  .list-button{float: right;margin-right:40px;margin-top:10px;}
+  .pay-again{width: 172px;height: 42px;background:#695e59;color: #ffffff;font-size: 18px;text-align: center;line-height: 42px;}
+  .pay-again a{color: #ffffff;cursor: pointer;}
+  .pay-again a:hover{color: #ffffff;}
+  .list-button p{font-size: 24px;color: #e13f38;text-align: center;line-height:60px}
+  .user-order-details{width: 100%;margin-top: 52px; display: none;font-family: GARA}
+  .user-order-details li{width: 100%;border-bottom:1px solid #94908d;}
+  .product-total{
+      width: 60%;
+      font-size: 18px;
+      color: #695e59;
+      overflow: hidden;
+      float: right;
+  }
+  .shiping-hanging{
+      width: 60%;
+      margin: 0 auto;
+      font-size: 18px;
+      color: #695e59;
+      overflow: hidden;
+      line-height: 36px;
+      float: right;
+  }
+  .sub{
+      width: 60%;
+      margin: 0 auto;
+      overflow: hidden;
+      font-size: 24px;
+      color: #695e59;
+      margin-top: 40px;
+      float: right;
+  }
+  .tf{margin-left: 40px;float: left;    color: #616161;font-family: GARA}
+  .ta{margin-right: 60px;float: right;    color: #e13f38;}
+  .ship-address{width:83%;margin: 0 auto}
+  .ship-met{width: 83%;margin: 0 auto}
+  .payment{width: 83%;margin: 0 auto}
+  .ship-address h2,.ship-met h2,.payment h2{margin-bottom:20px;margin-top:20px;font-size: 18px;    color: #616161;}
+  .payment h2{text-transform: uppercase}
+  .ship-address p,.ship-met p{font-size: 14px;color:#616161;line-height: 32px}
+  .met-pic{max-width:185px;height:63px!important;margin-bottom: -15px!important;}
+ 
+  .center-loadmore{
+      width: 214px;
+      height: 40px;
+      background: #fefbf4;
+      font-size: 26px;
+      text-align: center;
+      line-height: 40px;
+      color: #616161;
+      margin: 46px auto;
+  }
+    @media screen and (max-width: 690px){
+      .user_con_bd_box{padding:0;}
+      .user_con_bd{padding: 0;}
+      .user-list-pic{width: 100px;height: 100px;margin-top: 5%;}
+      .user-list-details{margin-top: 5%;font-size: 12px;}
+      .user-list-details h4{width:80px !important;}
+      .list-button{margin-right:0%;margin-top: 8%;}
+      .pay-again{width:100px;height:35px;line-height:35px;font-size: 12px;}
+      .unpaid-play, .unpaid-service{width: 100%;}
+      .unpaid-service{margin-top:5%;width: 98%;}
+      .unpaid-play{margin-top:5%;}
+      .tf{margin-left: 20px;}
+      .ta{margin-right: 40px;}
+      .time{width: 100%;margin-left: 0px;height: 50%}
+      .user-id{width: 100%;height: 50%}
+      .user-header{height: 100px;}
+    }
+    .myorder_title{float: left;}
+    .myorder_th{float: right;}
+    .myorder_td{height: 30px;
+        line-height: 30px;color: #616161;font-family: GARA;border-bottom:1px solid #94908d }
+    .user-list-details h4{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        width: 100%;
+        text-align: left;
+        border-bottom: 1px solid #94908d;
+        font-size: 26px;
+        color: #616161;
+        font-family: GARA;
+        margin: 0;
+    }
+    .user-list-details h4 a{color: #695e59;}
+    .user-list-details h4 a:hover{color: #695e59;}
+    

@@ -1,0 +1,157 @@
+<link href="<?=__CSS__?>/service.css" rel="stylesheet">
+<style>
+    .sercice_cont > div{padding-bottom: 20px;}
+    .service_in_box .sercice_cont p{margin: 0;}
+    .conent{text-align: justify;}
+</style>
+<!-- 主体 -->
+<div class="service_main">
+    <script>
+        var fouce = false;
+        search_related_url = "/support/searchrelated";
+        $(".search .search_btn").on("click", function () {
+            var keyword = $(".search [name='keyword']").val();
+            if(!keyword){
+                layer.alert('<?=\YII::t('common','EmptyKeywords')?>', {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000})
+                return false;
+            }
+            location.href = "/support/faq-list?keyword=" + keyword
+        })
+        $(function(){
+            $(document).keydown(function(event){
+                if(event.keyCode==13&&fouce){
+                    var keyword = $(".search [name='keyword']").val();
+                    if(!keyword){
+                        layer.alert('<?=\YII::t('common','EmptyKeywords')?>', {title: false, btn: "", shadeClose: true, shade: [0.7, '#000'], offset: "auto", time: 2000});
+                        return false;
+                    }
+                    location.href = "/support/faq-list?keyword=" + keyword
+                }
+            });
+        });
+        $(".search [name='keyword']").on("keyup focus", function () {
+            fouce = true;
+            var keyword = $(this).val();
+            if (keyword.length > 2)
+            {
+                $.post(search_related_url, {keyword: keyword}, function (data) {
+                    if (data)
+                    {
+                        $(".search_associated").width($(".search [name='keyword']").outerWidth() - 2).show();
+                        $(".search_associated ul").html(data);
+                    }
+                })
+            }
+            else
+            {
+                $(".search_associated").hide();
+            }
+        })
+    </script>
+<link rel="stylesheet" type="text/css" href="<?=__CSS__?>/service.css">
+    <div class="service_con service_index_con">
+        <h2><?=\YII::t('shop','Frequently Asked Questions')?></h2>
+        <p>
+            <div class="conent">We try to answer common questions with our FAQs, so please take a moment to browse these helpful articles. The easiest way is to search by keyword, or browse by category.</div>
+        </p>
+         <p>
+            <div class="conent_title">1. How to contact us?</div>
+            <div class="conent">By Email:</div>
+            <div class="conent">Please leave any additional requests when making an order, or send an email to: service@Bycouturier.com. We will process your request and respond within 24-48 hours. If you do not receive a reply in your inbox, please check your spam filter or junk folder for an email from our customer service team.</div>
+            <div class="conent">By Live Chat:</div>
+            <div class="conent"><img src="https://cdn-image.mutantbox.com/201808/87dd079c5d817e9d2f086963e96ac6eb.png" alt=""></div>
+        </p>
+        <p>
+            <div class="conent_title">2. Do you offer customized dress sizes?</div>
+            <div class="conent">Yes, we provide customized sizes for each dress. Please look for these on the dress product page. The methods of measurement are as follows:</div>
+            <div class="conent"><img src="https://cdn-image.mutantbox.com/201808/88dae4749d8bae80cda93783a7ee7aa9.png" alt=""></div>
+        </p>
+        <p>
+            <div class="conent_title">3. How to make a return?</div>
+            <div class="conent">Please submit the return request within 10  days after receiving your product(s). In this case, you need to send an email with your reasons and dress pictures attached to <a href="mailto:service@bycouturier.com" style="color: #616161">service@bycouturier.com</a>. You can return the products to the address we offer with our permission. We will inspect and process your return within 14 business days. You will receive a confirmation via email when your return has been processed.</div>
+            <div class="conent">Please allow up to two billing cycles for the return credit to appear on your credit card statement. Credits are processed for the original cost of the merchandise plus tax. Shipping and handling fees will not be refunded.</div>
+            <div class="conent">If an item is returned in an unacceptable condition, we will send it back to you without any refunds.</div>
+        </p>
+        <p>
+            <div class="conent_title">4. How can I change or cancel my order?</div>
+            <p class="conent">You can submit your request to our support service team by sending an email to <a href="mailto:service@bycouturier.com" style="color: #616161">service@bycouturier.com</a></p>
+           
+        </p>
+        <p>
+            <div class="conent_title">5. How far in advance should I buy my dress? </div>
+            <div class="conent">We recommend purchasing dresses 2-3 months in advance. Basically, the delivery time consists of two parts: tailoring time and shipping time. For tailoring time, it takes 18 to 20 business days to make the dress. For shipping time, we offer two ways for you to choose from: Standard (20-28 business days) and Express (2-7 business days). (The exact shipping time may be shorter than our estimate for the U.S.A, Europe and Asia while it may be longer than our estimate for South American countries.) So it is a good idea to leave some time for any potential alterations that may need to be done on the dress. We do have an express option to shorten the time on shipping, but that does come with an additional cost and the time for making the dress remains the same.</div>
+        </p>
+        <p>
+            <div class="conent_title">6. Can I view your sample gowns to check their quality?</div>
+            <div class="conent">Bycouturier is an online store. This allows us to lower our overhead costs, and the savings are passed on to you through our more affordable prices. Since Bycouturier aims at personalized customization, we do not keep any stock for the designs you see on our website. The dress will be under manufacture according to your specifications after the order is placed. Please check out our feedback page to see our previous brides’ experiences and quality feedback of our gowns.</div>
+        </p>
+        <p>
+            <div class="conent_title">7. What shipping methods do you use?</div>
+            <div class="conent">Normally, we ship all items by DHL or any other international express carrier to customers all over the world.</div>
+        </p>
+        <p>
+            <div class="conent_title">8. How can I track my order after it has been shipped?</div>
+            <div class="conent">We will update the tracking number of your order on the Order Details page as soon as it’s dispatched. You can find the tracking number by clicking 'Order Details' in the ‘My order' section. Please look at the picture below:</div>
+            <div class="conent"><img src="https://cdn-image.mutantbox.com/201808/da0f37283956d845569d44c76216c351.png" alt=""></div>
+        </p>
+        <p>
+            <div class="conent_title">9. How long will it take for my wedding gown to be delivered?</div>
+            <div class="conent">The delivery time consists of two parts: tailoring time and shipping time. For tailoring time, it takes 18 to 20 business days to make the dress. For shipping time, we offer two ways for you to choose from: Standard (20-28 business days) and Express (2-7 business days). (The exact shipping time may be shorter than our estimate for the U.S.A, Europe and Asia while it may be longer than our estimate for South American countries.)</div>
+            <div class="conent">In order to avoid unforeseen circumstances, we recommend that you confirm your order with us at least 2 months in advance of the date you require it.</div>
+        </p>
+        <p>
+            <div class="conent_title">10. Do you ship worldwide?</div>
+            <div class="conent">Yes, we do. You can see the shipping cost when making an order before the payment.</div>
+        </p>
+        <p>
+            <div class="conent_title">11. Do you accept returns?</div>
+            <div class="conent">Yes, we do. However, there are terms and conditions for it. Please refer to our Return & Refund Policy for more information.</div>
+        </p>
+        <p>
+            <div class="conent_title">12. About color display</div>
+            <div class="conent">Because settings on individual computer monitors vary, it is often hard for us to show the exact color(s) of each item. All images have been optimized to look their best on a variety of different platforms, browsers and monitors. </div>
+        </p>
+        <p>
+            <div class="conent_title">13. How do I find international pricing? </div>
+            <div class="conent">Bycouturier international retail prices, promotions, and products may vary by country. To shop online, click on the "Change Region" icon in the footer, select Country and Currency then click "Proceed to Home Page." International shoppers who visit Bycouturier.com will see the prices of items shown in their selected currency. The total international purchase price includes shipping fee and excludes potential taxes that may be charged for by customs clearance in your locality. </div>
+        </p>
+        <p>
+            <div class="conent_title">14. Are there any promotions? </div>
+            <div class="conent">i. You can make US$20 off from your first order which is over US$249 with code: FIRST20</div>
+            <div class="conent">ii. Free worldwide shipping for order over US$299</div>
+            <div class="conent">iii. Other sales promotions updated from time to time </div>
+            <div class="conent">Please note: You can either get First20 Discount or Free Shipping Promotion.</div>
+        </p>
+    <script>
+        $(".search_box [name='game_id']").on("change", function () {
+            var game_name = $(this).find("option:selected").text();
+            $(this).next(".text").text(game_name);
+        })
+    </script>
+    <script>
+        $('.service_list li').on('click',function(){
+            $(this).addClass('on').siblings().removeClass('on');
+            $('.sercice_cont>div').eq($(this).index()).addClass('on').siblings().removeClass('on');
+        })
+    </script>
+        <script>
+            jQuery(".slideBox").slide({mainCell: ".bd ul", effect: "fold", autoPlay: true, interTime: 4000});
+            TouchSlide({slideCell: "#focus", titCell: ".hd ul", mainCell: ".bd ul", effect: "leftLoop", autoPlay: true, autoPage: true, interTime: 4000});
+            function fangfa() {
+                var bodyw = $(window).width();
+                var bodyw = $('body').width();
+                if (bodyw > 960) {
+                    $('.pc_banner .bd ul,.pc_banner .bd li').width(bodyw)
+                    var imgh = $('.pc_banner .bd li img').height();
+                    $('.pc_banner .bd ul').height(imgh)
+                }
+            }
+            window.onload = function () {
+                fangfa()
+            };
+            $(window).resize(function () {
+                fangfa()
+            });
+        </script>
+</div>
+</div>

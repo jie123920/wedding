@@ -1,0 +1,13 @@
+@font-face {font-family: "GARAIT";
+    src: url('../fonts/GARAIT.ttf'); /* IE9*/
+    src: url('../fonts/GARAIT.eot') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts/GARAIT.ttf') format('ttf'), /* chrome、firefox */
+    url('../fonts/GARAIT.woff') format('woff'), /*chrome、firefox、opera、Safari, Android, iOS 4.2*/
+    url('../fonts/GARAIT.svg') format('svg'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+@font-face {font-family: "GARA";
+    src: url('../fonts/GARA.eot') format('embedded-opentype'),
+    url('../fonts/GARA.ttf') format('ttf'),
+    url('../fonts/GARA.woff') format('woff'),
+    url('../fonts/GARA.svg') format('svg');
+}

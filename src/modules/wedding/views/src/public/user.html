@@ -1,0 +1,41 @@
+<?php $this->beginContent('@module/views/'.GULP.'/public/main-shop.html');?>
+<link rel="stylesheet" type="text/css" href="<?=__CSS__?>/user.css">
+<script type="text/javascript" src="<?=__JS__?>/common.js"></script>
+<script type="text/javascript" src="<?=__JS__?>/jquery.validate.min.js"></script>
+<div class="content sub_main" style="min-width: 1260px;width: 1260px">
+    <div class="user_main_box">
+
+         <div class="sub_content" style="color: #000000;">
+            <div class="user_index">
+                <?php if($this->params['user_info']):?>
+                    <div class="personal_data">
+                        <div class="data">
+                            <div class="img">
+                            </div>
+                            <div class="text">
+                                <h2><?=$this->params['user_info']['username'] ?></h2>
+                                <h3 class="email" title="<?=$this->params['user_info']['email'] ?>"><?=$this->params['user_info']['email'] ?></h3>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif;?>
+                <div class="user_con">
+                    <?php if($this->params['user_info'] && isset($this->params['user_menu'])):?>
+                        <div class="user_con_hd">
+                            <ul>
+                                <?php foreach($this->params['user_menu'] as $menu){?>
+                                    <li <?php if($menu['active'] == 'on'){?> class="on" <?php } ?>><a href="<?=$menu['url']?>"><?=$menu['name']?></a></li>
+                                <?php }?>
+                            </ul>
+                        </div>
+                    <?php endif;?>
+                    <!--body-->
+                        <?= $content ?>
+                    <!--\body-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<?php $this->endContent();?>

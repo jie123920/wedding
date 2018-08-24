@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style lang="">
+        .content_x{
+            width: 1260px;
+            margin: 0 auto;
+            clear: both;
+        }
+		.content_x .left_x{
+            float: left;
+        }
+        .content_x .right_x{
+            float: right;
+            width: 470px;
+            border: 1;
+            background: #fefbf4;
+           
+            padding: 13px;
+            font-size: 12px!important;
+           height: 600px;
+        }
+        .content_x .right_x ul{
+            padding: 0;
+        }
+        .content_x .lie_o {
+            width: 600px;
+
+            border: 1px solid #cccccc;
+            font-size: 14px;
+            background: #F7F7F7;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .content_x .lie_o ul li{
+            list-style: none;
+            padding-bottom: 5px;
+        }
+        .content_x .lie_o ul li span:nth-child(1) {
+
+            margin-right: 30px;
+            display: inline-block;
+            width:160px;
+        }
+        .content_x .note_o {
+            margin-left: 15px;
+        }
+        .content_x .note {
+           
+            color: #FB5058;
+        }
+        .content_x>.left_x>ul>li {
+            margin: 10px 0;
+        }
+        .content_x>.left_x>ul>li:nth-child(3) {
+            border-bottom: 1px solid #cccccc;
+            padding-bottom: 20px;
+        }
+        .content_x .right_x ul li{
+            list-style:none;
+        }
+        .content_x .left_x h3{
+            color: #528550;
+            font-size: 24px;
+			padding: 0 0 6px;
+            font-family: "constanb";
+            border-bottom: 1px solid #90918c;
+            margin-bottom:15px;
+        }
+        .content_x h4{
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .content_x .left_x{
+            font-size: 14px;
+            width: 749px;
+            background: #fefbf4;
+            
+            padding: 20px;
+           height: 600px;
+        }
+        .content_x .lie_o ul {
+            padding: 0;
+            margin-left: 15px;
+        }
+        .content_x  .left_x a{
+            color: #dc3d39;
+            text-decoration: none;
+        }
+        .content_x .right_x h3{
+            color: #000;
+            padding-bottom: 6px;
+            font-family: "constanb"!important;
+            padding-top: 7px;
+        
+        }
+        .content_x table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        .content_x th{
+            line-height: 25px;
+            white-space: nowrap;
+            font-weight: normal;
+            padding-right: 5px;
+            text-align: left;
+        }
+        .content_x .theme-text {
+            color: #dc3d39;
+        }
+        .content_x h3,h4{
+            padding: 0;
+            margin: 0;
+        }
+		.content_x.clearfix .left_x>ul>li {
+  				 		list-style: disc;
+    				margin-left: 22px;
+		}
+		.content_x h4,.content_x ul,.content_x div{
+			font-family: "ebrima"!important;
+		}
+		.content_x .right_x h3{
+			color: #616161;
+     border-bottom: 1px solid #90918c;
+        margin-bottom: 10px;
+		}
+		.content_x table{
+			font-size: 14px!important;
+		}
+		.Note{
+			margin-top: 6px; 
+		}
+		.Note strong{
+			color: #dc3d39;
+        }
+        .content_x.clearfix .left_x>ul {
+    border-bottom: 1px solid #90918c;
+}
+    </style>
+</head>
+<body>
+
+<div class="content_x clearfix">
+    <div class="left_x">
+            <?php if($data['channel_method'] == 1001):?>
+        <h3>Thank you for shopping with us! Your order has been received!</h3>
+        <h4>Your next step is to complete your Wire Transfer payment and submit your payment details.</h4>
+        <?php else:?>
+        <h3>Thank you for shopping with us! Your order has been received!</h3>
+        <h4>Your next step is to complete your Western Union payment and submit your payment details.</h4>
+        <?php endif;?>
+        <ul>
+            <li>
+                <?php if($data['channel_method'] == 1001):?>
+                    <span>The information below will be needed to make your Wire Transfer.</span>
+                <div class="lie_o">
+                    <ul>
+						<li><span>Account Holder: </span><span>Shanghai Laiwan Network Technology Co. Ltd</span></li>
+						<li><span>Address: </span><span>Suite 1217, Building 6, 768 Chenxiang Rd, Shanghai, China</span></li>
+						<li><span>Bank:</span><span>BANK OF COMMUNICATIONS</span></li>
+						<li><span>Bank Account Number: </span><span>310066632018800062403</span></li>
+						<li><span>Swift Code:</span><span>COMMCNSHXXX</span></li>
+						<li><span>Bank Address:</span><span>200 Jiangxizhong Road, Shanghai, China</span></li>
+
+						
+
+						<li><span>Payment reference:</span><span>design fee No. <?=$order_id?></span></li>
+						<li class="Note"><strong>Note:</strong></li>
+
+						<li>Please include this payment reference in the instructions to your bank.<br>
+							Without this reference the processing of your payment will be delayed or may even not be possible.
+						</li>
+					</ul>
+				</div>
+                <?php else:?>
+                <span>The information below will be needed to complete your payment at Western Union.</span>
+				<div class="lie_o">
+                    <ul>
+                        <li><span>Receiver's First Name: </span><span>Xiaoyang</span></li>
+                        <li><span>Receiver's Surname: </span><span>Chen</span></li>
+						<li><span>Country: </span><span>China</span></li>
+						<li><span>Address:</span><span>Suite 1217, Building 6, 768 Chenxiang Rd, Shanghai, China</span></li>
+						<li><span>Phone: </span><span>+86 131 4845 5652</span></li>
+
+						<!-- <li><span>Payment reference:</span><span>design fee No. <?=$order_id?></span></li> -->
+						<li class="Note"><strong>Note:</strong></li>
+
+						<li>Please include this payment reference in the instructions to Western Union.<br>
+							Without this reference the processing of your payment will be delayed or may even not be possible.
+                        </li>
+                        
+					</ul>
+                </div>
+                <?php endif;?>
+            </li>
+
+            <?php if(!$this->params['is_login']):?>
+                <?php
+                    $sign = md5("3".$order_id.'order-guest');
+                    $url = "order_id=".$order_id."&sign=".$sign;
+                ?>
+                <li>You can check the status of your order by going to <a target="_blank" href="/order/order-info?<?=$url?>">My Orders</a></li>
+            <?php else:?>
+                <li>You can check the status of your order by going to <a target="_blank" href="/user-center/myorder">My Orders</a></li>
+            <?php endif;?>
+        </ul>
+        <div>Please Note:</div>
+        <?php if($data['channel_method'] == 1001):?>
+            <div>1. When you finish your Wire Transfer transaction, please send us a ticket below to submit your payment details including sender's account name and amount.</div>
+        <?php else:?>
+            <div>1. When you finish your Western Union transaction, please send us a ticket below to submit your payment details including WU tracking number (MTCN), sender's name, address, country, and amount.
+            </div>
+        <?php endif;?>
+            <div>2. Your order status will change to "Payment Confirmed" within 2 working days after we verify your payment. Some orders may take additional time to verify.</div>
+    </div>
+    <div class="right_x">
+
+        <h3>ORDER SUMMARY</h3>
+        <table>
+            <tbody><tr>
+                <th>Order Number: #</th>
+                <td><strong class="theme-text"><?=$order_id?></strong></td>
+            </tr>
+            <tr>
+                <th>Order Total:</th>
+                <td><strong class="theme-text">USD <?=$data['total_amount']?></strong></td>
+            </tr>
+            <tr>
+                <th>Number of Items:</th>
+                <td><strong class="black"><?=$number?></strong></td>
+            </tr>
+            <tr>
+                <th>Payment Method:</th>
+                <td><strong class="black">
+                    <?php if($data['channel_method'] == 1001):?>
+                    Wire transfer
+                    <?php elseif($data['channel_method'] == 1002):?>
+                    Western Union
+                    <?php endif;?>
+                </strong></td>
+            </tr>
+            </tbody></table>
+
+    </div>
+</div>
+
+</body>
+</html>

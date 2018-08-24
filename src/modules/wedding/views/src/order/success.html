@@ -1,0 +1,115 @@
+<?php
+use yii\helpers\Html;
+?>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="renderer" content="webkit">
+<title>SUCCECC</title>
+<script src="<?=__JS__?>/jquery-1.9.1.min.js"></script>
+<script src="<?=__JS__?>/layer/layer.js"></script>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link href="<?=__CSS__?>/pay_shop1.css" rel="stylesheet">
+<link href="<?=__CSS__?>/style_el-EL-2.css" rel="stylesheet">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-K5MP5DH');</script>
+    <!-- End Google Tag Manager -->
+
+
+
+</head>               
+
+<body>
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K5MP5DH"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<script>
+fbq('track', 'Purchase', {
+    value: "<?echo json_decode($orderinfo, true)['total_amount'];?>",
+    currency: 'USD',
+    content_ids: '<?php echo $orderid?>',
+    content_type:'product'
+  });
+</script>
+
+<?php
+    if(!$this->params['is_login']){
+        $sign = md5("3".$orderid.'order-guest');
+        $url = Yii::$app->params['MY_URL']['BS']."/order/order-info?order_id=".$orderid."&sign=".$sign;
+    }else{
+        $url = Yii::$app->params['MY_URL']['BS']."/user-center/myorder";
+    }
+?>
+
+
+<div class="pay_result">
+    <div class="box">
+        <h1><?=Yii::t('shop','ORDER CONFIRMED')?></h1>
+        <p><?=Yii::t('shop','Thank you for your purchase')?></p>
+        <div class="sub">
+            <a class="ml50 close" href="<?=$url?>" target="_parent" style="margin:0;"><?php echo Yii::t('common', 'shop.myorder')?></a>
+	        <a href="<?php echo Yii::$app->params['MY_URL']['BS']?>/" class="close" target="_parent"style="margin-left:20px;"><?php echo Yii::t('common', 'shop.continue')?></a>
+        </div>
+    </div>
+</div>
+<script>
+$(function(){
+    var form = '<?php echo $from?>';//adyen,paymentwall
+    if(form == 'paymentwall'){
+        $('.pay_result').css({'width':'758px','height':'625px'})
+    }
+	
+});
+</script>
+<script type="text/javascript">
+var orderinfo = <?php echo $orderinfo?>;
+	if(orderinfo){
+		try {
+			dataLayer.push({
+				'event': 'purchase',
+			    'orderid': orderinfo.orderid,
+			    'country': 'US',
+			    'quantity': orderinfo.quantity,    //商品总数量//
+			    'ids': orderinfo.ids,   //所有商品的id，用逗号分隔//
+			    'totalvalue': orderinfo.amount,    //所有商品总价值//
+			    'tax': '',
+			    'shipping': orderinfo.freight,
+			    'coupon': orderinfo.coupon_code, //有使用coupon的话//
+			    'revenue': orderinfo.total_amount,  //用户要付款的金额//
+				'ecommerce': {
+				  'purchase': {
+				    'actionField': {
+				    	 'id': orderinfo.orderid,                         // 订单id//
+				         'affiliation': 'Online Store',
+				         'revenue': orderinfo.total_amount,                     // 付款总金额//
+				         'tax':'',
+				         'shipping': orderinfo.freight,
+				         'coupon': orderinfo.coupon_code
+				    },
+				    'products': orderinfo.gtm
+				  }
+				}
+			});
+		
+		    console.log("pay sucessful datalayer:");
+		    console.log(dataLayer);
+		}catch(err) {
+	    	console.log(err.message);
+	    }
+	}
+</script>>
+
+</body>
+</html>

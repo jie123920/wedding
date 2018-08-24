@@ -1,0 +1,55 @@
+<?php if($comment):?>
+    <?php foreach($comment as $c):?>
+    <div class="item row">
+        <div class="user col-md-3">
+            <div class="user-msg">
+                <?php
+                   $first = mb_substr($c['uname'],0,1,'utf-8');
+                   $end   = mb_substr($c['uname'],-1,1,'utf-8');
+                   $name  = $first."***".$end;
+                 ?>
+                <span class="username"><?=$name?></span>
+            </div>
+        </div>
+        <div class="comment-ctn col-md-9" style="padding-top:0;padding-bottom:5px">
+            <div class="comment-character">
+                <div class="stars">
+                    <ul>
+                        <?php for($i=1;$i<=$c['star'];$i++){?>
+                            <li class="lights"><a href="javascript:;"><?=$i?></a></li>
+                        <?php }?>
+                        <?php $last_star = intval(5-$c['star']);?>
+                        <?php if($last_star>0){ for($i=1;$i<=$last_star;$i++){?>
+                            <li><a href="javascript:;"><?=$i?></a></li>
+                        <?php }}?>
+                    </ul>
+                </div>
+                <!-- <div class="publish-time">
+                    <span><?=date('F d,Y',$c['create_time'])?></span>
+                </div> -->
+                <p class="remark">
+                    <?=nl2br(htmlspecialchars($c['content']))?>
+                    <br>
+                    <br>
+                    <?php if($c['picture']):?>
+                    <?php
+                                    $picture = json_decode($c['picture'],true)
+                                ?>
+                    <?php foreach($picture as $p):?>
+                    <img src="<?=$p?>">
+                    <?php endforeach;?>
+                    <?php endif;?>
+                </p>
+            </div>
+        </div>
+    </div>
+    <?php endforeach;?>
+<?php endif;?>
+
+
+
+
+
+
+
+

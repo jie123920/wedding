@@ -1,0 +1,1124 @@
+<?php
+use app\helpers\myhelper;
+?>
+<link href="<?=__CSS__?>/new.css" rel="stylesheet">
+<div class="zl-container">
+    <!-- 支付详情 -->
+    <div class="ship-mode">
+        <div class="ship-address">
+            <div class="address-box">
+                <div class="add-title">*<?=Yii::t('shop','ShippingAddress')?></div>
+                <div id="address_input" style="display: none">
+
+                </div>
+                <div class="row j-selected-address">
+                    <div class="col-sm-6 c-default-address j-adress-item-box j-default-address" style="display: none;">
+                        <div class="address-item default-item j-address-item">
+                            <!-- JS 追加 DOM 默认地址或选择地址 -->
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="choose-address" style="display: none">
+                            <p><?=Yii::t('shop','Choose Another Address')?></p>
+                            <select class="choose-address-sel">
+                                <!-- JS 追加 DOM 地址列表 -->
+                            </select>
+                        </div>
+                        <div class="address-operate no-choose-others">
+                            <a href="javascript:void(0);" class="she-btn-white address-btn j-add-address">+<?=Yii::t('shop','Add New Address')?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-box">
+                <div class="add-title m_top20">*<?=Yii::t('shop','PaymentMethod')?></div>
+                <div class="pay-city">
+                    <form>
+                        <dl>
+                            <dd class="city-select">
+                                <select class="country-id">
+                                    <?php foreach($list as $item){?><?php if($default_id == $item['id']){?><option value="<?php echo $item['id']?>" selected='selected'><?php echo trim($item['region_name'])?></option><?php }else{?><option value="<?php echo $item['id']?>"><?php echo trim($item['region_name'])?></option><?php }}?>
+                                </select>
+                            </dd>
+                        </dl>
+                    </form>
+                </div>
+                <div class="pay-mode"></div>
+            </div>
+
+            <div class="exp-list">
+                <div class="add-title m_top20">*<?=Yii::t('shop','ShippingMethod')?></div>
+                <ul>
+                    <li>
+                        <select name="trans_type" id="trans_type" class='trans_type1'>
+                            <option value="1" class='trans_type_1' selected="selected"><?=Yii::t('shop','StandardShipping')?></option>
+                            <option value="2" class='trans_type_2'><?=Yii::t('shop','shop.UrgentExpress')?></option>
+                        </select>
+                        <select name="trans_type" id="trans_type" class='trans_type2' style="display:none">
+                            <option value="1" class='trans_type_1' selected="selected"><?=Yii::t('shop','StandardShipping')?></option>
+                        </select>
+                        <select name="trans_type" id="trans_type" class='trans_type3' style="display:none">
+                            <option value="2" class='trans_type_2'  selected="selected"><?=Yii::t('shop','shop.UrgentExpress')?></option>
+                        </select>
+                    </li>
+                    <li style="padding: 0">
+                        <p style="margin-left: 40px"><?=Yii::t('shop','Shipping times')?>.</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- 订单列表 -->
+            <div class="cf-order">
+                <div class="add-title m_top20"><?=Yii::t('shop','Shopping Bag')?></div>
+                <div class="order-th" style="font-family: GARA;display: none">
+                    <div class="th order-pic"></div>
+                </div>
+                <div class="order-list" style="font-family: GARA">
+                    <?php
+					$list = myhelper::productSort($product_info);
+					$i=0;
+                    if(is_array($list)){
+					foreach($list as $item){
+						$key = $item['goods_sku_id'];
+						$urltitle = preg_replace('/[^a-z0-9\s]/','',strtolower($item['name']));
+                        $urltitle = preg_replace('/\s+/','-',$urltitle);
+                ?>
+                    <div class='or-detailed list_sku_<?php echo $i?>'>
+                        <input type='hidden' value="<?php echo $item['goods_sku_id']?>" class='item-id'/>
+                        <input type='hidden' value="<?php echo implode(',', $item['categories'])?>" class='categories-id'/>
+                        <ul style="overflow: hidden">
+                            <li class='or-detailed-left'>
+                                <a target='_blank' href="/<?=$urltitle.'-g'. $item['goods_id']?>"><img src='<?php echo $item['cover']?>'></a>
+                            </li>
+                            <li class='or-detailed-right'>
+                                <div class='tds'  style="height:auto">
+                                    <div class='td-name'>
+                                        <a class='td-name-a' target='_blank' href="/<?=$urltitle.'-g'. $item['goods_id']?>"><?php echo $item['name']?></a>
+                                    </div>
+                                </div>
+                                <?php foreach($item['spec'] as $child){?>
+                                <?php if (in_array(trim($child['type2']), [1, 2])){?>
+                                <div class='tds'>
+                                    <div class='detailed-title'><?php echo $child['spec_name']?></div>
+                                    <?php
+                                            $child['spec_value'] = ($child['spec_value'] == 'Custom Size')?Yii::t('shop','Custom size'):$child['spec_value'];
+                                        ?>
+                                    <div class='td-right'><p class='td-name-p'><?php echo $child['spec_value']?></p></div>
+                                </div>
+                                <?php }}?>
+
+                                <?php if(isset($item['custom_size'])):?>
+                                    <?php if($item['custom_size']):?>
+                                        <?php foreach($item['custom_size'] as $key_c=>$child_c):?>
+                                        <?php
+                                                      $key_c = (Yii::t('shop',strtolower($key_c)) == strtolower($key_c))?$key_c:Yii::t('shop',strtolower($key_c));
+                                                    ?>
+                                        <div class='tds'>
+                                            <div class='detailed-title'><?php echo $key_c?></div>
+                                            <div class='td-right'><p class='td-name-p'><?php echo $child_c?></p></div>
+                                        </div>
+                                        <?php endforeach;?>
+                                    <?php endif;?>
+                                <?php endif;?>
+
+                                <div class='tds'>
+                                    <div class='detailed-title'><?=Yii::t('shop','Quantity')?></div>
+                                    <div class='td-right'>
+                                        <input type='text' value="1" class='order-amount item-number' disabled="disabled" />
+                                    </div>
+                                </div>
+                                <div class='tds'>
+                                    <div class='detailed-title'><?=Yii::t('shop','UnitPrice')?></div>
+                                    <div class='td-right'><strong><?php echo THINK_RATE_SYMBOL?></strong>
+                                        <?php if(isset($item['activitiy_name'])){?>
+                                        <span class='td-price'><?php echo round(($item['price'])*THINK_RATE_M, 2)?></span>
+                                        <span  style='display:none'><?php echo round($item['price']*THINK_RATE_M, 2)?></span>
+                                        <?php }else{?>
+                                        <span class='td-price'><?php echo round($item['price']*THINK_RATE_M, 2)?></span>
+                                        <?php }?>
+                                    </div>
+                                </div>
+                                <?php if(isset($item['activitiy_name'])){?>
+                                <div class='tds' style="color:red">
+                                    <div class='detailed-title' style="color:red"><?php echo $item['activitiy_name']?></div>
+                                    <div class='td-right'><strong>-<?php echo THINK_RATE_SYMBOL?></strong>
+                                        <span><?php echo round($item['price_promotion']*THINK_RATE_M, 2)?></span>
+                                    </div>
+                                </div>
+                                <?php }?>
+                                 <?php if(isset($item['activity_info'])){?>
+                                 
+                                <div class='tds' style="color:red">
+                                    <div class='detailed-title' style="color:red;font-size:12px;width:80%;"><?php echo $item['activity_info']?></div>
+                                     <?php if(isset($item['activity_discounts'])){?>
+                                    <div class='td-right'><strong>-<?php echo THINK_RATE_SYMBOL?></strong>
+                                        <span ><?php echo round($item['activity_discounts']*THINK_RATE_M, 2)?></span>
+                                    </div>
+                                     <?php }?>
+                                </div>
+                                <?php }?>
+                                <div style='display:none' class='weight'><?php echo $item['weight']?></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <?php $i++;}}?>
+                </div>
+              
+
+            </div>
+        </div>
+        <div class="ship-express">
+            <div class="data-title">EVENT DATE</div>
+            <div class="data-plug-in"> 
+                <select name="month1" class="month1"></select><span>M</span>
+                <select name="day1" class="day1"></select><span>D</span>
+                <select name="year1" class="year1"></select><span>Y</span>
+            </div>
+            <div class="cart-extra-info">
+                <div class="textarea-title">Additional Requirements</div>
+                <div class="list-input" style="box-sizing:border-box;margin-top: 10px;">
+                    <textarea name="comment" id="comment" cols="60" rows="10" placeholder="" class="check_comment textarea resize"></textarea>
+                </div>
+                <div class="textarea-end">Maximum number of charaters:500</div>
+            </div>
+            <div class="understand-title">HOW DID YOU FIRST KNOW US? </div>
+                <select name="understand" id="understand">
+                    <option value="">-- Please Select--</option>
+                    <option value="Facebook">Facebook</option>
+                    <option value="Pinterest">Pinterest</option>
+                    <option value="Instagram">Instagram</option>
+                    <option value="Google">Google</option>
+                    <option value="Bridal Party">Bridal Party</option>
+                    <option value="Other">Other</option>
+                </select>
+            
+            
+            <!-- 订单总价 -->
+            <div class="cf-total" style="width:100%;">
+                <div class="coupon-title">promotion code</div>
+                <div class="coupon-code">
+                    <div class="coupon">
+                        <input type="text" placeholder="<?=Yii::t('shop','Enter the promotion code')?>" id="code-input" autocomplete="off" data-encrypted-name="number">
+                    </div>
+                    <div class="code-buttom"><a href="javascript:" style="font-family:constanb"><?=Yii::t('shop','APPLY')?></a></div>
+                    <p class="promo_error">*<?=Yii::t('shop','promotion code error')?>.</p>
+                </div>
+                <div class="add-title"><?=Yii::t('shop','Order Summary')?></div>
+                <div class="code-price">
+                    <div class="before-calculation" style="display:none" id="product_price">
+                        <h4><?=Yii::t('shop','Product Price')?>:</h4>
+                        <p><i id='total_sysbol'><?=THINK_RATE_SYMBOL?></i><strong id='total_amount'>0.00</strong></p>
+                    </div>
+                     <div class="before-calculation" id="re_price" style="font-size:14px;color:#dc3d39;font-family: GARA;" >
+                        <?php if(isset($activity['name'])){ ?>
+                        <h5 style="width:70%;float:left"><?=$activity['name']?>:</h5>
+                        <p style="color:#dc3d39;"><i id='total_sysbol' >-<?=THINK_RATE_SYMBOL?></i><strong id='reprice'>0.00</strong></p>
+                        <?php }?>
+                    </div>
+                    <div class="before-calculation" id="standard_shipping" >
+                        <h4><?=Yii::t('shop','Shipping&Handing')?>:</h4>
+                        <p><i id='total_sysbol'><?=THINK_RATE_SYMBOL?></i><strong id='standardshipping'>0.00</strong></p>
+                    </div>
+                    <div class="after-calculation" style="display:none" id="promo">
+                        <h4><?=Yii::t('shop','Promo code')?>:</h4>
+                        <p>-<i id='promo_sysbol'><?=THINK_RATE_SYMBOL?></i><strong id='promo_amount'>0.00</strong></p>
+                    </div>
+                </div>
+                <div class="prduct-total">
+                    <h2 style="text-align:left;padding: 0px 16px 10px 16px;font-size: 26px;color: #616161;font-family: GARA"><?=Yii::t('shop','Subtotals')?>:
+                        <p style="font-size: 26px;color: #616161;font-family: GARA">
+                            <i id="last_sysbol"><?=THINK_RATE_SYMBOL?></i>
+                            <strong id="total"></strong>
+                        </p>
+                    </h2>
+                </div>
+                <div class="cf-submit">
+                    <p><?=Yii::t('shop','Orders are charged in $USD')?></p>
+                    <a href='javascript: void(0)' style="font-family:constanb"><?=Yii::t('shop','CHECKOUT')?></a>
+                </div>
+                <div class="cf-agreement">
+                    <?=Yii::t('shop','agree us',['<p>','</p>','<a href="'.\Yii::$app->params['MY_URL']['CF'].'/termsofuse">','</a>','<a href="'.\Yii::$app->params['MY_URL']['CF'].'/privacypolicy">','</a>'])?>
+                </div>
+                <p class="cf-prompt">0.00</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="shipping_address_show" style="">
+        <div class="shipping_address_show_bg"></div>
+        <div class="shipping-address-border j-adr-container">
+            <div class="c-adr">
+                <div class="body">
+                    <i class="fa fa-times aa" aria-hidden="true"></i>
+                    <p class="ind"><?=Yii::t('shop','ShippingAddress')?></p>
+                    <div class="user_con_bd">
+                        <div class="general">
+                            <form method="post" novalidate="novalidate" class="cf-add-form">
+                                <input type="hidden" name="id">
+                                <dl>
+                                    <dt><?=Yii::t('shop','Email')?></dt>
+                                    <dd class="email">
+                                        <input id="email" name="email" type="text" value="" class="cf-add-text">
+                                        <div>Please fill in a valid email address for accurate delivery and communication.</div>
+                                    </dd>
+                                    <dt><?=Yii::t('shop','FullName')?></dt>
+                                    <dd><input id="fullname" name="fullname" type="text" value="" class="cf-add-text"></dd>
+                                    <dt><?=Yii::t('shop','Country')?></dt>
+                                    <dd class="cf-select">
+                                        <select id="country_id" name="country_id">
+                                            <!-- JS 追加 DOM 国家运费 -->
+                                        </select>
+                                    </dd>
+
+                                    <dt><?=Yii::t('shop','* State/Province/Region')?></dt>
+                                    <dd><input id="state" name="state" type="text" value="" class="cf-add-text"></dd>
+                                    <dt><?=Yii::t('shop','City')?></dt>
+                                    <dd><input id="city" name="city" type="text" value="" class="cf-add-text"></dd>
+                                    <dt><?=Yii::t('shop','PhoneNumber')?></dt>
+                                    <dd >
+                                        <input id="phone" name="phone" value="" type="text" class="cf-add-text">
+                                    </dd>
+                                    <dt><?=Yii::t('shop','AddressLine1')?></dt>
+                                    <dd >
+                                        <input id="address" name="address" value="" type="text" class="cf-add-text">
+                                        <p style="margin-left:170px"><?=Yii::t('shop','AddressLine1Placeholder')?></p>
+                                    </dd>
+                                    <dt><?=Yii::t('shop','AddressLine2')?></dt>
+                                    <dd >
+                                        <input id="address2" name="address2" value="" type="text" class="cf-add-text">
+                                        <p style="margin-left:170px"><?=Yii::t('shop','AddressLine2Placeholder')?></p>
+                                    </dd>
+                                    <dt><?=Yii::t('shop','ZIPCode')?></dt>
+                                    <dd ><input id="postal_code" name="postal_code" value="" type="text" class="cf-add-text"></dd>
+                                </dl>
+                                <dl class="adr-btn">
+                                    <input type="button" class="she-btn-black j-adr-submit-btn" value="save" data-ga="Save" data-opera="edit">
+                                </dl>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <script>
+        $(function(){
+            var moth=[]
+            for(var i=1;i<13;i++){
+                moth.push(i)
+            }
+            var html_m='<option value="">'+ '-' +'</option>'
+           for(var i=0;i<moth.length;i++){
+               html_m +='<option value="' + moth[i] + '">' + moth[i] + '  </option>'
+           }
+            $(".month1").html(html_m)
+            var day=[]
+            for(var i=1;i<32;i++){
+                day.push(i)
+            }
+            var html_d='<option value="">'+ '-' +'</option>'
+           for(var i=0;i<day.length;i++){
+               html_d +='<option value="' + day[i] + '">' + day[i] + '  </option>'
+           }
+            $(".day1").html(html_d)
+            var year=[]
+            for(var i=2018;i<2051;i++){
+                year.push(i)
+            }
+            var html_y='<option value="">'+ '-' +'</option>'
+           for(var i=0;i<day.length;i++){
+               html_y +='<option value="' + year[i] + '">' + year[i] + '  </option>'
+           }
+            $(".year1").html(html_y)
+            var counties = <?php echo $freight_countries?>;
+            var is_guset = <?php echo $this->params['is_login']?>;
+            // 初始化地址数据
+            var showAddress = function() {
+//                var addressList = getAddressList();
+//
+//                var defaultAddress;
+//                if (addressList.length > 0) {
+//                    defaultAddress = addressList[0];
+//                    for(var j = 0, len = addressList.length; j < len; j++) {
+//                        if (addressList[j].is_default == '1') {
+//                            defaultAddress = addressList[j];
+//                        }
+//                    }
+//                    render_address_box(defaultAddress);
+//                    if(is_guset != 0){
+//                        render_address_select(addressList, defaultAddress.id);
+//                    }
+//                }
+                if (counties.countries) {
+                    var option = '';
+                    $.each( counties.countries, function(i, n){
+                        var selected = '';
+                        if (counties.country_id == n.country_id) {
+                            selected = 'selected';
+                        }
+                        option += '<option value=\"' + n.country_id + '\"' + selected + '>' + n.country + '</option>';
+                    });
+                    $('#country_id').html(option);
+                }
+            }
+
+            // 渲染选择地址数据
+            var render_address_box = function(data) {
+                var dom ='<span class=\"default\" style=\"display:inline-block\">'+ (data.is_default == 1 ? '<?=Yii::t('shop','DEFAULT ADDRESS')?>' : '') + ' </span>' + '<p class=\"name\">'+
+                data.fullname +'</p><p>' + data.address +
+                '</p><p>' + data.address2 + '</p><p>' + data.country+ '</p><p>' + data.state + '   ' + data.postal_code + '</p><p>' +
+                data.phone + '</p><p>' + data.email + '</p><span class=\"edit j-edit-address\" data-id=\"' +
+                data.id + '\" data-country-id=\"' + data.country_id + '\">edit</span>';
+                $('.j-address-item').html(dom);
+
+//                var input = '<input type="hidden" id="fullname" value="'+data.fullname+'">'+
+//                        '<input type="hidden" id="address" value="'+data.address+'">'+
+//                        '<input type="hidden" id="address2" value="'+data.address2+'">'+
+//                        '<input type="hidden" id="country" value="'+data.country+'">'+
+//                        '<input type="hidden" id="state" value="'+data.state+'">'+
+//                        '<input type="hidden" id="postal_code" value="'+data.postal_code+'">'+
+//                        '<input type="hidden" id="phone" value="'+data.phone+'">'+
+//                        '<input type="hidden" id="email" value="'+data.email+'">'+
+//                        '<input type="hidden" id="country_id" value="'+data.country_id+'">';
+//                $('#address_input').html(input);
+
+                $('.j-default-address').css('display', 'block');
+
+                refreshAll();
+            }
+
+            // 渲染地址选择框数据
+            var render_address_select = function(data, checkedId) {
+                var option = '';
+                var len = data.length;
+                for (var i=0; i < len; i++) {
+                    var selected = '';
+                    if (checkedId == data[i].id) {
+                        selected = 'selected';
+                    }
+                    option += '<option value=\"' + data[i].id + '\"' + selected + '>' + data[i].fullname + '</option>';
+                }
+                $('.choose-address-sel').html(option);
+            }
+
+            // 地址管理
+            $('.j-address-item').on('click', '.j-edit-address', function (e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                $('.shipping_address_show form').find('input[name=id]').val(id);
+                var address = $(this).data();
+                $('.shipping_address_show form dd').find('input,select').each(function () {
+                    var name = $(this).prop('name');
+                    if (name == 'country_id') {
+                        $(this).find('option[value=' + address[country_id] + ']').prop('selected', true);
+                    } else {
+                        $(this).val(address[name]);
+                    }
+                });
+                $('.j-adr-submit-btn').data('opera', 'edit');
+                $('.shipping_address_show').show();
+            });
+
+            // 新增地址
+            $('.j-add-address').on("click", function (event) {
+
+                event.preventDefault();
+                resetAddressForm();
+                $('.j-adr-submit-btn').data('opera', 'create');
+                $('.shipping_address_show').css("display","block");
+            });
+
+
+            $('.adr-btn').on('click', '.j-adr-submit-btn', function () {
+                var action = $(this).data('opera');
+                var url = '/user-address/' + action;
+                var data = {};
+                $('.shipping_address_show form').find('input,select').each(function () {
+                    var name = $(this).prop('name');
+                    if (name) {
+                        if (name == 'country_id') {
+                            data[name] = $(this).find('option:selected').val();
+                        } else {
+                            data[name] = $(this).val();
+                        }
+                    }
+                });
+
+
+                var dom ='<span class=\"default\" style=\"display:inline-block\">' + ' </span>' + '<p class=\"name\">'+
+                $("#fullname").val() +'</p><p>' + $("#address").val() +
+                '</p><p>' + $("#address2").val() + '</p><p>' + $("#country_id").find("option:selected").text() + '</p><p>' + $("#state").val() + '   ' + $("#postal_code").val() + '</p><p>' +
+                $("#phone").val() + '</p><p>' + $("#email").val() + '</p><span class=\"edit j-edit-address\" data-id=\"' + '\" data-country-id=\"' + $("#country_id").val()+ '\" data-country=\"' + $("#country_id").find("option:selected").text()+ '\" data-city=\"' + $("#city").val()+ '\" data-fullname=\"' + $("#fullname").val()+ '\" data-address=\"' + $("#address").val()+ '\" data-address2=\"' + $("#address2").val()+ '\" data-country_id=\"' + $("#country_id").val()+ '\" data-state=\"' + $("#state").val()+ '\" data-postal_code=\"' + $("#postal_code").val()+ '\" data-phone=\"' + $("#phone").val()+ '\" data-postal_code=\"' + $("#postal_code").val()+ '\" data-email=\"' + $("#email").val() + '\">edit</span>';
+                $('.j-address-item').html(dom);
+
+
+
+                $('.j-default-address').css('display', 'block');
+
+                refreshAll();
+
+                $('.shipping_address_show').hide();
+                resetAddressForm();
+
+                //sendAddress(url, data, action);
+
+                //游客状态隐藏添加地址按钮 隐藏选择地址按钮
+                $(".no-choose-others").hide();
+            });
+
+            $('.choose-address').on('change', '.choose-address-sel', function () {
+                var select = $(this).find('option:selected');
+                var id = select.val();
+                var params = getAddressList(id);
+                render_address_box(params);
+            });
+
+            var sendAddress = function(url, data, action) {
+                $.post(url, data, function (data) {
+                    layer.alert(data.message, {title: false, btn: '', shadeClose: true, shade: [0.7, '#000'], offset: 'auto', time: 2000});
+                    if (data.code == 0) {
+                        var choosedId = $('.j-edit-address').data('id');
+                        if (action == 'create') {
+                            var addressList = getAddressList(data.data.id,data.data.id);
+                            render_address_box(addressList);
+                        } else {
+                            var params = getAddressList(choosedId,choosedId);
+                            render_address_box(params);
+                            var editSelect = $('.choose-address-sel').find('option[value=' + params.id + ']');
+                            editSelect.val(params.id);
+                            editSelect.val(params.id).text(params.fullname);
+                        }
+
+                        $('.shipping_address_show').hide();
+                        resetAddressForm();
+                    }
+                });
+            }
+
+            var resetAddressForm = function() {
+                $('.shipping_address_show form').find('input[name=id]').val('');
+                $('.shipping_address_show form').trigger('reset');
+            }
+
+            $('.shipping_address_show .aa').on('click', function () {
+                resetAddressForm();
+                $('.shipping_address_show').hide();
+            });
+
+            var getAddressList = function(id,guest_id) {
+                var data = ajaxGet('/user-address/list', {id: id,guest_id:guest_id});
+                return data.data;
+            }
+
+            var ajaxGet = function(url, data) {
+                var output = '';
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    data: data,
+                    async: false,
+                    success: function (data) {
+                        if (data.code == 0) {
+                            output = data.data;
+                        } else {
+                            console.log(data.message);
+                        }
+                    }
+                });
+                return output;
+            }
+
+            var symbol = '<?php echo THINK_RATE_SYMBOL?>';
+            var think_rate_m = '<?php echo THINK_RATE_M?>';
+
+            var funComm = function(url){
+                var output = '';
+                $.ajax({
+                    url: url,
+                    cache: false,
+                    type: 'GET',
+                    dataType: 'json',
+                    async: false,
+                    success: function(data){
+                        if(data.code == 0){
+                            output = data.data;
+                        }else{
+                            output = data.message;
+                        }
+                    }
+                });
+                return output;
+            }
+
+            var pay_channel = <?php echo $pay_channel?>;//支付方式
+            var country_to_channel = <?php echo $country_to_channel?>;
+            var default_id = <?php echo $default_id?>;
+            var promotion = <?php echo $promotion?>;
+
+            var promotionShow = function(){
+                if(typeof promotion=='object'){
+                    $('.cf-prompt').html('');
+                    var content = '';
+                    if(promotion.data.id==1){
+                        content = '<?php echo Yii::t('shop','FreeDelivery')?>';
+                    }else{
+                        var amount = symbol+''+((parseFloat(promotion.data.money)*think_rate_m).toFixed(2));
+                        content = '<?php echo Yii::t('shop','OrdersAboveNGetFreeShipping', '+amount+')?>';
+                        var content_new = content.replace('+amount+', amount)
+                    }
+                    $('.cf-prompt').append(content_new);
+                }
+            }
+
+            var showChannel = function(countryid){
+                if(!country_to_channel[countryid]){
+                    countryid = 235;
+                }
+                if(country_to_channel){
+                    $.each(country_to_channel[countryid].channel_way_id,function(i, n){
+            
+                        if(pay_channel[n] && pay_channel[n].img){    
+                            var img_url = pay_channel[n].img; 
+                        } else{
+                            var img_url = '';
+                        }
+                            if(i == 0){
+                                $('.payment-box .pay-mode').append('<div><label><input type=\'radio\' value=\''+n+'\' checked=\'checked\' name=\'paymode\'><img src=\''+img_url+'\'></label></div>');
+                            }else{
+                                $('.payment-box .pay-mode').append('<div><label><input type=\'radio\' value=\''+n+'\' name=\'paymode\'><img src=\''+img_url+'\'></label></div>');
+                            }
+
+                        
+                       
+                    });
+                }
+            }
+
+            $(document).on("change","input[type=radio]",function(){
+
+                if($('input:radio[name="paymode"]:checked').val()=='1001'){
+
+                    $(this).parent("label").append("<div class='ti'>1. Once your order is placed, our bank account information will be displayed.</div><div class='ti'>2. Your order status will change to 'Payment Confirmed' within 2 working days after we verify your payment. </div>")
+                    $("input[name='paymode'][value='1002']").siblings("div").css("display","none")
+                }else if($('input:radio[name="paymode"]:checked').val()=='1002'){
+                    $(this).parent("label").append("<div class='ti'>1. Once your order is placed, our western union account information will be displayed.</div><div class='ti'>2. Your order status will change to 'Payment Confirmed' within 2 working days after we verify your payment. </div>")
+                    $("input[name='paymode'][value='1001']").siblings("div").css("display","none")
+
+                }else {
+
+                    $("input[name='paymode'][value='1002']").siblings("div").css("display","none")
+                    $("input[name='paymode'][value='1001']").siblings("div").css("display","none")
+                }
+
+            })
+
+
+
+
+
+
+            //获取商品列表
+            var getTotal = function(){
+                var s=0;
+                $('.order-list .or-detailed').each(function(){
+                    s += parseInt($(this).find('.item-number').val())*parseFloat($(this).find('.td-price').html());
+                });
+                return s;
+            }
+
+            //获取商品重量列表
+            var getWeight = function(){
+                var s=0;
+                $('.order-list .or-detailed').each(function(){
+                    var weight = $(this).find('.weight').html();
+                    if(!weight){
+                        weight = 0;
+                    }
+                    s += parseInt($(this).find('.item-number').val())*parseFloat(weight);
+                });
+                return s;
+            }
+
+            // 计算运费价格
+            var freight = function(country_id, weight, promotion_amount) {
+                var re_price = <?php echo $re_price?>;
+                if(weight >0)
+                weight = parseFloat(weight).toFixed(2);
+                if(!re_price) re_price=0;       
+                if(!counties.countries[country_id]){
+                    country_id = 235;
+                }
+                var types = counties.countries[country_id].type;
+                var one = $.inArray(1, types);
+                var two = $.inArray(2, types);
+                var type =1;
+                if(one != '-1' && two != '-1'){
+                     type = $('.trans_type1').find('option:selected').val(); 
+                    
+                }else if(one != '-1'){
+                     type = $('.trans_type2').find('option:selected').val(); 
+                    
+                }else{
+                    type = $('.trans_type3').find('option:selected').val(); 
+                }
+                    
+                //console.log('sssssss = '+type);
+                var trans_type_1 = "<?=Yii::t('shop','StandardShipping',['20-60'])?>"
+                var trans_type_2 = "<?=Yii::t('shop','shop.UrgentExpress',['20-60'])?>"
+                var shipping_time_1 = counties.countries[country_id].shipping_time[1];
+                if(shipping_time_1 == 'undefined'){
+                    shipping_time_1 = '20-60';
+                }
+                var shipping_time_2 = counties.countries[country_id].shipping_time[2];
+                if(shipping_time_2 == 'undefined'){
+                    shipping_time_2 = '20-60';
+                }
+
+                trans_type_1 = trans_type_1.replace('20-60',shipping_time_1);
+                trans_type_2 = trans_type_2.replace('20-60',shipping_time_2);
+
+                $(".trans_type_1").html(trans_type_1);
+                $(".trans_type_2").html(trans_type_2);
+
+
+
+                showfreight(types);
+                var k = $.inArray(parseInt(type), types);
+                if(k == '-1'){
+                    if(type == '1' ){
+                        type = '2';
+                    }else{
+                        type = '1';
+                    }
+                }
+                var amount = 0.00;
+
+                $('.order-list .or-detailed').each(function () {
+                    var unit_price = $(this).find('span.td-price').text();
+                    var quantity   = parseInt($(this).find('input.order-amount').val());
+                    amount += unit_price * quantity;
+                });
+                s_usd = amount/think_rate_m-promotion_amount-re_price/think_rate_m;
+                if(s_usd<0){
+                    s_usd = 0.00
+                }
+                if(promotion_amount){
+                    var data = funComm('/order/freight-new-no-promo?country_id='+country_id+'&type='+type+'&amount='+s_usd+'&weight='+weight);
+                }else{
+                    var data = funComm('/order/freight-new?country_id='+country_id+'&type='+type+'&amount='+s_usd+'&weight='+weight);
+                }
+                if(typeof data=='object'){
+                    return data;
+                }else{
+                    return false;
+                }
+
+            }
+
+            var showfreight = function(types){
+                var one = $.inArray(1, types);
+                var two = $.inArray(2, types);
+                if(one != '-1' && two != '-1'){
+                    $('.trans_type1').css('display','block');
+                    $('.trans_type2').css('display','none');
+                    $('.trans_type3').css('display','none');
+                }else if(one != '-1'){
+                    $('.trans_type2').css('display','block');
+                    $('.trans_type1').css('display','none');
+                    $('.trans_type3').css('display','none');
+                }else{
+                    $('.trans_type3').css('display','block');//.show();
+                    $('.trans_type1').css('display','none');
+                    $('.trans_type2').css('display','none');
+                }
+            }
+
+            var refreshAll = function(){
+                var code = $('#code-input').val();
+                var re_price = <?php echo $re_price?>; //wdx
+                var total = getTotal();
+                var weight = getWeight();
+                var country_id = $('.j-edit-address').data('country-id');
+                country_id = country_id!=null?country_id:235;
+                 if(!re_price) re_price=0.0;//wdx 0719
+                if(code){
+                    var categories = getCategories();
+
+                    var couponData = funComm('/order/verify-by-code?code='+code+'&categories='+encodeURI(categories)+'&activity_amount='+re_price);
+                     console.log(couponData);
+                    if(typeof couponData=='object'){
+                       
+                        $('.promo_error').hide();
+                        var promotion_amount = (couponData.amount)*think_rate_m;
+                        var logistics_freight = freight(country_id, weight, couponData.amount);
+                        var trans_price = (logistics_freight.trans_price)*think_rate_m;
+
+                        var last_amount = (total-promotion_amount-re_price>=0)?(total-promotion_amount-re_price):0.00;
+
+                        $('#total_sysbol').text(symbol);
+                        $('#total_amount').text(total.toFixed(2));
+                        $('#promo_sysbol').text(symbol);
+                        $('#standardshipping').text(trans_price.toFixed(2));
+                        $('#promo').show();
+                        $('#promo_amount').text((promotion_amount).toFixed(2));
+                        $('#last_sysbol').text(symbol);
+                        $('#total').text(parseFloat(last_amount+trans_price).toFixed(2));
+                        if(re_price){
+                            $('#re_price').show();//wdx 0719
+                            $('#reprice').text(re_price);
+                        }
+                         
+                    }else{
+                        $('.promo_error').show();
+                        $('.promo_error').html("*The code First20 won't work if your oder is below US$ 249. You can not get other discount once you have US$ 20 off.");
+                        var logistics_freight = freight(country_id, weight, 0);
+                        var trans_price = (logistics_freight.trans_price)*think_rate_m;
+                        $('#total_sysbol').text(symbol);
+                        $('#total_amount').text(total.toFixed(2));
+                        $('#promo_sysbol').text(symbol);
+                        $('#standardshipping').text(trans_price.toFixed(2));
+                        $('#promo').hide();
+                        //$('#promo_amount').text((promotion_amount).toFixed(2));
+                        $('#last_sysbol').text(symbol);
+                        $('#total').text(parseFloat(total+trans_price-re_price).toFixed(2));
+                         if(re_price){
+                            $('#reprice').text(re_price);//wdx
+                            $('#re_price').show();
+                        }
+                    }
+                }else{
+                    var logistics_freight = freight(country_id, weight, 0.00);
+                    var trans_price = (logistics_freight.trans_price)*think_rate_m;
+
+                    var last_amount = total+trans_price-re_price;//wdx
+                    $('#product_price').show();
+                    $('#total_amount').text(total.toFixed(2));
+                    $('#last_sysbol').text(symbol);
+                    $('#standardshipping').text(parseFloat(trans_price).toFixed(2));
+                    $('#total').text(parseFloat(last_amount).toFixed(2));
+                     $('#promo').hide();
+                    if(re_price){
+                        $('#reprice').text(re_price);//wdx
+                        $('#re_price').show();
+                    }
+                }
+            };
+             var refreshAll2 = function(){
+                var code = $('#code-input').val();
+                var re_price = <?php echo $re_price?>;
+                var total = getTotal() ;//wdx 0608
+                var weight = getWeight();
+                var country_id = $('.j-edit-address').data('country-id');
+                country_id = country_id!=null?country_id:235;
+                  if(!re_price) re_price=0.0;//wdx 0719
+                if(code){
+                    var categories = getCategories();
+                    //console.log(categories);return;
+                    var couponData  =  funComm('/order/verify-by-code?code='+code+'&categories='+encodeURI(categories)+'&activity_amount='+re_price);
+                    if(typeof couponData=='object'){
+                       
+                        $('.promo_error').hide();
+                        var promotion_amount = 0;//(couponData.amount)*think_rate_m;
+                        var logistics_freight = freight(country_id, weight, couponData.amount);
+                        var trans_price = (logistics_freight.trans_price)*think_rate_m;
+
+                        var last_amount = (total-promotion_amount-re_price>=0)?(total-promotion_amount-re_price):0.00;
+
+                        $('#total_sysbol').text(symbol);
+                        $('#total_amount').text(total.toFixed(2));
+                        $('#promo_sysbol').text(symbol);
+                        $('#standardshipping').text(trans_price.toFixed(2));
+                        $('#promo').hide();
+                        //$('#promo_amount').text((promotion_amount).toFixed(2));
+                        $('#last_sysbol').text(symbol);
+                        $('#total').text(parseFloat(last_amount+trans_price-re_price).toFixed(2));//wdx
+                       
+                        if(re_price){
+                            $('#re_price').show();//wdx 0719
+                            $('#reprice').text(re_price);
+                        }
+                    }else{
+
+                        $('.promo_error').show();
+                        $('.promo_error').html("*The code First20 won't work if your oder is below US$ 249. You can not get other discount once you have US$ 20 off.");
+                        var logistics_freight = freight(country_id, weight, 0);
+                        var trans_price = (logistics_freight.trans_price)*think_rate_m;
+                        $('#total_sysbol').text(symbol);
+                        $('#total_amount').text(total.toFixed(2));
+                        $('#promo_sysbol').text(symbol);
+                        $('#standardshipping').text(trans_price.toFixed(2));
+                         
+                        $('#promo').hide();
+                        //$('#promo_amount').text((promotion_amount).toFixed(2));
+                        $('#last_sysbol').text(symbol);
+                        $('#total').text(parseFloat(total+trans_price-re_price).toFixed(2));//wdx
+                        if(re_price){
+                            $('#reprice').text(re_price);//wdx
+                            $('#re_price').show();
+                        }
+                    }
+                }else{
+                    var logistics_freight = freight(country_id, weight, 0.00);
+                    var trans_price = (logistics_freight.trans_price)*think_rate_m;
+
+                    var last_amount = total+trans_price-re_price;//wdx
+                    $('#product_price').show();
+                    $('#total_amount').text(total.toFixed(2));
+                    $('#last_sysbol').text(symbol);
+                    $('#standardshipping').text(parseFloat(trans_price).toFixed(2));
+                    $('#total').text(parseFloat(last_amount).toFixed(2));
+                    $('#promo').hide();
+                    if(re_price){
+                        $('#reprice').text(re_price);//wdx
+                        $('#re_price').show();
+                    }
+                  
+                }
+            };
+            var init = function(){
+                showChannel(default_id);
+                // 默认渲染地址
+                showAddress();
+                refreshAll();
+                promotionShow();
+            }
+
+            //页面初始化
+            init();
+
+            $(document).delegate('.country-id','change',function(){
+                $('.payment-box .pay-mode').html('');
+                var countryid = $(this).val();
+                if(!country_to_channel[countryid]){
+                    countryid = 235;
+                }
+                showChannel(countryid);
+            });
+
+            function compareAsc(propertyName) {
+                return function(object1, object2) {
+                    var value1 = object1[propertyName];
+                    var value2 = object2[propertyName];
+                    if(value2 < value1) {
+                        return 1;
+                    } else if(value2 > value1) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+
+            var getCategories = function(){
+                var iteminfo = new Object();
+                var i=0;
+                $('.order-list .or-detailed').each(function(i,n){
+                    var item_id = $('.list_sku_'+i).find('.item-id').val();
+                    var price = $('.list_sku_'+i).find('.td-price').html();
+                    var number = $('.list_sku_'+i).find('.item-number').val();
+                    var amount = price*number/think_rate_m;
+                //     var re_price = <?php echo $re_price?>;//wdx 0608
+                //     if(re_price <= amount)
+                //     amount -=re_price;
+                // console.log('amount == ' +amount);
+                    if(!iteminfo[item_id]){
+                        iteminfo[item_id] = new Object();
+                        iteminfo[item_id]['sku_id'] = item_id;
+                        iteminfo[item_id]['amount'] = amount.toFixed(2);
+                        iteminfo[item_id]['categories'] = $(this).find('.categories-id').val();
+                        iteminfo[item_id]['number'] =  parseInt(number);
+                        iteminfo[item_id]['_sort'] =  i++;
+                    }else{
+                        iteminfo[item_id]['number'] +=  parseInt(number);
+                    }
+
+                });
+
+                $arr_cart = [];
+                for (k in iteminfo) {
+                    $arr_cart.push(iteminfo[k]);
+                }
+
+                $arr_cart.sort(compareAsc("_sort"));   //按照年龄降序排列
+
+                return JSON.stringify($arr_cart);
+            };
+
+            //优惠码功能
+            $('.code-buttom').click(function(){
+                 if($(this).hasClass('code-buttom_on')){
+                    $('.code-buttom').removeClass('code-buttom_on');
+                    $('.code-buttom a').html('<?=Yii::t('shop','APPLY')?>');
+                    $('#code-input').val('');
+                     refreshAll2();
+                }else{
+                    $('.code-buttom').addClass('code-buttom_on');
+                    var cancel ='<?=Yii::t('shop','shop.Cancel')?>'; 
+                    cancel = cancel.toUpperCase();
+                    $('.code-buttom a').html(cancel);
+                     refreshAll();
+                }
+            });
+
+            $('.order-amount').blur(function() {
+                var inp = $(this);
+                var re = /^\\d+(\\.\\d+)$/; //浮点数
+                if (isNaN(inp.val()) || inp.val() < 0 || inp.val() == '') {
+                    inp.val(1)
+                } else if (!re.test(inp.val())) {
+                    inp.val(parseInt(inp.val()))
+                }
+                refreshAll();
+            })
+
+            $('.plus-square').click(function(){
+                var t=$(this).parent().find('.order-amount');
+                t.val(parseInt(t.val())+1)
+                refreshAll();
+            })
+            $('.minus-square').click(function(){
+                var t=$(this).parent().find('.order-amount');
+                t.val(parseInt(t.val())-1)
+                if(parseInt(t.val())<=0){
+                    t.val(1);
+                }
+                refreshAll();
+            })
+
+
+            var from  ="<?=\yii::$app->request->get("from","")?>";
+            var custom_size  =<?=$custom_size_str?>;
+            if(custom_size){
+                custom_size  = JSON.stringify(custom_size);
+            }
+
+            //支付 
+            $('.cf-submit a').click(function(event){
+                event.preventDefault();
+                var categories = getCategories();
+                var address_id = $('.j-edit-address').data('id');
+                var channel_id = $('input[name=\'paymode\']:checked').val();
+                var trans_type = $('#trans_type').val();
+                var products = encodeURI(categories);
+                var coupon_code = $('#code-input').val();
+                var remark = $('#comment').val();
+                var event_date = $("select[name='year1']").val()+'-'+$("select[name='month1']").val()+'-'+$("select[name='day1']").val();
+                var refer = $('#understand').val();
+
+
+                if(!$('.j-edit-address').data('state')){
+                    alert('State/Province/Region can\'t be empty');
+                    return false;
+                }
+                var payment_country_id = $('.city-select .country-id').val();
+                var channel_name = pay_channel[channel_id].pay_way;
+                channel_name_u = encodeURI(channel_name);
+                var url = '/order/create-order-guest?'
+                        +'&email='+$('.j-edit-address').data('email')
+                        +'&fullname='+$('.j-edit-address').data('fullname')
+                        +'&country_id='+$('.j-edit-address').data('country_id')
+                        +'&country='+$('.j-edit-address').data('country')
+                        +'&state='+$('.j-edit-address').data('state')
+                        +'&city='+$('.j-edit-address').data('city')
+                        +'&phone='+$('.j-edit-address').data('phone')
+                        +'&address='+$('.j-edit-address').data('address')
+                        +'&address2='+$('.j-edit-address').data('address2')
+                        +'&postal_code='+$('.j-edit-address').data('postal_code')
+                        +'&channel_id='+channel_id+'&trans_type='+trans_type+'&products='+products+'&coupon_code='+coupon_code+'&remark='+remark+'&payment_country_id='+payment_country_id+'&channel_name='+channel_name_u+'&event_date='+event_date+'&refer='+refer+'&from='+from+'&custom_size='+custom_size;
+                var payinfo = funComm(url);
+                var gtm = payinfo.gtm
+                if(typeof payinfo=='object'){
+                    if(channel_name == 'Paypal'){
+                        try {
+                            dataLayer.push({
+                                'event': 'checkout',
+                                'orderid':gtm.orderid,
+                                'quantity':gtm.quantity,
+                                'country': gtm.country,
+                                'ids': gtm.ids,
+                                'totalvalue': gtm.totalvalue,
+                                'tax': '',
+                                'shipping': gtm.shipping,
+                                'coupon':gtm.coupon,
+                                'revenue': gtm.revenue,
+                                'ecommerce': {
+                                    'checkout': {
+                                        'actionField': {'step': 1, 'option': gtm.option.pay_way},
+                                        'products': gtm.product_gtm
+                                    }
+                                },
+                            });
+                            fbq('track', 'InitiateCheckout', {
+                                value: payinfo.gtm.totalvalue,
+                                currency: 'USD',
+                            });
+                            console.log('checkout dataLayer:')
+                            console.log(dataLayer)
+                        }
+                        catch(err) {
+                            console.log(err.message);
+                        }
+                        window.open(payinfo.url, '_self');
+                        return false;
+                    }
+
+                    //offline pay
+                    if(channel_name == 'Wire Transfer' || channel_name == 'Western Union'){
+                        window.location.href='/order/offline-pay?id='+payinfo.orderid;
+                        return false;
+                    }
+
+                    try {
+                        dataLayer.push({
+                            'event': 'checkout',
+                            'orderid':gtm.orderid,
+                            'quantity':gtm.quantity,
+                            'country': gtm.country,
+                            'ids': gtm.ids,
+                            'totalvalue': gtm.totalvalue,
+                            'tax': '',
+                            'shipping': gtm.shipping,
+                            'coupon':gtm.coupon,
+                            'revenue': gtm.revenue,
+                            'ecommerce': {
+                                'checkout': {
+                                    'actionField': {'step': 1, 'option': gtm.option.pay_way},
+                                    'products': gtm.product_gtm
+                                }
+                            },
+                        });
+                        fbq('track', 'InitiateCheckout', {
+                            value: payinfo.gtm.totalvalue,
+                            currency: 'USD',
+                        });
+                        console.log('checkout dataLayer:')
+                        console.log(dataLayer)
+                    }
+                    catch(err) {
+                        console.log(err.message);
+                    }
+                    layer.open({
+                        type: 2,
+                        title: false,
+                        closeBtn: 1, //不显示关闭按钮
+                        shade: [0],
+                        area: ['780px', '644px'],
+                        anim: 2,
+                        content: [payinfo.url, 'no'], //iframe的url，no代表不显示滚动条
+                        end: function () {
+                            window.location.href=payinfo.order_info_url;
+                        }
+                    });
+                }else{
+                    alert(payinfo);
+                }
+            });
+
+            // 更改快递方式更新运费价格
+            $('.exp-list').on('change', '#trans_type', function () {
+                refreshAll();
+            })
+        });
+    </script>

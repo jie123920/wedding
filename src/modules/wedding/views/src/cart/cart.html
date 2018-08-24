@@ -1,0 +1,641 @@
+<?php
+use app\helpers\myhelper;
+?>
+<style>
+    html,body{background: none;}
+    /*    ship*/
+
+    .ship-header{width: 100%;height: 86px;border-bottom: 2px solid #695e5a;}
+    .ship-title{width:10%;font-size:24px;color: #695e59;text-align:left;line-height:120px;display: inline-block;}
+    .ship-nav{width: 88%;color: #ffffff;float: right;}
+    .ship-nav li{padding: 0px 20px;height: 86px;line-height:120px;float: left;font-size: 16px;color: #af9e89;font-family: "ebrima";}
+    .ship-mode{width: 100%;margin-top: 50px;overflow: hidden;}
+    .ship-address{width:60%;float: left;}
+    .ship-express{width: 35%;float: right;}
+    .add-title,.exp-title{font-size: 24px;color:#695e5a;line-height: 48px;}
+    .add-title{border-bottom:1px solid #695f56;}
+    .exp-title{border-bottom: 1px solid #695f56;}
+    .cf-add-form{margin-top: 5%;}
+    .cf-add-form dl{line-height: 52px;}
+    .exp-list select{width: 100%;font-size: 14px;color: #695e59;}
+    .cf-add-form dt{width:160px;float: left;text-align:left;padding-right: 22px;font-size:16px;color:#695f56;}
+    .cf-add-form dd{padding-bottom: 15px;}
+    .cf-add-text{width:434px;height: 36px;color: #695f56;padding:7px;line-height:20px;font-size:18px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;}
+    .cf-add-text{border: 1px solid #695f56;background-color: #fff;}
+    .cf-add-form dd p{color:#af9e89}
+    .cf-select select{height: 36px;width:434px;font-size: 18px;color:#695f56;border: 1px solid #695f56;background-color: #fff;}
+    .exp-list li{font-size: 16px;color:#616161;padding: 18px 0px;}
+    .exp-list li p{font-size: 14px;line-height: 25px;    font-family: "ebrima";}
+    .cf-order .th{float: left;color: #616161;font-size:18px; height: 75px;line-height:75px;text-align: center;}
+    .order-th{ height: 75px;}
+    .order-list{width: 100%;}
+    .order-amount{width: 100px;font-size:14px;border: none;color: #616161;text-align: center;background: none;}
+    .td-quantity i{font-size: 38px;color: #af9e89;}
+    .order-remove a:hover{text-decoration:underline;}
+
+    /*   ShoppingCart*/
+    .cf-order{margin-top: 0px;overflow: hidden;}
+    .order-pic{width:225px;height: 75px;position: relative;}
+    .cart-checkboxs {
+        float: left;
+        margin-top:35%;
+    }
+    .cfcheckbox {width:22px;height:22px;float: none;position: relative;z-index: 5;vertical-align: middle;_vertical-align: -1px; margin: 0 3px 0 0;padding: 0;}
+    .cart-checkbox label {display: none;}
+    .mycheck{font-size:14px;color: #af9e89;}
+    .order-list{width: 100%;}
+    .or-detailed{overflow: hidden;border-bottom:1px solod #c8c9c6; padding: 20px;height: auto}
+    .order-list .td .cart-checkbox .jdcheckbox{height: 100%;}
+    .order-remove a:hover{text-decoration:underline;}
+    .order-remove{
+        width: 140px!important;
+        height: 30px!important;
+        border: 1px solid #c8c9c6;
+        float: right;
+        line-height: 30px!important;
+        text-align: center;
+        font-size: 22px!important;
+        margin-top: 20px;
+    }
+    .cf-total{width:35%;float: right;overflow: hidden;}
+    .prduct-total h2{font-size: 26px;color: #616161;text-align:left;line-height: 52px;font-family: "GARA";}
+    .prduct-total p{font-size:26px;color: #e13f38;text-align: right;float: right;font-family: "GARA";    margin-right: 55px;}
+    .cf-empty{font-size: 18px;text-align: center;margin-top:90px;margin-bottom: 40px;color: #dc3d39;margin-right: 40px;font-family: GARA}
+     .td-quantity{width: 140px}
+    /*payment*/
+
+    .ship-title{width: 20%;font-size:24px;color: #ffffff;text-align: center;line-height: 86px;display: inline-block;}
+    .ship-nav{width: 80%;color: #ffffff;float: right;}
+    .payment-mode{width: 100%;margin-top: 50px;overflow: hidden;}
+    .city-select select{height: 36px;width:354px;font-size: 18px;color: #695e59;border: 1px solid #575043;background-color: #fff;font-family: "ebrima";}
+    .pay-city dt{width:186px;float:left;text-align:left;padding-right: 22px;font-size: 18px;color: #695e59;line-height: 36px;}
+    .pay-city{width: 60%;border-bottom: 1px dashed #af9e89;}
+    .pay-city dd{padding-bottom: 10px;}
+    .cf-total1{width:35%;margin-top: 2%;float: right;overflow: hidden;margin-right: 5%;border-top: 1px dashed #af9e89;font-family: "ebrima";}
+    .prduct-total {margin-top: 20px;    overflow: hidden;}
+    .prduct-total span{font-size: 18px;color: #695e59;text-align: right;line-height: 52px;}
+    .cf-submit a{width: 220px;height:68px;float: right;line-height: 68px;text-align: center;margin-top: 10px;
+        background: url('<?=__IMG__?>/btn_01.png');
+        font-family: "GARA";}
+    .cf-submit a{font-size: 24px;color: #ffffff;}
+    .cf-submit{margin-top: 30px;font-family: "constanb"}
+    .cf-submit p{text-align: right;color: #695e59;}
+    .pay-mode{width: 100%;overflow: hidden;margin-top: 36px;}
+    .pay-mode li{float: left;width: 185px;height:62px;margin: 5px;border:1px solid #000000;}
+    .order-summary{width: 40%;float: right;margin-right: 5%;}
+    .order-header{font-size: 30px;color:#000000;}
+    .pay-total{margin-top: 48px;font-family: "ebrima";}
+    .pay-ship{margin-top: 22px;font-family: "ebrima";}
+    .pay-ship span{text-align:left;font-size: 16px;color: #695e59;}
+    .pay-ship p{float:right;display: inline-block;font-size: 18px;color: #e13f38;}
+
+    .cf-prompt{
+        text-align: right;
+        font-size: 18px;
+        color: #dc3d39;
+        margin-top: 110px;
+        margin-bottom: 100px;
+        margin-right: 40px;
+        width: 100%;
+        font-family: GARA;
+    }
+    .or-detailed-left{
+        width: 20%;
+        float: left;
+    }
+    .list_img{
+        width: 155px;
+        height: 230px;
+        float: left;
+        margin-left: 40px;
+    }
+    .list_img img{
+        width: 155px;
+        height: 230px;
+    }
+    .or-detailed-right{
+        float: left;
+        width: 80%;
+    }
+    .or-detailed-right div{
+        width: 100%;
+        height: 40px;
+        line-height: 34px;
+        font-size: 14px;
+        font-family: GARA;
+        color: #616161;
+        border-bottom: 1px  solid #c8c9c6;
+    }
+    .detailed-title{float: left;margin: 0}
+    .td-right{float: right;margin: 0}
+    .td-name{font-size: 22px;font-family: GARA;color: #616161;width:660px;}
+    .cart-checkbox{color: #616161;font-family: GARA}
+    .order-remove {
+    cursor: pointer;
+}
+.o_detailed_left {
+    float: left;
+}
+.o_detailed_right {
+    float: left;
+    margin-left:18px;
+    position: relative;
+}
+.o_detailed_left img {
+    width: 106px;
+    height: 160px;
+}
+.quantit {
+    display: inline-block;
+    font-size: 22px;
+    color: #818181;
+    font-family: gara;
+}
+.pirec {
+    display: inline-block;
+    margin-left: 145px;
+}
+.td-name{
+    display: inline-block;
+    margin: 0;
+}
+.pirec span{
+    font-size: 22px;
+    font-family: gara;
+}
+.pirec span:nth-child(1){
+   color: #616161;
+
+}
+.pirec span:nth-child(2){
+    color: #ec7c5d;
+}
+.o_detailed_color {
+    font-size: 16px;
+    font-family: ebrima;
+    color: #616161;
+}
+.o_detailed_size{
+    font-size: 16px;
+    font-family: ebrima;
+    color: #616161;
+}
+.remove {
+    width: 130px;
+    height: 30px;
+    color: #616161;
+    font-family: gara;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    position: absolute;
+    top: 116px;
+}
+.o_detailed li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+}
+.o_detailed {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+.custom_s {
+    font-size: 16px;
+    font-family: ebrima;
+    color: #616161;
+    width: 260px;
+    position: absolute;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 73px;
+    background: #f5e3da;
+    z-index: 2;
+}
+.custom_s span:nth-child(2) {
+    padding-left: 10px;
+}
+.custom_sc{
+    color: red;
+}
+.discoun{
+    font-size: 22px;
+    font-family: gara;
+    color: #e13f38;
+    text-align: right;
+}
+</style>
+<div class="zl-container">
+    <!-- 订单列表 -->
+    <div class="cf-order" style="background: #fefdf6;">
+        <div class="order-list">
+            <div class="o_detailed">
+                <ul>
+<?php
+    //$total = 0;
+    foreach ($list as $item) {
+        $spc_data = [];
+        foreach($item['spec'] as $specv){
+            if(!in_array($specv['type2'], ['1', '2']))
+            {
+                continue;
+            }
+            $spc_data[$specv['spec_name']] = $specv['spec_value'];
+        }
+        ksort($spc_data);
+        $spc_str = $custom_size_json = '';
+        if(isset($item['custom_size'])){
+            if(is_array($item['custom_size'])){
+                $custom_size_json = json_encode($item['custom_size']);
+            }
+        }
+
+        $spec_str = '';
+        foreach($spc_data as $k=>$v) {
+            $traslatek = (Yii::t('shop',strtolower($k)) == strtolower($k))?$k:Yii::t('shop',strtolower($k));
+            $v = ($v == 'Custom Size')?Yii::t('shop','Custom size'):$v;
+            if(strtolower($v) == strtolower('Custom Size')){
+                $spec_str .= "<div class=\"o_detailed_color\"><span>{$traslatek}:</span><span class=\"custom_si\" style=\"color:red\" >{$v}</span></div>";
+            }else{
+                $spec_str .= "<div class=\"o_detailed_color\"><span>{$traslatek}:</span><span>{$v}</span></div>";
+            }
+        }
+
+        $custom_size = '';
+        if(isset($item['custom_size'])){
+            if(is_array($item['custom_size']))
+            foreach($item['custom_size'] as $k=>$v) {
+                $traslatek = (Yii::t('shop',strtolower($k)) == strtolower($k))?$k:Yii::t('shop',strtolower($k));
+                $custom_size .= "<div><span>{$traslatek}</span>:<span>{$v}</span></div>";
+            }
+        }
+
+        $urltitle = preg_replace('/[^a-z0-9\s]/','',strtolower($item['name']));
+        $urltitle = preg_replace('/\s+/','-',$urltitle);
+
+        //$price = round($item['price']*THINK_RATE_M, 2);
+        //$total += $price;
+?>
+
+
+            <li class="clearfix" sku_id="<?=$item['id']?>" number="1">
+                <div id="custom_size" style="display: none"><?=$custom_size_json?></div>
+                <div id="gtm_id<?=$item['id']?>" style="display: none"><?=$item['gtm']?></div>
+                <div class="o_detailed_left"><a target='_blank' href='/<?=$urltitle.'-g'.$item['goods_id']?>'><img alt="<?=$item['name']?>" src='<?=$item['cover']?>'></a></div>
+                <div class="o_detailed_right">
+                    <div class="o_detailed_t"><h1 class='td-name'><a target='_blank' href='/<?=$urltitle.'-g'.$item['goods_id']?>'><?=$item['name']?></a></h1><div class="quantit"><span><?=Yii::t('shop','Quantity')?>:</span><span>1</span></div><div class="pirec"><span><?=Yii::t('shop','UnitPrice')?>:</span><span>
+                        <?php echo THINK_RATE_SYMBOL?>
+                        <?php if(isset($item['activitiy_name'])){?>
+                                <?php echo round(($item['price']+$item['price_promotion'])*THINK_RATE_M, 2)?>
+                            <?php }else{?>
+                                <?php echo round($item['price']*THINK_RATE_M, 2)?>
+                        <?php }?>
+                    </span></div></div>
+                    <?=$spec_str?>
+
+                    <?php if(isset($item['activitiy_name'])){?>
+                        <div class="discoun"><span><?=$item['activitiy_name']?>:</span><span><?php echo THINK_RATE_SYMBOL?><?php echo round($item['price_promotion']*THINK_RATE_M, 2)?></span></div>
+                    <?php }?>
+
+                    <div class="custom_s"  style="display: none;"><?=$custom_size?></div>
+                    <?php if(isset($item['activity_info'])){?>
+                    <div style="color:red"><?=$item['activity_info'] ?></div>
+                    <?php }?>
+                    <div class="remove" id="<?=$item['id']?>"><?=Yii::t('shop','Remove')?></div>
+                </div>
+            </li>
+        <?php 
+      //wdx
+        
+
+
+        }?>
+                </ul>
+            </div>
+    </div>
+    <!-- 订单总价 -->
+    <div style="display:none;margin-right:0px" class="cf-empty"><?=Yii::t('shop','YourShoppingCartIsEmpty.')?></div>
+    <div class="cf-total">
+        <div class="prduct-total" style="margin-right: 0px;">
+            <h2><?=Yii::t('shop','Product Price')?>:
+                <p>
+                    <i><?=THINK_RATE_SYMBOL?></i>
+                    <strong class="zong1" id="zongl"><?=$total_ori?></strong>
+                </p>
+            </h2>
+            <?php if($re_price){ ?>
+            <h4> <p style="font-size: 20px; ">- <i><?=THINK_RATE_SYMBOL?></i><?=$re_price?></p></h4>
+            <?php }?>
+            <div style="clear:both"></div>
+            <h2><?=Yii::t('shop','Subtotals')?>:
+                <p>
+                    <i><?=THINK_RATE_SYMBOL?></i>
+                    <strong class="zong1" id="zongl"><?=$total?></strong>
+                </p>
+            </h2>
+
+        </div>
+        <div class="cf-submit" style="margin-right: 50px;">
+            <a href="javascript:"><?=Yii::t('shop','CHECKOUT')?></a>
+        </div>
+
+
+        <p class="cf-prompt">
+            <?php
+            if($promotion){
+				if ($promotion['id'] == 1) {
+              		echo "Free shipping";
+          		} else if ($promotion['id'] == 2) {
+					$currency = THINK_RATE_SYMBOL.number_format($promotion['money']*THINK_RATE_M, 2, '.', '');
+              		echo  Yii::t('shop','OrdersAboveNGetFreeShipping', $currency);
+          		}
+			}
+          ?>
+        </p>
+    </div>
+
+</div>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".custom_si").hover(function(){
+
+        $(this).parent().siblings(".custom_s").css('display','block')
+
+         },function(){
+            $(this).parent().siblings(".custom_s").css('display','none')
+         })
+        var item_num =  '<?=count($list)?>';
+        if (item_num <= 0) {
+            $(".cf-total").hide();
+            $(".cf-empty").show();
+        } else {
+            $(".cf-empty").hide();
+            $(".cf-total").show();
+        }
+        $('.remove').on('click', function() {
+            var data = {
+                id: $(this).attr("id")
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/cart/delete-item',
+                data: data,
+                success: function(content, status) {
+                    if (content['code'] != 0) {
+                        return false;
+                    }
+                    var delete_gtm = $.parseJSON(content['data']['gtm']);
+                    dataLayer.push({
+                        'event': 'removeFromCart',
+                        'name': delete_gtm[0].name,
+                        'id': delete_gtm[0].id,
+                        'price': delete_gtm[0].price,
+                        'category': delete_gtm[0].category,
+                        'variant': delete_gtm[0].variant,
+                        'ecommerce': {
+                            'remove': {                               // 'remove' actionFieldObject measures.
+                                'products':delete_gtm
+                            }
+                        }
+                    });
+                    location.reload();
+                }
+
+            });
+            //carts为空
+        }); 
+
+
+        function compareAsc(propertyName) {  
+            return function(object1, object2) {  
+                var value1 = object1[propertyName];  
+                var value2 = object2[propertyName];  
+                if(value2 < value1) {  
+                    return 1;  
+                } else if(value2 > value1) {  
+                    return -1;  
+                } else {  
+                    return 0;  
+                }  
+            }  
+        }
+
+        $('.cf-submit').on('click', function() {
+        	var cart = new Object();
+            var i=0;
+            $('.order-list li').each(function() {
+                console.log($(this).attr('sku_id'));
+                var item_id = parseInt($(this).attr('sku_id'));
+                var number = parseInt($(this).attr('number'));
+                var custom_size = $("#custom_size").text();
+                if(custom_size){
+                    custom_size = $.parseJSON(custom_size)
+                }
+                console.log(custom_size);
+                if (cart[item_id]) {
+                    cart[item_id].number += 1;
+                } else {
+                    cart[item_id] = {item_id: item_id, number: number,custom_size:custom_size,order:i++};
+                }
+            });
+
+            var arr_cart = Array();
+            for (k in cart) {
+                arr_cart.push(cart[k]);
+            }
+            console.log(arr_cart);
+
+            arr_cart.sort(compareAsc("order"));   //按照年龄降序排列
+
+            if (arr_cart.length == 0) {
+                return  $(".wenzi").text('<?=Yii::t('shop','please choose goods')?>').parent().show();
+            }
+
+            var is_check_store = checkStore(arr_cart);
+            if (!is_check_store) {
+                return false;
+            }
+
+            gg_gtm()
+
+            var items = JSON.stringify(arr_cart);
+
+            <?php if(!$this->params['is_login']):?>
+                location.href = '/login?referer=/checkout?from=cart';
+            <?php else:?>
+                location.href = '/checkout?from=cart';
+            <?php endif;?>
+
+
+        });
+
+        /* 检查库存 */
+        function checkStore(cart) {
+            var flag = true;
+            var items = JSON.stringify(cart);
+            items = encodeURI(items);
+            $.ajax({
+                type: 'GET',
+                url: '/cart/check-store',
+                async: false,
+                data: {items: items},
+                success: function(data) {
+                    if (data.code != 0) {
+                        var message = '';
+                        for (var i = 0; i < data.data.length; i++) {
+                            message += data.data[i].name + ' ' + data.data[i].tips;
+                        }
+                        $(".wenzi").text(message).parent().show();
+                        flag = false;
+                    }
+                }
+            });
+            return flag;
+        }
+
+        function gg_gtm() {
+            var ids_arr = [];
+            var gtm = [];
+            var quantity = 0;
+            $('.order-list  li').each(function(key,value){
+                var json = $("#gtm_id"+$(this).attr("sku_id")).text();
+                ids_arr[key] = $(this).attr("sku_id");
+                gtm.push($.parseJSON(json));
+                quantity = parseInt(quantity + 1)
+            });
+            var ids = ids_arr.join(",");
+
+            var totalvalue = $("#zongl").html()
+			try {
+				dataLayer.push({
+				    'event': 'confirmproducts',
+				    'ids': ids,   //所有购物车内的id，用逗号分隔//
+				    'totalvalue': totalvalue,    //所有商品总价值//
+				    'quantity': quantity,    //购物车商品总数量//
+				    'ecommerce': {
+				        'confirmproducts': {
+				            'actionField': {'step': 0},   //confirmproducts步骤为0//
+				            'products':gtm
+				        }
+				    },
+				});
+				console.log('confirmproducts  dataLayer :')
+				console.log(dataLayer)
+			}catch(err) {
+				console.log(err.message);
+			}
+        }
+
+        function changeNumber(type, node) {
+            var numberNode = node.find('.item-number');
+            var number = parseInt(numberNode.val());
+            var item_id = node.attr('data-item-id');
+            if (type == 'incr') {
+                number += 1;
+            } else if (type == 'decr') {
+                number -= 1;
+            } else if ( type == 'change' ) {
+            } else {
+                return false;
+            }
+            sums = 0;
+
+            // todo:
+            if (number <= 0 || number >= 100) {
+                return false;
+            }
+
+            data = {
+                id : item_id,
+                number: number
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/cart/update-item',
+                data: data,
+                success: function(content, status) {
+                    if (content['code'] != 0) {
+                        return  $(".wenzi").text(content['message']).parent().show();
+                        return false;
+                    }
+                    // numberNode.val(number);
+                    // totl();
+                }
+            });
+        }
+
+        var $all = $('.allselect');
+        var $inp = $('.item-check');
+        var $totl =$('#zongl');
+        var $tb =$('.or-detailed');
+        var $price = $('.td-price');
+        var $price_pro = $('.td-price-pro');
+        var $num =$('.order-amount');
+        var sums = 0;
+
+
+        //初始值
+        $all.prop('checked',true);
+        $inp.prop('checked',true);
+        //totl();
+
+
+        $('.order-amountr').change(function() {
+            var inp = $(this);
+            var re = /^\\d+(\\.\\d+)$/; //浮点数
+
+            if (isNaN(inp.val()) || inp.val() < 0 || inp.val() == '') {
+                inp.val(1)
+            } else if (!re.test(inp.val())) {
+                inp.val(parseInt(inpVal.val()))
+            }
+            changeNumber('$(this)',$(this).parents('ul'));
+        })
+
+        //小计和加减
+        //加
+        $('.plus-circle').on('click',function() {
+            changeNumber('incr', $(this).parents('ul'));
+        })
+        //减
+        $('.minus-circle').on('click',function() {
+            changeNumber('decr', $(this).parents('ul'));
+        })
+
+        //是否全选
+        $all.on('click',function(){
+            if($(this).is(':checked')){
+                $inp.each(function(){
+                    $(this).prop('checked',true)
+                })
+            }else{
+                $inp.each(function(){
+                    $(this).prop('checked',false)
+                })
+            }
+            sums = 0;
+            //totl();
+        })
+
+        //总计
+        function totl() {
+            var sum = 0;
+            $('.item-check:checked').each(function(){
+                if ($price_pro) {
+                  sums +=(parseInt($(this).parents('.or-detailed').eq($(this).index()).find($num).val())) * (parseFloat($(this).parents('.or-detailed').eq($(this).index()).find($price).text() - $(this).parents('.or-detailed').eq($(this).index()).find($price_pro).text()));  
+                }else{
+                  sums +=(parseInt($(this).parents('.or-detailed').eq($(this).index()).find($num).val())) * (parseFloat($(this).parents('.or-detailed').eq($(this).index()).find($price).text()));  
+                }
+            })
+            sums = sums.toFixed(2);
+            $totl.text(sums);
+        }
+        //单选
+        $inp.on('click',function(){
+            sums = 0;
+            totl();
+        })
+    })
+</script>

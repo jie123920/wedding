@@ -1,0 +1,850 @@
+<?php
+    use app\modules\wedding\widgets\MyLinkPager;
+    use yii\data\Pagination;
+    use yii\helpers\Url;
+	use app\helpers\myhelper;
+	$category_id = \Yii::$app->request->get('category_id');
+	$tlang = $this->params['bs'];//wdx
+?>
+<style>
+	html,body{background: none;}
+	.trending-list a{
+		color: #695e59!important;
+	}
+
+.icon-arrowleft:before {
+   
+    font-weight: 700;
+}
+.icon-arrowright:before {
+    font-weight: 700;
+}
+.icon-dian:before {
+  
+    font-size: 12px;
+}
+ul#b {
+    padding-bottom: 10px;
+}
+div.Color_screening span {
+    display: inline-block;
+	font-size: 16px;
+    font-family: gara;
+    color: #616161;
+	margin-left:4px ;
+    background: #fffcf6;
+	cursor: pointer;
+}
+
+.Color_screening {
+    padding-left: 14px;
+	margin: 6px 0;
+}
+.color_s li {
+	display: inline-block;
+	margin: 2.8px;
+	position: relative;
+	cursor: pointer;
+}
+.color_s li img {
+    width: 20px;
+    height: 20px;
+}
+ul.color_s {
+    padding: 0px 12px;
+}
+.more_than {
+    text-align: right;
+    font-size: 16px;
+    font-family: gara;
+    color: #616161;
+    padding-right: 26px;
+	cursor: pointer;
+}
+.color_s li span{
+    position: absolute;
+    top: 35px;
+    left: -35px;
+    z-index: 9;
+    width: 100px;
+    text-align: center;
+}
+.bg{
+	position: relative;
+}
+h1.tit {
+    font-family: gara;
+    color: #616161;
+    padding-left: 18px;
+	font-size: 20px;
+}
+div#botto{
+	text-align: center;
+}
+.spinner {
+  margin: 20px auto 20px;
+  width: 150px;
+  text-align: center;
+}
+ 
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #ccc;
+ 
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  animation: bouncedelay 1.4s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+ 
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+ 
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+ 
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+ 
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+div#ending span:nth-child(2){
+	text-align: center;
+    margin: 0 auto;
+    color: #616161;
+    display: block;
+    position: relative;
+    top: -40px;
+    width: 170px;
+    background: #fff;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+div#ending span:nth-child(2) img {
+    width: 140px;
+}
+div#ending span:nth-child(1) {
+    border-bottom: 1px solid #af9e8a;
+    display: inherit;
+}
+#botto {
+            width: 50%;
+            text-align: center;
+            margin: 50px auto;
+        }
+        
+        #botto img {
+            animation: myfirst 2s infinite;
+        }
+        
+        @keyframes myfirst {
+            0% {
+                transform: translate(0px, 0px);
+            }
+            50% {
+                transform: translate(0px, -10px);
+            }
+            100% {
+                transform: translate(0px, 0px);
+            }
+        }
+</style>
+<script type="text/javascript" src="<?=__JS__?>/template.js"></script>
+<div class="zl-container">
+	<div class="zl-list clearfix">
+
+		<div class="left-nav">
+			<?php if($cates):?>
+				<div class="list_nav">
+					<div class="left_header">
+						<span class="first_header"><?=$category_name?></span>
+						<span class="nav_all iconfont icon-jian"></span>
+					</div>
+					<ul class="drop">
+						<?php foreach($cates as $_cates):?>
+						<li>
+							<span class="two_nav"><a <?php if($_cates['id'] == $category_id){echo "style='color: #d38d82'";}?> href="<?=$tlang?>/<?=$_cates['urltitle']?>-c<?=$_cates['id']?>"><?=$_cates['name']?></a></span>
+							<?php if($_cates['cat_id'] && in_array($_cates['id'],$assoc_category_ids)):?>
+								<ul class="three_nav">
+									<?php foreach($_cates['cat_id'] as $__cates):?>
+									<li data="<?=$__cates['id']?>"> <a  <?php if($__cates['id'] == $category_id){echo "style='color: #d38d82'";}?>  href="<?=$tlang?>/<?=$__cates['urltitle']?>-c<?=$__cates['id']?>"><?=$__cates['name']?></a></li>
+									<?php endforeach;?>
+								</ul>
+							<?php endif;?>
+						</li>
+						<?php endforeach;?>
+					</ul>
+				</div>
+			<?php endif;?>
+			<?php //if($parent_id == 0):?>
+				<div class="screen_nav" <?php if($category_id==188){echo "style='display:none'";}?>>
+				<div class="screen_header">
+					<span class="screen_first_header"><?=\YII::t('shop','Filter')?></span>
+					<span class="screen_nav_all iconfont icon-jian"></span>
+				</div>
+				<div class="collocation">
+					<ul>
+						<li class="clear">
+							<span><?=\YII::t('shop','CLEAR ALL')?></span>
+						</li>
+					</ul>
+				</div>
+				<ul class="screen_drop subs" >
+					<?php
+						$color = $shape = $price_range = $length = $fabric = $neckline = $featrue  = [];
+						if(isset($filter['spec'])){
+						if($filter['spec'])
+							foreach($filter['spec'] as $spec){
+								if($spec['type'] == 2){
+									$color[] = $spec;
+								}
+								if($spec['type'] == 3){
+									$shape[] = $spec;
+								}
+								if($spec['type'] == 4){
+									$length[] = $spec;
+								}
+								if($spec['type'] == 5){
+									$fabric[] = $spec;
+								}
+								if($spec['type'] == 6){
+									$neckline[] = $spec;
+								}
+								if($spec['type'] == 7){
+									$featrue[] = $spec;
+								}
+							}
+						}
+						$price_range = isset($filter['price_range'])?$filter['price_range'] : [];
+					?>
+					<?php if($price_range):?>
+					<li>
+						<span class="screen_two_nav"><?=\YII::t('shop','Shop By Price')?></span>
+						<span class="drop_one iconfont icon-jian"></span>
+						<ul class="screen_three_nav a">
+							<?php foreach($price_range as $_price_range):?>
+							<?php if(!$selected_price || ($selected_price && $selected_price==($_price_range['price_start'].'_'.$_price_range['price_end']))):?>
+								
+								 <?php if($show_link):?>
+									<li style="height:30px;line-height:30px;"><span><a href="<?=$reqstr?>price_range=<?=$_price_range['price_start'].'_'.$_price_range['price_end']?>"><?="$".$_price_range['price_start']."-$".$_price_range['price_end']?></a></span></li>
+								 <?php else:?>
+								 	<li>
+									<input type="checkbox" name="a" id="<?=$_price_range['price_start'].'_'.$_price_range['price_end']?>" onchange="check()">
+									<label class="label1" for="<?=$_price_range['price_start'].'_'.$_price_range['price_end']?>"></label>
+									<span><?="$".$_price_range['price_start']."-$".$_price_range['price_end']?></span></li>
+								 <?php endif;?>
+								 
+							<?php endif;?>
+							<?php endforeach;?>
+						</ul>
+					</li>
+					<?php endif;?>
+
+
+					<?php if($length):?>
+					<li>
+						<span class="screen_two_nav"><?=\YII::t('shop','LENGTH')?></span>
+						<span class="drop_one iconfont icon-jian"></span>
+						<ul class="screen_three_nav d">
+							<?php foreach($length as $_length):?>
+							<?php if(!$selectlength || ($selectlength && in_array($_length['spec_value_id'],$selectlength))):?>
+								<li>
+								 <?php if($show_link):?>
+								 	<li style="height:30px;line-height:30px;"><span><a href="<?=$reqstr?>length=<?=$_length['spec_value_id']?>"><?=$_length['spec_value']?></a></span></li>
+								 <?php else:?>
+ 									<li><input type="checkbox" name="a" id="<?=$_length['spec_value_id']?>" onchange="check()">
+									<label class="label1" for="<?=$_length['spec_value_id']?>"></label>
+									<span><?=$_length['spec_value']?></span></li>
+								<?php endif;?>
+
+								 
+							<?php endif;?>
+							<?php endforeach;?>
+						</ul>
+					</li>
+					<?php endif;?>
+
+					<?php if($fabric):?>
+					<li>
+						<span class="screen_two_nav"><?=\YII::t('shop','FABRIC')?></span>
+						<span class="drop_one iconfont icon-jian"></span>
+						<ul class="screen_three_nav clearfix e">
+							<?php foreach($fabric as $_fabric):?>
+							<?php if(!$selectfabric || ($selectfabric && in_array($_fabric['spec_value_id'],$selectfabric))):?>
+								<?php if($show_link):?>
+								 	<li style="height:30px;line-height:30px;"><span><a href="<?=$reqstr?>fabric=<?=$_fabric['spec_value_id']?>"><?=$_fabric['spec_value']?></a></span></li>
+								 <?php else:?>
+ 									<li>
+									<input type="checkbox" name="a" id="<?=$_fabric['spec_value_id']?>" onchange="check()">
+									<label class="label1" for="<?=$_fabric['spec_value_id']?>"></label>
+									<span><?=$_fabric['spec_value']?></span></li>
+								 <?php endif;?>
+								 
+							<?php endif;?>
+							<?php endforeach;?>
+						</ul>
+					</li>
+					<?php endif;?>
+
+
+                    <?php if($shape):?>
+                    <li>
+                        <span class="screen_two_nav"><?=\YII::t('shop','SIHOUETTE')?></span>
+                        <span class="drop_one iconfont icon-jian"></span>
+                        <ul class="screen_three_nav clearfix c">
+                            <?php foreach($shape as $_shape):?>
+							<?php if(!$selectshape || ($selectshape && in_array($_shape['spec_value_id'],$selectshape))):?>
+
+								<?php if($show_link):?> 
+								<li class="same-two"><a href="<?=$reqstr?>selectshape=<?=$_shape['spec_value_id']?>"><label for="<?=$_shape['spec_value_id']?>" class="label"> <div class="bgc"><img src="<?=$_shape['spec_image']?>" alt="<?=$_shape['spec_value']?>"/><div class="tp" style="display:none"><?=$_shape['spec_value']?></div></div></label></a>
+								
+								</li>
+								<?php else:?>
+								<li class="same-two"><label for="<?=$_shape['spec_value_id']?>" class="label"><input type="checkbox" id="<?=$_shape['spec_value_id']?>"><div class="bgc"><img src="<?=$_shape['spec_image']?>" alt="<?=$_shape['spec_value']?>"/><div class="tp" style="display:none"><?=$_shape['spec_value']?></div></div></label>
+								
+								</li>
+								<?php endif;?>
+
+							<?php endif;?>
+                            <?php endforeach;?>
+                        </ul>
+                    </li>
+                    <?php endif;?>
+
+
+                    <?php if($neckline):?>
+                    <li>
+                        <span class="screen_two_nav"><?=\YII::t('shop','NECKLINE & SLEEVES')?></span>
+                        <span class="drop_one iconfont icon-jian"></span>
+                        <ul class="screen_three_nav clearfix f">
+                            <?php foreach($neckline as $_neckline):?>
+							<?php if(!$selectneckline || ($selectneckline && in_array($_neckline['spec_value_id'],$selectneckline))):?>
+								<?php if($show_link):?>
+								 <li class="same-two"><a href="<?=$reqstr?>neckline=<?=$_neckline['spec_value_id']?>"><label for="<?=$_neckline['spec_value_id']?>" class="label"><div class="bgc"><img src="<?=$_neckline['spec_image']?>" alt="<?=$_neckline['spec_value']?>"/><div class="tp" style="display:none"><?=$_neckline['spec_value']?></div></div></label></a></li>
+								 <?php else:?>
+								<li class="same-two"><label for="<?=$_neckline['spec_value_id']?>" class="label"><input type="checkbox" id="<?=$_neckline['spec_value_id']?>"><div class="bgc"><img src="<?=$_neckline['spec_image']?>" alt="<?=$_neckline['spec_value']?>"/><div class="tp" style="display:none"><?=$_neckline['spec_value']?></div></div></label></li>
+								<?php endif;?>
+								
+							<?php endif;?>
+                            <?php endforeach;?>
+                        </ul>
+                    </li>
+                    <?php endif;?>
+
+
+					<?php if($featrue):?>
+					<li>
+						<span class="screen_two_nav"><?=\YII::t('shop','FEATRUE')?></span>
+						<span class="drop_one iconfont icon-jian"></span>
+						<ul class="screen_three_nav g">
+							<?php foreach($featrue as $_featrue):?>
+							<?php if(!$selectfeatrue || ($selectfeatrue && in_array($_featrue['spec_value_id'],$selectfeatrue))):?>
+ 								<?php if($show_link):?>
+								 	<li style="height:30px;line-height:30px;"><span><a href="<?=$reqstr?>featrue=<?=$_featrue['spec_value_id']?>"><?=$_featrue['spec_value']?></a></span></li>
+								 <?php else:?>
+								    <li>
+									<input type="checkbox" name="a" id="<?=$_featrue['spec_value_id']?>" onchange="check()">
+									<label class="label1" for="<?=$_featrue['spec_value_id']?>"></label>
+									<span><?=$_featrue['spec_value']?></span></li>
+								 <?php endif;?>
+								
+							<?php endif;?>
+							<?php endforeach;?>
+						</ul>
+					</li>
+					<?php endif;?>
+
+					<?php  if($color && $category_id!=165 && $parent_id != 165 && $category_id!=157 && $parent_id != 157 && $parent_id != 162 && $category_id!=162 && $category_id!=214 && $parent_id != 214):?>
+					<li>
+						<span class="screen_two_nav"><?=\YII::t('shop','COLOR')?></span>
+						<span class="drop_down iconfont icon-jian"></span>
+						<ul class="screen_three_nav clearfix b" id="b">
+							<?php foreach($color as $spec):?>
+							<?php if($spec['type'] == 2):?>
+								<?php if(!$selectcolor || ($selectcolor && in_array($spec['spec_value_id'],$selectcolor))):?>
+									<?php if($show_link):?>
+								 	<li class="same-one">
+									 <a href="<?=$reqstr?>selectcolor=<?=$spec['spec_value_id']?>"><label for="<?=$spec['spec_value_id']?>" class="label"><span class="bg"><img src="<?=$spec['spec_image']?>" alt="<?=$spec['spec_value']?>"/><div class="tp" style="display:none"><?=$spec['spec_value']?></div></span></label></a></li>
+								   <?php else:?>
+									<li class="same-one">
+									<label for="<?=$spec['spec_value_id']?>" class="label"><input type="checkbox" id="<?=$spec['spec_value_id']?>"><span class="bg"><img src="<?=$spec['spec_image']?>" alt="<?=$spec['spec_value']?>"/><div class="tp" style="display:none"><?=$spec['spec_value']?></div></span></label></li>
+									<?php endif;?>
+									
+								<?php endif;?>
+							<?php endif;?>
+							<?php endforeach;?>
+						</ul>
+						<div id="more_c"><?=\YII::t('shop','More colors')?></div>
+		
+					</li>
+					<?php endif;?>
+
+				</ul> 
+			</div>
+			<?php //endif;?>
+		</div>
+
+		<div class="right-list">
+			<!-- 颜色分类 -->
+			<h1 class="tit"><?=$category_name?></h1>
+			<?php if(isset($show_color)):?>
+				<?php if($show_color && (in_array($parent_id,[157,162,214,165]) || in_array($category_id,[157,162,214,165]))):?>
+					
+					<div class="Instructions"><?=\YII::t('shop','Browse our gorgeous collection of dresses and select the color you need to fit into your themed wedding day! If we don\'t have the styles you\'re looking for, we can make the adjustment according to your personalized customization. Please leave the special request when making an order or send us Email to this address: service@bycouturier.com.',['<a href="mailto:service@bycouturier.com">','</a>'])?></div>
+			
+					<div class="Color_screening">
+						<?php $i=1;?>
+							<?php foreach($show_color as $spec):?>
+								<span class="<?=$i;?>"><?=$spec['spec_name']?></span>
+							<?php $i++;?>
+						<?php endforeach;?>
+					</div>
+
+
+					<?php $j=1;?>
+					<?php foreach($show_color as $spec):?>
+						<ul <?php if($j==1){echo 'style="display:block;"';}else{echo 'style="display:none;"';}?> class="color_s" id="<?=$j;?>">
+							<?php foreach($spec['value'] as $_spec):?>
+								<li class="color_o"><img src="<?=$_spec['spec_image']?>" alt="<?=$_spec['spec_value']?>"/><span style="display: none;"><?=$_spec['spec_value']?></span></li>
+							<?php endforeach;?>
+						</ul>
+						<?php $j++;?>
+					<?php endforeach;?>
+
+					<div class="more_than">All Colors</div>
+				<?php endif;?>
+			<?php endif;?>
+			<!--选择区域-->
+			<?php if($data['total_num'] > 0):?>
+			<div class="select-area">
+				<div class="newest">
+					<select class="cf-select-style-new" name="sort" class="sort">
+						<option <?php if($sort == "sell"){echo 'selected';}?> value="sell"><?=\YII::t('shop','Popular')?></option>
+						<option <?php if($sort == "up_time"){echo 'selected';}?> value="up_time"><a href="<?=Yii::$app->request->getHostInfo().Yii::$app->request->url?>&order=up_time"><?=\YII::t('shop','Newest')?></a></option>
+						<option <?php if($sort == "-price"){echo 'selected';}?> value="-price"><?=\YII::t('shop','Price:Low to High')?></option>
+						<option <?php if($sort == "price"){echo 'selected';}?> value="price"><?=\YII::t('shop','Price:High to Low')?></option>
+					</select>
+				</div>
+
+				<!--分页-->
+
+				<?php if($pages):?>
+
+				<div class="pages">
+					<?php echo MyLinkPager::widget([
+						// 'pageCssClass' => 'load-center',
+					'pagination'       => $pages,
+					'maxButtonCount'   => 5,
+					'options'          => ['class' => 'load-center'],
+					'activePageCssClass'=>'curs',
+					'prevPageCssClass' => 'load-left',
+					'nextPageCssClass' => 'load-right',
+					'nextPageLabel'    => '<span class="jian"><img src="'.__IMG__.'/right.png"/></span>',
+					'prevPageLabel'    => '<span class="plus"><img src="'.__IMG__.'/left.png"/></span>',
+					]); ?>
+				</div>
+				<?php endif;?>
+			</div>
+			<?php endif;?>
+			<!--列表区域-->
+			<div class="cf-commodities" style="width: 102%;">
+				<ul>
+					<?php if(\Yii::$app->request->get('error_type',0) == 1):?>
+					<p class="tishi" style="width: 50%;margin: 20px auto 10px;text-align: center;font-size: 18px;color: #695e59;">Sorry, <?=Yii::t('shop','SoldOut')?>.</p>
+					<?php elseif(\Yii::$app->request->get('error_type',0) == 2):?>
+					<p class="tishi" style="width: 50%;margin: 20px auto 10px;text-align: center;font-size: 18px;color: #695e59;"><?=\YII::t('shop','Sorry, we couldn\'t find a match for this product')?>.</p>
+					<?php else:?>
+
+					<?php if($data['total_num'] > 0):?>
+					<?php
+								$gtm_list['currencyCode'] = THINK_RATE_SYMBOL;
+								$gtm_list['pagetype'] = $type;
+								$gtm_list['categoryid'] = \yii::$app->request->get('category_id','');
+					$gtm_list['pageid'] = \yii::$app->request->get('page','1');
+					$gtm_list['referer'] = \Yii::$app->request->referrer;
+					?>
+					<?php echo $this->render('goods_list_item.html',['goods'=>$data['data'],'gtm_list'=>$gtm_list]);?>
+
+					<?php else:?>
+					<p class="tishi" style="width: 50%;margin: 20px auto 10px;text-align: center;font-size: 18px;color: #695e59;"><?=\YII::t('shop','Sorry, we couldn\'t find a match for',$keywords?$keywords:$cate_name)?>.</p>
+					<p class="tishi" style="width: 50%;text-align: center;font-size: 18px;color: #695e59;margin:0 auto;padding-bottom: 600px;"><?=\YII::t('shop','Please try adjusting the key words')?>.</p>
+					<?php endif;?>
+
+					<?php endif;?>
+				</ul>
+
+				<ul id="table1">
+				
+				</ul>
+				<script id="weather" type="text/html">
+					<%for(var i in data.data){%>
+
+				<li id='li_<%=data.data[i].id%>' gtm="{'price':'<%=data.data[i].price%>','category_id':'<%=data.data[i].category_id%>','category_name':'<%=data.data[i].category_name%>','id':'<%=data.data[i].bn%>','name':'<%=data.data[i].name%>'}">
+					
+					<div class='cf-commodities-pic'>
+						<div class="imgs">
+								<%for(var index in data.data[i].covers.slice(0,2)){%>
+
+							<a goods_id='<%=data.data[i].id%>' href="<?=$this->params['bs']?>/<%= data.data[i].urltitle%>-g<%= data.data[i].id%>"><img alt="<%= data.data[i].name%>" src="" data-src="<%=data.data[i].covers[index].url%>" style='background-color:#ccc'></a>
+
+
+							<%}%>
+						</div>
+						<span class='flow' id='<%=data.data[i].id%>'>
+						
+							<% if (data.data[i].if_favorite==1) { %>
+									<img src="http://cdn.mutantbox.com/01/04/wedding/images/img_06.png"  class="heart" style="display: block">
+            						<img src="http://cdn.mutantbox.com/01/04/wedding/images/img_05.png"  class="heart-o" style="display: none">
+							<%}else{%>
+									<img src="http://cdn.mutantbox.com/01/04/wedding/images/img_06.png"  class="heart" style="display: none">
+            						<img src="http://cdn.mutantbox.com/01/04/wedding/images/img_05.png"  class="heart-o" style="display: block">
+							<%}%>
+						</span>
+					</div>
+					<h2><a goods_id='<%=data.data[i].id%>' href="<?=$this->params['bs']?>/<%= data.data[i].urltitle%>-g<%= data.data[i].id%>"><%= data.data[i].name%></a></h2>
+					<div class="cf-commodities-price">
+						<div>
+							<span class='z_price'>
+								<% if (data.data[i].price_min>0 && data.data[i].price_max >0 && data.data[i].price_min != data.data[i].price_max) { %>
+								<span><span>$</span><%= data.data[i].price_min%> ~ <span>$</span><%= data.data[i].price_max%></span>
+								<%}else{%>
+								<span><?=THINK_RATE_SYMBOL?></span>
+								<span><%= parseFloat(data.data[i].price*<?=THINK_RATE_M?>).toFixed(2)%></span>
+								<%}%>
+							</span>
+							<% if (data.data[i].price_original>data.data[i].price) { %>
+								<span class="long-string yuanjia" style="text-decoration: line-through;color: #616161;">
+										<span><?=THINK_RATE_SYMBOL?></span>
+										<span><%= parseFloat(data.data[i].price_original*<?=THINK_RATE_M?>).toFixed(2)%></span>
+								</span>
+							<%}%>
+						</div>
+						<% if (data.data[i].color_number) { %>
+							<% if (data.data[i].color_number>1) { %>
+							<div class="more_color"><a style="color: #a7a7a7" href="<?=$this->params['bs']?>/<%= data.data[i].urltitle%>-g<%= data.data[i].id%>">More colors></a></div>
+						<%}%>
+						<%}%>
+					</div>
+				</li>
+				<%}%>
+				</script>
+
+
+			</div>
+			<div id="loadiing" style="display: none;"><div class="spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			  </div></div>
+			<div id="botto"><img src="//cdn-image.mutantbox.com/201807/28e45c3a2e50b52bf8117b1522b0384f.png" alt=""></div>
+			<div id="ending" style="display: none"><span></span><span><img src="<?=__IMG__?>/logo.png" alt=""></span><span></span></div>
+			<?php if($data['total_num'] > 0):?>
+				<div class="b-newst">
+
+				<select class="cf-select-style-new" name="sort" class="sort">
+					<option <?php if($sort == "sell"){echo 'selected';}?> value="sell"><?=\YII::t('shop','Popular')?></option>
+					<option <?php if($sort == "up_time"){echo 'selected';}?> value="up_time"><a href="<?=Yii::$app->request->getHostInfo().Yii::$app->request->url?>&order=up_time"><?=\YII::t('shop','Newest')?></a></option>
+					<option <?php if($sort == "-price"){echo 'selected';}?> value="-price"><?=\YII::t('shop','Price:Low to High')?></option>
+					<option <?php if($sort == "price"){echo 'selected';}?> value="price"><?=\YII::t('shop','Price:High to Low')?></option>
+				</select>
+
+				<?php if($pages):?>
+				<div class="jia">
+					<?php echo MyLinkPager::widget([
+							// 'pageCssClass' => 'load-center',
+					'pagination'       => $pages,
+					'maxButtonCount'   => 5,
+					'options'          => ['class' => 'load-center'],
+					'activePageCssClass'=>'curs',
+					'prevPageCssClass' => 'load-left',
+					'nextPageCssClass' => 'load-right',
+					'nextPageLabel'    => '<span class="jian"><img src="'.__IMG__.'/right.png"/></span>',
+					'prevPageLabel'    => '<span class="plus"><img src="'.__IMG__.'/left.png"/></span>',
+					]); ?>
+				</div>
+				<?php endif;?>
+
+				<!-- <span class="up"><img src="<?=__IMG__?>/top.png" class="cf-top"/></span> -->
+
+			</div>
+			<?php endif;?>
+		</div>
+	</div>
+</div>
+<span class="up"><img src="<?=__IMG__?>/top.png" class="cf-top"/></span>
+<script>
+	$(function(){
+		
+		var p=0,t=0; 
+		 var cur_count =<?=$cur_count?>;
+	
+		if(cur_count<20){
+			$('#loadiing').css('display','none')
+			$('#ending').css('display','none')
+			$('#botto').css('display','none')
+			return false
+		}
+
+		var curpage = <?=$page?>;
+		var per_page_show = <?=$per_page_show?>;
+		if(per_page_show > 0)	
+		var page=2 + (curpage-1)*per_page_show/20;
+		else
+		var page=2
+		var load=true
+			// 滚动获取更多
+			var p1 = $(this).scrollTop(); 
+			$(window).scroll(function(){
+			 p = $(this).scrollTop();  
+			 var delta = p - p1;
+			 p1=p;
+  			if(delta <=0) return false;
+			    
+			// document 文档高度
+			var docHeight = $(document).height();
+			// window 可视区高度
+			var rollHeight = $(window).height();
+			//window 滚动条高度
+ 			var scrHeight = $(window).scrollTop();
+		 	//如果内容区域 小于等于 可视区高度加滚动条的高度的话那么就进行加载...
+		  	if (docHeight <= (rollHeight+scrHeight+docHeight*0.3)) {
+			
+		  		// console.log('nowpages = '+page*20);
+		  		// console.log('totalpages = '+per_page_show*curpage);
+		  		if(page*20 > per_page_show*curpage)  {
+					$('#ending').css('display','block')
+					$('#botto').css('display','none')
+					return false;
+				}
+				if (!load) return false;
+		        load=false
+				getgoodslistnew()
+		
+			  								};
+
+		 });
+		 $("#botto").on("click",function(){
+		 	// console.log('nowpages = '+page*20);
+		  // 	console.log('totalpages = '+per_page_show*curpage);
+		  	if(page*20 > per_page_show*curpage) {
+					$('#ending').css('display','block')
+					$('#botto').css('display','none')
+					return false;
+			} 
+			if (!load) return false;
+		  	load=false
+		  getgoodslistnew()
+		 })
+		//  模板js处理方法
+		function getgoodslistnew(){
+			$('#loadiing').css('display','block')
+	//你所要执行的其它代码...
+	var path=window.location.pathname.replace(/[^0-9]+/g, '')
+	var url=window.location.search.replace('?','')
+	$.ajax({
+                type: 'GET',
+                url: 'goods/list-new?category_id='+path+'&'+url,
+				dataType: "json",
+				data:{page:page,per_page:20,curpage:curpage},
+                success: function(data) {
+					$('#loadiing').css('display','none')
+					if(data.data.data.length==0){
+					$('#ending').css('display','block')
+					$('#botto').css('display','none')
+					return false
+					}
+					page++
+					load = true
+				//   var html = template('weather', data);
+				//   $("#table1").html(html);
+					var html = template(document.getElementById('weather').innerHTML,data);
+					$("#table1").append(html);
+					// 懒加载
+				
+
+					var imgs = $('#table1 img');
+       H = window.innerHeight;  //浏览器视窗高度
+   function lazyload() {
+       var S = document.documentElement.scrollTop || document.body.scrollTop;   //滚动条滚过高度
+       [].forEach.call(imgs, function (img) {
+           if (!img.getAttribute('data-src')) {
+               return
+           }  //已经替换过的跳过
+           if (H + S  > getTop(img)) {    //为达到演示效果，这里H+S减去200，延后加载时机
+               img.src = img.getAttribute("data-src");
+               img.removeAttribute("data-src");
+           }
+       });
+       [].every.call(imgs, function (img) {
+           return !img.getAttribute('data-src')
+       }) && (window.removeEventListener("scroll", lazyload, false));   //完成所有替换后注销事件
+
+   }
+   	lazyload()
+   window.addEventListener("scroll", lazyload, false);
+   window.addEventListener("load", lazyload, false);
+
+   function getTop(e) {
+       var T = e.offsetTop;
+       while (e = e.offsetParent) {
+           T += e.offsetTop
+       }
+       return T
+   }
+
+
+ 
+						$(".cf-commodities-price").each(function(){if($(this).children().children("span").length==2){
+							$(this).children().children("span.z_price").css("color","red")}})
+							    // 收藏点击
+    $(".cf-commodities").delegate(".flow","click",function(){
+        if($(this).find(".heart").css("display")=="none"){
+            $(this).find(".heart").show();
+            $(this).find(".heart-o").hide();
+        }else{
+            $(this).find(".heart").hide();
+            $(this).find(".heart-o").show();
+        }
+
+        var goods_id = $(this).attr("id");
+        $.get('/goods/favorite?goods_id='+goods_id,{}, function(data, textStatus, xhr) {
+            if (data.status == 0) {
+                //GG GTM
+                dataLayer.push({
+                    'event': 'addtowishlist',
+                    'name': data.gtm.name,
+                    'id': data.gtm.name,
+                    'price': '',
+                    'category': data.gtm.category
+                });
+                console.log('addtowishlist dataLayer:')
+                console.log(dataLayer)
+
+                <?php if(\Yii::$app->controller->action->id == 'favorite-goods'):?>
+                    window.location.reload();
+                <?php endif;?>
+            }else{
+                if(data.status == -1){
+                    location.href = "/login?referer="+document.location.href;
+                }else{
+                    return  $(".wenzi").text(data.msg).parent().show();
+                }
+            }
+        },"json").complete(function(){
+
+        });
+	});
+	$(".cf-commodities-pic>.imgs").find("a").eq(0).css("display", "block").eq(1).css("display", "none");
+	$(".cf-commodities-pic").on("mouseenter", ">.imgs", function() {
+		aa = $(this).find("a");
+		if (aa.length == 1) {
+			return false
+		} else {
+			$(aa[1]).css("display", "block");
+			$(aa[0]).css("display", "none")
+		}
+	});
+	$(".cf-commodities-pic").on("mouseleave", ".imgs", function() {
+		aa = $(this).find("a");
+		if (aa.length == 1) {
+			return false
+		} else {
+			$(aa[0]).css("display", "block");
+			$(aa[1]).css("display", "none")
+		}
+	});
+
+                }
+
+            });
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+ $(".Color_screening span").each(function(index,item){
+                $(item).on("click",function(){
+					
+					 var l=$(this).attr("class")
+				
+                    $('#'+l).css("display","block").siblings("ul").css("display","none")
+					if( $('#'+l).children("li").length>70){
+						$('#'+l).children('li:gt(69)').css("display",'none')
+					$('.more_than').css("display","block")
+					$('#'+l).siblings(".more_than").text('All Colors')
+						}else{
+						$('.more_than').css("display","none")
+						}
+						
+                		});
+				$(item).hover(function(){
+					$(this).css("background","#f8e3d9")
+				},function(){
+						$(this).css("background","#fffcf6")
+					})
+			
+            });
+			$(".more_than").on("click",function(){
+				$(".color_s").each(function(){
+						if($(this).css("display")=='block' ){
+					$(this).children('li:gt(69)').toggle()
+				if($(this).siblings(".more_than").text() == 'All Colors')
+        		{$(this).siblings(".more_than").text('Back')}
+    				else
+        		{$(this).siblings(".more_than").text('All Colors')}
+				}
+				})
+			
+				
+				})
+			if($('#1 li').length>70){
+				$('#1 li:gt(69)').css("display",'none')
+				$('.more_than').css("display","block")
+			}else{
+		$('.more_than').css("display","none")
+		}
+
+		$(".color_s li ").each(function(index,item){
+			$(item).hover(function(){
+			$(this).children("span").css("display","inline-block")
+			},function(){
+			$(this).children("span").css("display","none")
+		})
+		})
+
+		$(".cf-commodities-pic img").lazyload({
+						effect : "fadeIn",
+						threshold : 300,
+						failure_limit:20,
+		});
+	})
+
+</script>
+
+<script type="text/javascript" src="<?=__JS__?>/shop2.js"></script>

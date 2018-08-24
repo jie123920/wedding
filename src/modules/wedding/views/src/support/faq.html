@@ -1,0 +1,48 @@
+<link href="<?=__CSS__?>/service.css" rel="stylesheet">
+    <div class="content sub_main">
+        <div class="sub_main_box">
+            <div class="sub_content">
+                <div class="news_detail">
+                    <!--<div class="position"><a href="/">Home</a>-->
+                        <!--<font><?=$article['title']?></font></div>-->
+                    <div class="detail_box">
+                        <div class="title">
+                            <h2><?=$article['title']?></h2>
+                            <p><?=date("Y m d",$article['create_time'])?> [GMT]</p>
+                        </div>
+                        <div class="edit"><?=htmlspecialchars_decode($article['remark'])?></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<script>-->
+        <!--$(".input_s").mouseenter(function(){-->
+            <!--$(".input_s02").show();-->
+            <!--$(".input_s").hide();-->
+        <!--});-->
+        <!--$(".input_s02").mouseleave(function(){-->
+            <!--$(".input_s").show();-->
+            <!--$(".input_s02").hide();-->
+        <!--});-->
+    <!--</script>-->
+    <script>
+        jQuery(".slideBox").slide({mainCell: ".bd ul", effect: "fold", autoPlay: true, interTime: 4000});
+        TouchSlide({slideCell: "#focus", titCell: ".hd ul", mainCell: ".bd ul", effect: "leftLoop", autoPlay: true, autoPage: true, interTime: 4000});
+        function fangfa() {
+            var bodyw = $(window).width();
+            var bodyw = $('body').width();
+            if (bodyw > 960) {
+                $('.pc_banner .bd ul,.pc_banner .bd li').width(bodyw)
+                var imgh = $('.pc_banner .bd li img').height();
+                $('.pc_banner .bd ul').height(imgh)
+            }
+        }
+        window.onload = function () {
+            fangfa()
+        };
+        $(window).resize(function () {
+            fangfa()
+        });
+    </script>
+

@@ -1,0 +1,58 @@
+<?php
+    use app\modules\wedding\widgets\MyLinkPager;
+    use yii\data\Pagination;
+    use yii\helpers\Url;
+	use app\helpers\myhelper;
+?>
+<style>
+	html,body{background: none;}
+	.favorite-list{width: 100%;}
+	.cf-commodities{margin-left: 15px;}
+    .fhg{width: 220px;height: 68px;background: url('<?=__IMG__?>/btn_01.png');font-size: 24px;text-align:center;line-height: 68px;margin: 40px auto;}
+</style>
+<div class="user_con_bd_box">
+    <div class="user_title"><?=\YII::t('shop','My Favorite Goods')?></div>
+	<div class="user_con_bd" style="width: 1040px">
+		<div class="cf-commodities">
+			<ul>
+				<?php if(isset($data['data']) && !empty(isset($data['data']))):?>
+				<?php
+						$gtm_list['currencyCode'] = THINK_RATE_SYMBOL;
+						$gtm_list['pagetype'] = 'my favorite goods';
+						$gtm_list['categoryid'] = \yii::$app->request->get('category_id','');
+						$gtm_list['pageid'] = \yii::$app->request->get('page','1');
+						$gtm_list['referer'] = \Yii::$app->request->referrer;
+				?>
+					<?php echo $this->render('goods_list_item.html',['goods'=>$data['data'],'gtm_list'=>$gtm_list]);?>
+
+				<?php else:?>
+					<p style="width: 50%;margin: 20px auto 10px;text-align: center;font-size: 18px;color: #616161;font-family: GARA"><?=\YII::t('shop','Items you tag a .. live here.Start building your collection','<span><i style="color:#ea251d" class="fa fa-heart" aria-hidden="true"></i></span>')?>.</p>
+					<div class="fhg" style=""><a href="/" style="color: #fff;font-family: GARA"><?=\YII::t('shop','GO SHOPPING')?></a></div>
+				<?php endif;?>
+			</ul>
+			<?php if($pages):?>
+			<?php echo MyLinkPager::widget([
+                // 'pageCssClass' => 'load-center',
+			'pagination'       => $pages,
+			'maxButtonCount'   => 5,
+			'options'          => ['class' => 'load-center'],
+			'activePageCssClass'=>'curs',
+			'prevPageCssClass' => 'load-left',
+			'nextPageCssClass' => 'load-right',
+			'nextPageLabel'    => '<span>Next Page</span><span class="fa fa-caret-right" style="margin-left:10px"></span>',
+			'prevPageLabel'    => '<span class="fa fa-caret-left"></span><span style="margin-left:10px">Previous Page</span>',
+			]); ?>
+			<?php endif;?>
+		</div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(".cf-select-style").change(function () {
+		location.href='<?=$sort_url?>&order='+$(this).val();
+	})
+
+	$(function() {
+		$(".imgs img").lazyload({effect: "fadeIn", threshold:500});
+	});
+</script>

@@ -1,0 +1,28 @@
+.content_box03 .text dl {
+    font-size: 14px;
+}
+.header_msg_box li a {
+    font-size: 13px;
+
+}
+.user_box ul li.forgot_password .layer_sub {
+    font-size: 12px;
+}
+.user_con_hd li a{
+    font-size: 20px!important;
+}
+.user_con_bd dt{
+    padding-right: 0px!important;
+    margin-right: 0px!important;
+    width: 171px!important;
+}
+.user_con_bd dt{
+    text-align: center!important;
+}
+span.login>a {
+    position: relative!important;
+    left: 10px!important;
+}
+.shipping-address-border{
+    width: 650px!important;
+}
